@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$journail.journailname}_电子期刊阅览_{$cfg.sysname}</title>
+<meta name="keywords" content="{$cfg.keywords}" />
+<meta name="description" content="{$cfg.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+{include file='header.htm'}
+<!--{if $action=='list'}-->
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position">您现在的位置 > <a href="index.php">网站首页</a> > <a href="journail.php">电子期刊阅览</a> > 往期期刊列表</span>
+</div>
+<div class="area" id="yuelan2">
+	<div class="title-blue">
+		<span class="menu01">往期电子期刊列表</span>
+	</div>
+	<div id="magaframe">
+		<!--{foreach from=$journails.list item=jour}-->
+		<div class="imagebox" onmouseover="this.style.background='#ccc'" onmouseout="this.style.background='#fff'">
+			<div class="image"><a href="journail.php?id={$jour.id}" title="{$jour.journailname}"><img src="{$jour.thumbnail}" border="0" alt="{$jour.journailname}" /></a></div>
+			<div class="title"><a href="journail.php?id={$jour.id}">{$jour.journailname}</a></div>
+		</div>
+		<!--{/foreach}-->
+		<div class="pagelink">{$pagelink}</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--{else}-->
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position">您现在的位置 > <a href="index.php">网站首页</a> > 电子期刊阅览 > {$journail.journailname}</span>
+</div>
+<div class="area">
+	<div class="journailimage">
+		<img src="{$journail.image}" border="0" />
+	</div>
+	<div class="journailarticle">
+		<h1><a href="jarticle.php?jid={$articles.recommend.jid}&aid={$articles.recommend.aid}" target="_blank">{$articles.recommend.title}</a></h1>
+		<p>{$articles.recommend.summary}　<a href="jarticle.php?jid={$articles.recommend.jid}&aid={$articles.recommend.aid}" target="_blank">详细...</a></p>
+		<ul>
+			<!--{foreach from=$articles.list item=arc}-->
+			<li>·<a href="jarticle.php?jid={$arc.jid}&aid={$arc.aid}" target="_blank">{$arc.title}</a></li>
+			<!--{/foreach}-->
+		</ul>
+		<div class="more"><a href="jarticle.php?action=list&jid={$journail.id}">浏览本期所有文章>></a></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="blank"></div>
+<div class="area" id="yuelan">
+	<div class="title-blue">
+		<span class="more"><a href="journail.php?action=list">更多</a></span>
+		<span class="menu01">往期电子期刊阅览</span>
+	</div>
+	<div id="magaframe">
+		<!--{foreach from=$journails.new item=jour}-->
+		<div class="imagebox" onmouseover="this.style.background='#ccc'" onmouseout="this.style.background='#fff'">
+			<div class="image"><a href="journail.php?id={$jour.id}" title="{$jour.journailname}"><img src="{$jour.thumbnail}" border="0" alt="{$jour.journailname}" /></a></div>
+			<div class="title"><a href="journail.php?id={$jour.id}">{$jour.journailname}</a></div>
+		</div>
+		<!--{/foreach}-->
+		<div class="clear"></div>
+	</div>
+</div>
+<!--{/if}-->
+<div class="adv0"><img src="images/adv5.png" border="0" /></div>
+{include file='footer.htm'}

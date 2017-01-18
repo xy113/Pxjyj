@@ -1,0 +1,64 @@
+{literal}<style type="text/css">
+.table-mail {clear:both; margin:10px 0;}
+.table-mail td{padding:5px; text-align:left;}
+.table-mail td p{line-height:150%; text-align:justify;}
+</style>{/literal}
+<div class="main-div">
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#666666" class="table-mail">
+  <tr>
+    <td width="40" height="24" bgcolor="e2e2e2">标题：</td>
+    <td bgcolor="e2e2e2">{$mail.subject}</td>
+    <td width="40" bgcolor="e2e2e2">发件人</td>
+    <td width="120" bgcolor="#e2e2e2">{$mail.author}</td>
+  </tr>
+   <tr>
+    <td colspan="4" bgcolor="#FFFFFF"><p>{$message}</p></td>
+    </tr>
+  <tr>
+    <td height="24" bgcolor="#e2e2e2">时间：</td>
+    <td bgcolor="#e2e2e2">{$mail.dateline|date_format:'%Y-%m-%d %H:%M'}</td>
+    <td bgcolor="#e2e2e2">IP地址</td>
+    <td bgcolor="#e2e2e2">{$mail.postip}</td>
+  </tr>
+</table>
+{if $mail.status==1}
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#666666" class="table-mail">
+  <tr>
+    <td height="24" bgcolor="e2e2e2" colspan="4"><b>回复内容</b></td>
+    </tr>
+   <tr>
+    <td bgcolor="#FFFFFF" colspan="4"><p>{$mail.reply}</p></td>
+    </tr>
+    <tr>
+    <td height="24" bgcolor="#e2e2e2" width="40">时间：</td>
+    <td bgcolor="#e2e2e2">{$mail.reptime|date_format:'%Y-%m-%d %H:%M'}</td>
+    <td bgcolor="#e2e2e2" width="40">回复人</td>
+    <td bgcolor="#e2e2e2" width="120">{$mail.repadmin}</td>
+   </tr>
+</table>
+{/if}
+<form method="post" name="reply" action="{$adminscript}?action=leadmails&mailid={$mail.id}&operation=reply" onsubmit="return Reply()">
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#666666" class="table-mail">
+  <tr>
+    <td height="24" bgcolor="e2e2e2"><b>回复信件</b></td>
+    </tr>
+   <tr>
+    <td bgcolor="#FFFFFF" style="text-align:center;">
+	<textarea name="message" id="message" style="width:590px; height:100px; margin:0 auto;"></textarea>
+	</td>
+    </tr>
+	<tr>
+		<td bgcolor="#FFFFFF" style="text-align:center;"><input type="submit" value="回复信件" class="button"></td>
+	</tr>
+</table>
+</form>	
+</div>
+{literal}<script type="text/javascript">
+function Reply(){
+	if($("#message").val()){
+		return true;
+	}else{
+		return false;
+	}
+}
+</script>{/literal}

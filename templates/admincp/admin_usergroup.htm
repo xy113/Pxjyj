@@ -1,0 +1,125 @@
+<!--{if $operation=='addnew'||$operation=='edit'}-->
+<div class="main-div">
+	<div class="pos-div">
+		<h2>{$lang.cp_home} &raquo; {$lang.group.manage} &raquo; {if $operation=='addnew'}{$lang.group.addnew}{else}{$lang.group.edit}{/if}</h2>
+	</div>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="SaveGroup()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{if $operation=='addnew'}{$lang.save}{else}{$lang.save_edit}{/if}</span></span>
+		<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	</div>
+	<form name="usergroup" method="post" action="{$adminscript}?action=usergroup&operation=save">
+	  <input type="hidden" name="groupid" value="{$group.groupid}" />
+	  <table border="0" cellspacing="0" cellpadding="0" class="form-table">
+		<tr>
+		  <td width="90">{$lang.group.name}£º</td>
+		  <td><input name="newgroup[groupname]" type="text" class="textinput" id="groupname" style="width:240px;" value="{$group.groupname}" /></td>
+		</tr>
+		<tr>
+		  <td>{$lang.group.min}£º</td>
+		  <td><input name="newgroup[minexp]" type="text" class="textinput" id="minexp" style="width:240px;" value="{$group.minexp}" /></td>
+		</tr>
+		<tr>
+		  <td>{$lang.group.max}£º</td>
+		  <td><input name="newgroup[maxexp]" type="text" class="textinput" id="maxexp" style="width:240px;" value="{$group.maxexp}" /></td>
+		</tr>
+		<tr>
+		  <td>{$lang.group.allowpost}£º</td>
+		  <td>
+		  <input type="radio" name="newgroup[allowpost]" value="1"{if $group.allowpost==1} checked="checked"{/if} /> {$lang.yes}¡¡
+	      <input type="radio" name="newgroup[allowpost]" value="0"{if $group.allowpost==0} checked="checked"{/if} /> {$lang.no}
+		  </td>
+		</tr>
+		<tr>
+		  <td>{$lang.group.allowreply}£º</td>
+		  <td>
+		  <input type="radio" name="newgroup[allowreply]" value="1"{if $group.allowreply==1} checked="checked"{/if} /> {$lang.yes}¡¡
+	      <input type="radio" name="newgroup[allowreply]" value="0"{if $group.allowreply==0} checked="checked"{/if} /> {$lang.no}
+		  </td>
+		</tr>
+		<tr>
+		  <td>{$lang.group.allowupload}£º</td>
+		  <td>
+		  <input type="radio" name="newgroup[allowupload]" value="1"{if $group.allowupload==1} checked="checked"{/if} /> {$lang.yes}¡¡
+	      <input type="radio" name="newgroup[allowupload]" value="0"{if $group.allowupload==0} checked="checked"{/if} /> {$lang.no}
+		  </td>
+		</tr>
+		<tr>
+		  <td>{$lang.group.allowcontrib}£º</td>
+		  <td>
+		  <input type="radio" name="newgroup[allowcontrib]" value="1"{if $group.allowcontrib==1} checked="checked"{/if} /> {$lang.yes}¡¡
+	      <input type="radio" name="newgroup[allowcontrib]" value="0"{if $group.allowcontrib==0} checked="checked"{/if} /> {$lang.no}
+		  </td>
+		</tr>
+		<tr>
+		  <td>{$lang.remark}£º</td>
+		  <td><textarea name="newgroup[body]" id="body" style="width:500px; height:50px;">{$group.body}</textarea></td>
+		</tr>
+	  </table>
+	</form>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="SaveGroup()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{if $operation=='addnew'}{$lang.save}{else}{$lang.save_edit}{/if}</span></span>
+		<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	</div>
+</div>
+<script type="text/javascript">
+var grouptext = new Array();
+grouptext[0] = '{$lang.group.name_empty}';
+grouptext[1] = '{$lang.group.min_empty}';
+grouptext[2] = '{$lang.group.max_empty}';
+{literal}function SaveGroup(){
+	var theForm = document.usergroup;
+   if(!theForm.groupname.value){
+	  showError(grouptext[0]);
+	  return false;
+   }
+   if(!theForm.minexp.value){
+       showError(grouptext[1]);
+	   return false;
+   }
+   if(!theForm.maxexp.value){
+	  showError(grouptext[2])
+	  return false;
+   }
+   theForm.submit();
+   return true;
+}{/literal}
+</script>
+<!--{else}-->
+<div class="main-div">
+	<div class="pos-div">
+		<h2>{$lang.cp_home} &raquo; {$lang.group.manage} &raquo; {$lang.group.list}</h2>
+	</div>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="Drop('groupid[]')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+		<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.group.addnew}</span></span>
+		<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	</div>
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+		  <th width="20"><input type="checkbox" onclick="checkAll(this,'groupid[]')" /></th>
+		  <th width="15" class="tocenter">ID</th>
+		  <th width="200">{$lang.group.name}</th>
+		  <th width="60">{$lang.group.min}</th>
+		  <th width="60">{$lang.group.max}</th>
+		  <th class="last">{$lang.remark}</th>
+		</tr>
+		<!--{foreach from=$groups item=gg key=key}-->
+		<tr onmouseover="this.className='active'" onmouseout="this.className=''">
+		  <td><input type="checkbox" name="groupid[]" value="{$gg.groupid}" /></td>
+		  <td class="tocenter">{$gg.groupid}</td>
+		  <td><a href="{$adminscript}?action=usergroup&operation=edit&groupid={$gg.groupid}">{$gg.groupname}</a></td>
+		  <td><span title="{$lang.click_edit}" onclick="Edit(this,'operation=editmin&groupid={$gg.groupid}')">{$gg.minexp}</span></td>
+		  <td><span title="{$lang.click_edit}" onclick="Edit(this,'operation=editmax&groupid={$gg.groupid}')">{$gg.maxexp}</span></td>
+		  <td>{$gg.body}</td>
+		</tr>
+		<!--{/foreach}-->
+	  </table>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="Drop('groupid[]')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+		<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.group.addnew}</span></span>
+		<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	</div>
+</div>
+<!--{/if}-->

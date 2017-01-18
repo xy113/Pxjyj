@@ -1,0 +1,43 @@
+<div class="main-div">
+	<div class="pos-div">
+		<h2>$lang[cp_home] &raquo; 编辑管理员</h2>
+	</div>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#form1').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=admins&cid=$cid')"><span>刷新</span></b>
+	</div>
+	<form name="form1" id="form1" method="post" action="">
+	<input type="hidden" name="formsubmit" value="yes">
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+        <tr>
+          <th width="50"><input type="checkbox" class="checkbox" onClick="checkAll(this,'delete[]')"> 删?</th>
+          <th width="80">显示顺序</th>
+          <th width="180">用户名</th>
+          <th>管理级别</th>
+        </tr>
+		{loop $admins $member}
+        <tr>
+          <td><input type="checkbox" name="delete[]" value="$member[uid]"></td>
+          <td><input type="text" class="text text60" name="displayorder[{$member[uid]}]" value="$member[displayorder]"></td>
+          <td>$member[username]</td>
+          <td>$member[level]</td>
+        </tr>
+		{/loop}
+        <tr>
+          <td>新增:</td>
+          <td><input type="text" class="text text60" name="neworder" value="0"></td>
+          <td><input type="text" class="text text160" name="newusername"></td>
+          <td>
+		  	<select name="newgroupid">
+				<option value="1">系统管理员</option>
+				<option value="2" selected="selected">信息管理员</option>
+			</select>
+		  </td>
+        </tr>
+      </table>
+        </form>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#form1').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=admins&cid=$cid')"><span>刷新</span></b>
+	</div>
+</div>

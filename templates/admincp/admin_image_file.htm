@@ -1,0 +1,58 @@
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.image.manage} &raquo; {$image.title} &raquo; {$lang.image.upload}¡¡{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';Drop('fid[]','{$querystring}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';LoadPage('operation=localfile&{$querystring}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.localfile}</span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';LoadPage('operation=remotefile&{$querystring}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.remotefile}</span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';Location('{$adminscript}?action=image&cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.backgroups}</span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';Location('{$adminscript}?action=image&operation=addnew&cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.image.addnew}</span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';document.filelist.submit()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save_edit}</span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';LoadPage('{$querystring}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+<form method="post" name="filelist" action="{$adminscript}?action=imagefile&operation=modify&cid={$cid}&gid={$gid}&page={$page}">
+<table border="0" cellpadding="0" cellspacing="0" class="imagetable">
+	<tr>
+	    <td colspan="3">{$lang.select}£º
+		<a href="javascript:;" onclick="selectAll('fid[]',false)">{$lang.selectall}</a> - 
+		<a href="javascript:;" onclick="cancelAll('fid[]',false)">{$lang.noselect}</a> - 
+		<a href="javascript:;" onclick="reverseAll('fid[]',false)">{$lang.reverseselect}</a>
+		</td>
+	</tr>
+	<!--{foreach from=$files item=fl}-->
+	<tr>
+		<td width="30"><input type="checkbox" name="fid[]" value="{$fl.fid}" style="vertical-align:sub;" /></td>
+		<td class="thumbbox"><a href="{$fl.attachment}" target="_blank"><img src="{$fl.thumbnail}" title="{$lang.view}" border="0"></a></td>
+		<td valign="top">
+			<ul>
+				<li>{$lang.imagefile.filename}£º{$fl.filename}</li>
+				<li>{$lang.imagefile.time}£º{$fl.dateline|date_format:'%Y-%m-%d %H:%M:%S'}¡¡{$lang.image_size}£º{$fl.filesize}KB</li>
+				<li>{$lang.imagefile.description}£º</li>
+				<li><textarea name="description[]" style="width:300px; height:60px;">{$fl.description}</textarea><input type="hidden" name="fileid[]" value="{$fl.fid}" /></li>
+				<!--<li> <a href="javascript:;" onclick="DropOne({$fl.fid},'{$querystring}')">{$lang.drop}</a> <a href="{$adminscript}?action=imagefile&operation=edit&fid={$fl.fid}&{$querystring}">{$lang.edit}</a></li>-->
+			</ul>
+		</td>
+	</tr>
+	<!--{/foreach}-->
+	<tr>
+	    <td colspan="3">{$lang.select}£º
+		<a href="javascript:;" onclick="selectAll('fid[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onclick="cancelAll('fid[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onclick="reverseAll('fid[]')">{$lang.reverseselect}</a>
+		</td>
+	</tr>
+</table>
+</form>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';Drop('fid[]','{$querystring}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';LoadPage('operation=localfile&{$querystring}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.localfile}</span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';LoadPage('operation=remotefile&{$querystring}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.remotefile}</span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';Location('{$adminscript}?action=image&cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.backgroups}</span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';Location('{$adminscript}?action=image&operation=addnew&cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.image.addnew}</span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';document.filelist.submit()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save_edit}</span></span>
+	<span class="btn btn-dft" onclick="this.className='btn btn-active';LoadPage('{$querystring}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>

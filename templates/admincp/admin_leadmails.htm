@@ -1,0 +1,144 @@
+<!--{if $opration=='view'}-->
+<div class="main-div">
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveMail()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>回复</span></span>
+	<span class="btn btn-dft" onclick="Location('index.php?action=leadmail')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+  <form method="post" action="index.php?action=leadmail&opration=save" name="mail">
+  <input type="hidden" name="mid" value="{$mail.id}">
+  <input type="hidden" name="leadid" value="{$mail.leadid}">
+  <input type="hidden" name="subject" value="回复：{$mail.subject}">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="form-table">
+    <tr>
+      <td width="60">邮件标题：</td>
+      <td><strong>{$mail.subject}</strong></td>
+    </tr>
+    <tr>
+      <td>发 &#160;送 &#160;人：</td>
+      <td>{$mail.author}　发送时间：{$mail.dateline|date_format:'%Y-%m-%d %H:%M'}　IP：{$mail.postip}</td>
+    </tr>
+    <tr>
+      <td>电子邮件：</td>
+      <td>{$mail.mailfrom}　联系电话：{$mail.tel}</td>
+    </tr>
+    <tr>
+      <td>邮件内容：</td>
+      <td style="line-height:150%;">{$mail.message}</td>
+    </tr>
+	<tr><td colspan="2" style="border-top:3px #e2e2e2 solid; height:8px;"><strong>以下是回复内容:</strong></td></tr>
+	<!--{foreach from=$messages item=mm}-->
+    <tr>
+      <td>回 &#160;复&#160; 人：</td>
+      <td><span style="float:right; margin-right:20px;"><a href="javascript:;" onClick="if(confirm('此操作不能被撤销，您确定要删除吗?'))ListTable('action=view&opration=drop&did={$mm.did}&id={$mm.mid}&rid={$mm.id}')">删除</a></span>{$mm.author}　回复时间：{$mm.dateline|date_format:'%Y-%m-%d %H:%M'}　IP：{$mm.postip}</td>
+    </tr>
+    <tr>
+      <td>回复内容：</td>
+      <td style="line-height:150%;">{$mm.message}</td>
+    </tr>
+	<tr><td colspan="2" style="border-top:3px #e2e2e2 solid;"></td></tr>
+	<!--{/foreach}-->
+    <tr>
+      <td>回复内容：</td>
+      <td><textarea name="message" style="width:98%; height:200px;"></textarea></td>
+    </tr>
+  </table>
+  </form>
+  <div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveMail()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>回复</span></span>
+	<span class="btn btn-dft" onclick="Location('index.php?action=leadmail')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">　{$lang.ctrlenter}</span>
+	</div>
+</div>
+{literal}
+<script type="text/javascript">
+var hassubmited = false;
+function SaveMail(){
+	if(hassubmited) return false;
+	var theForm = document.mail;
+    if(!theForm.message.value){
+	   showError('回复内容不能留空。');
+	   return false;
+    }
+    hassubmited = true;
+    theForm.submit();
+    return true;
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveMail();
+	}
+}
+</script>
+{/literal}
+<!--{else}-->
+<div class="main-div">
+    <div class="pos-div">
+	     <h2>{$lang.cp_home} &#187; 政务管理 &#187; 领导信箱　{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+		 <div class="searchbox">
+		 	  <select name="leadid" id="leadid" onChange="ListTable('leadid='+this.value)">
+			  <option value="0">所有分类</option>
+			  <!--{foreach from=$leads item=cc}-->
+			  <option value="{$cc.leadid}"{if $cc.leadid==$leadid} selected="selected"{/if}>{$cc.title}--{$cc.name}</option>
+			  <!--{/foreach}-->
+			  </select>
+		      <input type="text" name="q" id="q" value="{$smarty.get.q}" class="textinput" style="width:145px;" />
+			  <span class="btn btn-dft" onclick="ListTable('leadid='+$('leadid').value+'&q='+$('q').value)" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.search}</span></span>
+		 </div>
+	</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onClick="Drop('id[]','{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onClick="LoadPage('{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+  <tr>
+    <th scope="col" width="20"><input type="checkbox" onClick="checkAll(this,'id[]')" /></th>
+    <th scope="col">标题</th>
+    <!--<th scope="col" width="100">所属领导</th> -->
+    <th scope="col" width="70">发送人</th>
+	<th scope="col" width="80">发送人IP</th>
+    <th scope="col" width="40" class="tocenter">已审核</th>
+    <th scope="col" width="40" class="tocenter">已回复</th>
+    <th scope="col" width="130" class="last">发送时间</th>
+  </tr>
+  <!--{foreach from=$mails item=mail}-->
+  <tr onMouseOver="this.className='active'" onMouseOut="this.className=''">
+    <td><input type="checkbox" name="id[]" value="{$mail.id}" onClick="checkThis(this)" /></td>
+    <td><a href="javascript:;" onClick="OpenMail({$mail.id})">{$mail.subject}</a></td>
+    <!--<td><a href="{$smarty.server.PHP_SELF}?leadid={$mail.leadid}">{$mail.title}-{$mail.name}</a></td> -->
+    <td>{$mail.author}</td>
+    <td>{$mail.postip}</td>
+    <td class="tocenter"><img src="images/{if $mail.audited==1}yes.gif{else}no.gif{/if}" onClick="toggle(this,'operation=toggle_audited&id={$mail.id}')" border="0" /></td>
+    <td class="tocenter"><img src="images/{if $mail.status==1}yes.gif{else}no.gif{/if}" border="0" /></td>
+    <td><span class="mdate">{$mail.dateline|date_format:'%Y-%m-%d %H:%M:%S'}</span></td>
+  </tr>
+  <!--{/foreach}-->
+  <tr>
+      <td colspan="7">{$lang.select}：
+		<a href="javascript:;" onClick="selectAll('id[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onClick="cancelAll('id[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onClick="reverseAll('id[]')">{$lang.reverseselect}</a> - 
+		<a href="javascript:;" onClick="ListTable('audited=0')">未审核</a> - 
+		<a href="javascript:;" onClick="ListTable('status=0')">未回复</a> -
+		<a href="javascript:;" onClick="ListTable('')">全部</a>
+	  </td>
+  </tr>
+</table>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onClick="Drop('id[]','{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onClick="LoadPage('{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+{literal}<script type="text/javascript">
+function OpenMail(id){
+	var sw=Math.floor((window.screen.width/2-320));
+    var sh=Math.floor((window.screen.height/2-280));
+	window.open(ADMINSCRIPT+'?action=leadmails&operation=view&id='+id,'dialog','Width=650,Height=550,toolbar=no,menubar=no,directories=no,top=80,left='+sw+',resizable=yes,scrollbars=yes,center=yes,help=no,alwaysRaised=yes,location=no, status=no',false);
+}
+</script>{/literal}
+<!--{/if}-->

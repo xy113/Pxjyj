@@ -1,0 +1,205 @@
+<!--{if $operation=='addnew'||$operation=='edit'}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.nav.manage} &raquo; {if $operation eq 'edit'}{$lang.nav.edit}{else}{$lang.nav.addnew}{/if}</h2>
+</div>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveNav()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+    <span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+</div>
+<form name="formnav" method="post" action="{$adminscript}?action=nav&operation=save">
+  <input type="hidden" name="id" value="{$nav.id}" />
+  <table border="0" cellspacing="0" cellpadding="0" class="form-table">
+    <tr>
+      <td height="10" colspan="2"></td>
+    </tr>
+    <tr>
+      <td width="60">{$lang.nav.father}£º</td>
+      <td>
+	     <select name="navnew[fid]" onchange="ChangePos(this.value)">
+		 <option value="0">{$lang.nav.first}</option>
+		 <!--{foreach from=$navs.top.0 item=nn}-->
+		 <option value="{$nn.id}"{if ($fid==$nn.id || $nav.fid==$nn.id)} selected="selected"{/if}>{$nn.title}</option>
+		 <!--{/foreach}-->
+		 <!--{foreach from=$navs.mid.0 item=nn}-->
+		 <option value="{$nn.id}"{if ($fid==$nn.id || $nav.fid==$nn.id)} selected="selected"{/if}>{$nn.title}</option>
+		 <!--{/foreach}-->
+		 <!--{foreach from=$navs.bot.0 item=nn}-->
+		 <option value="{$nn.id}"{if ($fid==$nn.id || $nav.fid==$nn.id)} selected="selected"{/if}>{$nn.title}</option>
+		 <!--{/foreach}-->
+		 </select>
+	  </td>
+    </tr>
+    <tr id="navpos"{if $fid>0 || $nav.fid>0} style="display:none;"{/if}>
+      <td>{$lang.nav.position}£º</td>
+      <td>
+		  <select name="navnew[position]" id="position">
+			<option value="top" {if $nav.position=='top'}selected="selected"{/if}>{$lang.nav.top}</option>
+			<option value="mid" {if $nav.position=='mid'}selected="selected"{/if}>{$lang.nav.mid}</option>
+			<option value="bot" {if $nav.position=='bot'}selected="selected"{/if}>{$lang.nav.bottom}</option>
+		  </select>
+      </td>
+    </tr>
+    <tr>
+      <td>{$lang.nav.name}£º</td>
+      <td><input name="navnew[title]" id="title" type="text" class="textinput" style="width:200px;" value="{$nav.title}" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.nav.link}£º</td>
+      <td><input name="navnew[url]" id="url" type="text" class="textinput" style="width:200px;" value="{$nav.url}" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.nav.order}£º</td>
+      <td><input name="navnew[ordernum]" id="ordernum" type="text" class="textinput" style="width:200px;" value="{$nav.ordernum}" /></td>
+    </tr>
+    <tr>
+      <td height="10" colspan="2"></td>
+  </tr>
+  </table>
+</form>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveNav()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+    <span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+</div>
+</div>
+<script type="text/javascript">
+var hassubmited = false;
+var Message = new Array();
+Message[0] = '{$lang.navtxt.0}';
+Message[1] = '{$lang.navtxt.1}';
+{literal}function SaveNav(){
+	if(hassubmited) return false;
+	var theForm = document.formnav;
+    if(!$("#title").val()){
+	    showError(Message[0]);
+	    return false;
+    }else if(!$("#url").val()){
+	    showError(Message[1]);
+	    return false;
+    }else{
+   		hassubmited = true;
+        theForm.submit();
+	    return true;
+    }
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveNav();
+	}
+}
+function ChangePos(val){
+	if(!val)val=0;
+	if(val>0){
+		$$("navpos").style.display='none';
+	}else{
+		$$("navpos").style.display='table-row';
+	}
+}{/literal}
+</script>
+<!--{else}-->
+<div class="main-div">
+	<div class="pos-div">
+		 <h2>{$lang.cp_home} &raquo; {$lang.nav.manage} &raquo; {$lang.nav.list}</h2>
+	</div>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="Drop('id[]')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+		<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.nav.addnew}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	</div>
+  	<table border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th width="30"><input type="checkbox"  onclick="checkAll(this,'id[]')" /></th>
+      <th width="160">{$lang.nav.name}</th>
+	  <th>{$lang.nav.link}</th>
+      <th width="60">{$lang.nav.position}</th>
+      <th width="30" class="tocenter">{$lang.sort}</th>
+      <th width="40" class="tocenter">{$lang.nav.newwindow}</th>
+      <th width="40" class="tocenter last">{$lang.display}</th>
+    </tr>
+	<!--{foreach from=$navs.top.0 item=nav}-->
+	<!--{assign var=subnav value=$nav.id}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox" name="id[]" value="{$nav.id}" onclick="checkThis(this)" /></td>
+      <td><a href="{$adminscript}?action=nav&operation=edit&id={$nav.id}"><b>{$nav.title}</b></a></td>
+      <td><span onclick="Edit(this,'operation=editurl&id={$nav.id}')">{$nav.url}</span></td>
+	  <td style="color:#0000FF;">{$lang.nav.top}</td>
+      <td class="tocenter"><span onclick="javascript:Edit(this,'operation=editorder&id={$nav.id}')">{$nav.ordernum}</span></td>
+	  <td class="tocenter"><img onclick="toggle(this,'operation=toggle_open&id={$nav.id}')" src="images/{if $nav.open}yes.gif{else}no.gif{/if}" border="0" /></td>
+      <td class="tocenter"><img onclick="toggle(this,'operation=toggle_display&id={$nav.id}')" src="images/{if $nav.display}yes.gif{else}no.gif{/if}" border="0" /></td>
+    </tr>
+	<!--{foreach from=$navs.sub.$subnav item=nn}-->
+	<tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox" name="id[]" value="{$nn.id}" onclick="checkThis(this)" /> </td>
+      <td>¡¡|-<a href="{$adminscript}?action=nav&operation=edit&id={$nn.id}">{$nn.title}</a></td>
+      <td><span onclick="Edit(this,'operation=editurl&id={$nn.id}')">{$nn.url}</span></td>
+	  <td style="color:#0000FF;">{$lang.nav.top}</td>
+      <td class="tocenter"><span onclick="javascript:Edit(this,'operation=editorder&id={$nn.id}')">{$nn.ordernum}</span></td>
+	  <td class="tocenter"><img onclick="toggle(this,'operation=toggle_open&id={$nn.id}')" src="images/{if $nn.open}yes.gif{else}no.gif{/if}" border="0" /></td>
+      <td class="tocenter"><img onclick="toggle(this,'operation=toggle_display&id={$nn.id}')" src="images/{if $nn.display}yes.gif{else}no.gif{/if}" border="0" /></td>
+    </tr>
+	<!--{/foreach}-->
+	<!--{/foreach}-->
+	<!--{foreach from=$navs.mid.0 item=nav}-->
+	<!--{assign var=subnav value=$nav.id}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox" name="id[]" value="{$nav.id}" onclick="checkThis(this)" /></td>
+      <td><a href="{$adminscript}?action=nav&operation=edit&id={$nav.id}"><b>{$nav.title}</b></a></td>
+      <td><span onclick="Edit(this,'operation=editurl&id={$nav.id}')">{$nav.url}</span></td>
+	  <td style="color:#ff0000;">{$lang.nav.mid}</td>
+      <td class="tocenter"><span onclick="javascript:Edit(this,'operation=editorder&id={$nav.id}')">{$nav.ordernum}</span></td>
+	  <td class="tocenter"><img onclick="toggle(this,'operation=toggle_open&id={$nav.id}')" src="images/{if $nav.open}yes.gif{else}no.gif{/if}" border="0" /></td>
+      <td class="tocenter"><img onclick="toggle(this,'operation=toggle_display&id={$nav.id}')" src="images/{if $nav.display}yes.gif{else}no.gif{/if}" border="0" /></td>
+    </tr>
+	<!--{foreach from=$navs.sub.$subnav item=nn}-->
+	<tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox" name="id[]" value="{$nn.id}" onclick="checkThis(this)" /></td>
+      <td>¡¡|-<a href="{$adminscript}?action=nav&operation=edit&id={$nn.id}">{$nn.title}</a></td>
+      <td><span onclick="Edit(this,'operation=editurl&id={$nn.id}')">{$nn.url}</span></td>
+	  <td style="color:#ff0000;">{$lang.nav.mid}</td>
+      <td class="tocenter"><span onclick="javascript:Edit(this,'operation=editorder&id={$nn.id}')">{$nn.ordernum}</span></td>
+	  <td class="tocenter"><img onclick="toggle(this,'operation=toggle_open&id={$nn.id}')" src="images/{if $nn.open}yes.gif{else}no.gif{/if}" border="0" /></td>
+      <td class="tocenter"><img onclick="toggle(this,'operation=toggle_display&id={$nn.id}')" src="images/{if $nn.display}yes.gif{else}no.gif{/if}" border="0" /></td>
+    </tr>
+	<!--{/foreach}-->
+	<!--{/foreach}-->
+	<!--{foreach from=$navs.bot.0 item=nav}-->
+	<!--{assign var=subnav value=$nav.id}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox" name="id[]" value="{$nav.id}" onclick="checkThis(this)" /></td>
+      <td><a href="{$adminscript}?action=nav&operation=edit&id={$nav.id}"><b>{$nav.title}</b></a></td>
+      <td><span onclick="Edit(this,'operation=editurl&id={$nav.id}')">{$nav.url}</span></td>
+	  <td style="color:#006600;">{$lang.nav.bottom}</td>
+      <td class="tocenter"><span onclick="javascript:Edit(this,'operation=editorder&id={$nav.id}')">{$nav.ordernum}</span></td>
+	  <td class="tocenter"><img onclick="toggle(this,'operation=toggle_open&id={$nav.id}')" src="images/{if $nav.open}yes.gif{else}no.gif{/if}" border="0" /></td>
+      <td class="tocenter"><img onclick="toggle(this,'operation=toggle_display&id={$nav.id}')" src="images/{if $nav.display}yes.gif{else}no.gif{/if}" border="0" /></td>
+    </tr>
+	<!--{foreach from=$navs.sub.$subnav item=nn}-->
+	<tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox" name="id[]" value="{$nn.id}" onclick="checkThis(this)" /></td>
+      <td>¡¡|-<a href="{$adminscript}?action=nav&operation=edit&id={$nn.id}">{$nn.title}</a></td>
+      <td><span onclick="Edit(this,'operation=editurl&id={$nn.id}')">{$nn.url}</span></td>
+	  <td style="color:#006600;">{$lang.nav.bottom}</td>
+      <td class="tocenter"><span onclick="javascript:Edit(this,'operation=editorder&id={$nn.id}')">{$nn.ordernum}</span></td>
+	  <td class="tocenter"><img onclick="toggle(this,'operation=toggle_open&id={$nn.id}')" src="images/{if $nn.open}yes.gif{else}no.gif{/if}" border="0" /></td>
+      <td class="tocenter"><img onclick="toggle(this,'operation=toggle_display&id={$nn.id}')" src="images/{if $nn.display}yes.gif{else}no.gif{/if}" border="0" /></td>
+    </tr>
+	<!--{/foreach}-->
+	<!--{/foreach}-->
+	<tr><td colspan="8">{$lang.select}:
+		<a href="javascript:;" onclick="selectAll('id[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onclick="cancelAll('id[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onclick="reverseAll('id[]')">{$lang.reverseselect}</a>
+	</td></tr>
+  	</table>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="Drop('id[]')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+		<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.nav.addnew}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	</div>
+</div>
+<!--{/if}-->

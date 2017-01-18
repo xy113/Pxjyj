@@ -1,0 +1,88 @@
+<div class="main-div">
+	<div class="pos-div">
+		<span class="searchbox">
+			<form name="search" id="search" method="get" action="$BASESCRIPT">
+			<input type="hidden" name="action" value="$action" />
+			<select name="cid">
+			<option value="0">所有栏目</option>
+			{if $admincp[adminid]==1}
+			{loop $categories[0] $cat}
+			<option value="$cat[cid]"{if $cid==$cat[cid]} selected="selected"{/if} class="bold">$cat[name]</option>
+			{loop $categories[$cat[cid]] $cc}
+			<option value="$cat[cid]"{if $cid==$cc[cid]} selected="selected"{/if}>|—$cc[name]</option>
+			{/loop}
+			{/loop}
+			{else}
+			{loop $categories $cat}
+			<option value="$cat[cid]"{if $cid==$cat[cid]} selected="selected"{/if}>$cat[name]</option>
+			{/loop}
+			{/if}
+			</select>
+			<input type="text" class="text text160" name="q" value="$q" />
+			<b class="button" tabindex="0" onclick="$('#search').submit()"><span>$lang[search]</span></b>
+			</form>
+		</span>
+		<h2>$lang[cp_home] &raquo; 文章管理 &raquo; 文章列表</h2>
+	</div>
+	<div class="toolbar">
+		<span class="pagebox">$pagelink</span>
+		<b class="button" tabindex="0" onclick="$('#articles').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onclick="LoadPage('operation=add&cid=$cid')"><span>添加文章</span></b>
+		<b class="button" tabindex="0" onclick="LoadPage()"><span>刷新</span></b>
+	</div>
+	<form method="post" name="articles" id="articles">
+		<input type="hidden" name="mod" id="mod" value="delete">
+		<input type="hidden" name="formsubmit" value="yes">
+		<input type="hidden" name="formhash" value="{FORMHASH}">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" class="list">
+		  <tr>
+			<th width="20"><input type="checkbox" onclick="checkAll(this,'id[]');" /></th>
+			<th width="15" class="tocenter"><img src="images/icon_view.gif" title="{$lang[view]}" border="0" width="16" height="16" /></th>
+			<th>文章标题</th>
+			<th width="100">所属分类</th>
+			<th width="50">{$lang[author]}</th>
+			<th width="30" class="tocenter">{$lang[comment]}</th>
+			<th width="40" class="tocenter">{$lang[audited]}</th>
+			<th width="30" class="tocenter">{$lang[recommend]}</th>
+			<th width="35" class="tocenter">{$lang[clicks]}</th>
+			<th width="120">{$lang[dateline]}</th>
+			<th width="40" class="last">选项</th>
+		</tr>
+	   <!--{loop $articles $arc}-->
+		<tr onmouseover="this.className='active'" onmouseout="this.className=''">
+			<td><input type="checkbox" name="id[]" value="{$arc[id]}" onclick="checkThis(this)" /></td>
+			<td class="tocenter"><a href="article.php?id=$arc[id]" target="_blank"><img src="images/icon_view.gif" title="{$lang[view]}" border="0" width="16" height="16" /></a></td>
+			<td><a href="article.php?id=$arc[id]" target="_blank">{$arc[title]}</a></td>
+			<td>{$arc[name]}</td>
+			<td>{$arc[author]}</td>
+			<td class="tocenter">{$arc[comments]}</td>
+			<td class="tocenter"><img src="images/{if $arc[audited]}yes.gif{else}no.gif{/if}" border="0" onclick="toggle(this,'operation=toggle_audit&id=$arc[id]')" /></td>
+			<td class="tocenter"><img src="images/{if $arc[recommend]}yes.gif{else}no.gif{/if}" border="0" onclick="toggle(this,'operation=toggle_recommend&id=$arc[id]')" /></td>
+			<td class="tocenter">{$arc[views]}</td>
+			<td>$arc[pubtime]</td>
+			<td><a href="$BASESCRIPT?action=$action&operation=edit&id=$arc[id]">$lang[edit]</a></td>
+		</tr>
+		<!--{/loop}-->
+		<tr>
+			<td colspan="11">
+                <input type="checkbox" name="id[]" value="0" onclick="checkAll(this,'id[]');" />
+                <a href="javascript:;" onclick="selectAll('id[]')">{$lang[selectall]}</a> 
+                <input type="radio" name="mod" value="delete" checked="checked" /> 删除
+                <input type="radio" name="mod" value="recommend" /> 推荐
+                <input type="radio" name="mod" value="unrecommend" /> 取消推荐
+                <input type="radio" name="mod" value="audited" /> 通过审核
+                <input type="radio" name="mod" value="unaudited" /> 取消审核
+			</td>
+		</tr>
+		</table>
+    </form>
+	<div class="toolbar">
+		<span class="pagebox">$pagelink</span>
+		<b class="button" tabindex="0" onclick="$('#articles').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onclick="LoadPage('operation=add&cid=$cid')"><span>添加文章</span></b>
+		<b class="button" tabindex="0" onclick="LoadPage()"><span>刷新</span></b>
+	</div>
+</div>
+<script type="text/javascript">
+$(".ss").click(function(){$(this).find('ul').show();}).mouseleave(function(){$(this).find('ul').hide();});
+</script>

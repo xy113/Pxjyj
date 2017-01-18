@@ -1,0 +1,47 @@
+<div class="main-div">
+    <div class="pos-div">
+	     <h2>{$lang.cp_home} &raquo; 讨论区管理 &raquo; 主题管理 &raquo; 主题列表　{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+		 <div class="searchbox">
+		 	  <select name="fid" id="fid" onChange="ListTable('fid='+this.value)">
+			  <option value="0">所有板块</option>
+			  <!--{foreach from=$forums item=ff}-->
+			  <option value="{$ff.fid}" {if $ff.current} selected="selected" {/if}>{$ff.fname}</option>
+			  <!--{/foreach}-->
+			  </select>
+		      <input type="text" name="q" id="q" value="{$smarty.get.q}" class="textinput" style="width:145px;" />
+			  <span class="btn btn-dft" onClick="ListTable('fid='+$('fid').value+'&q='+$('q').value)" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOver="this.className='btn btn-hover'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span>{$lang.search}</span></span>
+		 </div>
+	</div>
+	<div class="toolbar">
+		<span class="pagebox">{$pagelink}</span>
+		<span class="btn btn-dft" onClick="Drop('tid[]','{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'"><span><b>{$lang.drop}</b></span></span>
+		<span class="btn btn-dft" onClick="LoadPage('{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'"><span>{$lang.refresh}</span></span>
+	</div>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th scope="col" width="20"><input type="checkbox" onClick="checkAll(this,'tid[]')"></th>
+      <th scope="col" width="20"><img src="images/icon_view.gif" border="0" width="16" height="16"></th>
+      <th scope="col">标题</th>
+      <th scope="col" width="100">所属板块</th>
+      <th scope="col" width="60">发布人</th>
+      <th scope="col" width="40" class="tocenter">已审核</th>
+      <th scope="col" width="140" class="last">发布时间</th>
+    </tr>
+	<!--{foreach from=$threads item=tt}-->
+    <tr onMouseOver="this.className='active'" onMouseOut="this.className=''">
+      <td><input type="checkbox" name="tid[]" value="{$tt.tid}" onClick="checkThis(this)"></td>
+	  <td><a href="thread.php?tid={$tt.tid}" target="_blank"><img src="images/icon_view.gif" title="浏览" border="0" width="16" height="16"></a></td>
+      <td><a href="thread.php?tid={$tt.tid}" target="_blank">{$tt.subject}</a></td>
+      <td><a href="{$adminscript}?action=thread&fid={$qq.fid}">{$tt.fname}</a></td>
+      <td>{$tt.author}</td>
+      <td class="tocenter"><img src="images/{if $tt.audited==1}yes.gif{else}no.gif{/if}" border="0" onClick="toggle(this,'operation=toggle_audited&tid={$tt.tid}')"></td>
+      <td><span class="mdate">{$tt.dateline|date_format:'%Y-%m-%d %H:%M:%S'}</span></td>
+    </tr>
+	<!--{/foreach}-->
+  </table>
+  	<div class="toolbar">
+		<span class="pagebox">{$pagelink}</span>
+		<span class="btn btn-dft" onClick="Drop('tid[]','{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'"><span><b>{$lang.drop}</b></span></span>
+		<span class="btn btn-dft" onClick="LoadPage('{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'"><span>{$lang.refresh}</span></span>
+	</div>
+</div>

@@ -1,0 +1,117 @@
+<!--{if $operation=='addnew'||$operation=='edit'}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.flink.manage} &raquo; {if $operation eq 'edit'}{$lang.flink.edit}{else}{$lang.flink.addnew}{/if}</h2>
+</div>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="SaveLink()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+</div>
+<form name="flink" method="post" action="{$adminscript}?action=friendlink&operation=save">
+  <input type="hidden" name="id" value="{$flink.id}" />
+  <table border="0" cellpadding="0" cellspacing="0" align="center" class="form-table">
+    <tr>
+      <td width="70">{$lang.flink.name}£º</td>
+      <td><input name="flinknew[sitename]" id="sitename" type="text" class="textinput" value="{$flink.sitename}" style="width:400px;" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.flink.url}£º</td>
+      <td><input name="flinknew[siteurl]" id="siteurl" type="text" class="textinput" value="{$flink.siteurl}" style="width:400px;" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.flink.logo}£º</td>
+      <td>
+	      <input name="flinknew[logo]" id="logo" type="text"  class="textinput" value="{$flink.logo}" style="width:400px;" />
+		  <span class="btn btn-dft" onclick="OpenDialog('logo')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.upload}</span></span>
+	  </td>
+    </tr>
+    <tr>
+      <td>{$lang.flink.description}£º</td>
+      <td><textarea name="flinknew[description]" id="description" style="width:480px; height:50px;">{$flink.description}</textarea></td>
+    </tr>
+  </table>
+</form>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="SaveLink()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+</div>
+</div>
+<script type="text/javascript">
+var hassubmited = false;
+var Message = new Array();
+Message[0] = '{$lang.flinktxt.0}';
+Message[1] = '{$lang.flinktxt.1}';
+{literal}function SaveLink(){
+	if(hassubmited) return false;
+	var theForm = document.flink;
+	if(!$("#sitename").val()){
+		showError(Message[0]);
+		return false;
+	}
+	if(!$("#siteurl").val()){
+		showError(Message[1]);
+		return false;
+	}
+	hassubmited = true;
+	theForm.submit();
+	return true;
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveLink();
+	}
+}
+</script>{/literal}
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.flink.manage} &raquo; {$lang.flink.list}¡¡{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('id[]','page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.flink.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+<table border="0" align="center" cellpadding="0" cellspacing="0" class="list">
+  <tr>
+    <th width="15"><input type="checkbox" onclick="checkAll(this,'id[]')" /></td>
+	<th width="15"><img src="images/icon_view.gif" border="0" width="16" height="16" /></th>
+    <th width="150" style="cursor:pointer;" title="{$lang.click_resort}" onclick="ListTable('page={$page}')">{$lang.flink.name}</td>
+    <th width="200">{$lang.flink.url}</td>
+    <th width="30" class="tocenter">{$lang.display}</td>
+    <th width="50" style="text-align:center;cursor:pointer;" title="{$lang.click_resort}" onclick="ListTable('page={$page}')">{$lang.sort}</td>
+    <th class="last">{$lang.description}</td>
+  </tr>
+  <!--{foreach from=$friendlinks item=flink}-->
+  <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+    <td><input type="checkbox" name="id[]" value="{$flink.id}" onclick="checkThis(this)" /></td>
+	<td><a href="{$flink.siteurl}" target="_blank"><img src="images/icon_view.gif" border="0" width="16" height="16" /></a></td>
+    <td><a href="{$adminscript}?action=friendlink&operation=edit&id={$flink.id}">{$flink.sitename}</a></td>
+    <td><span title="{$lang.click_edit}" onclick="Edit(this,'operation=edit_url&id={$flink.id}');">{$flink.siteurl}</span></td>
+    <td class="tocenter"><img src="images/{if $flink.display==1}yes.gif{else}no.gif{/if}" title="{$lang.click_switch}" onclick="toggle(this,'operation=toggle_display&id={$flink.id}');" /></td>
+    <td class="tocenter"><span title="{$lang.click_edit}" onclick="Edit(this,'operation=edit_order&id={$flink.id}');">{$flink.displayorder}</span></td>
+    <td><span title="{$lang.click_edit}" onclick="Edit(this,'operation=edit_description&id={$flink.id}');">{$flink.description}</span></td>
+  </tr>
+  <!--{/foreach}-->
+  <tr>
+      <td colspan="7">{$lang.select}£º
+		<a href="javascript:;" onclick="selectAll('id[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onclick="cancelAll('id[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onclick="reverseAll('id[]')">{$lang.reverseselect}</a>
+	 </td>
+  </tr>
+</table>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('id[]','page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.flink.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<!--{/if}-->

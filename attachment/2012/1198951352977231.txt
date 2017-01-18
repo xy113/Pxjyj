@@ -1,0 +1,14 @@
+ Link encap:Ethernet  HWaddr 00:26:B9:8D:A2:6A
+          inet addr:220.194.47.115  Bcast:220.194.47.127  Mask:255.255.255.128
+          inet6 addr: fe80::226:b9ff:fe8d:a26a/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:173616220 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:229164996 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:4202682821 (3.9 GiB)  TX bytes:3785917621 (3.5 GiB)
+          Interrupt:169 Memory:da000000-da012800
+
+
+echo '220.194.47.1 00:17:5A:23:1E:C9' > /etc/ip-mac
+echo 'arp -f /etc/ip-mac' >> /etc/rc.d/rc.local
+arp -f /etc/ip-mac

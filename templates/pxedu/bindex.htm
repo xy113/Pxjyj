@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>部门通知_{$config[sysname]}</title>
+<meta name="keywords" content="{$config[keywords]}" />
+<meta name="description" content="{$config[description]}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+<script src="static/js/jquery.js" type="text/javascript"></script>
+<script src="static/js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+{template header2}  
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position">您现在的位置 > <a href="index.php">网站首页</a> > 部门通知</span>
+</div>
+<div class="blank"></div>
+<div class="area">
+	{template left2}
+	<div class="bodyright" id="arclist" style="height:auto;">
+		<div class="title-green">
+			<span class="menu">部门通知</span> 
+		</div>
+		<div class="thebranches"> 
+		{loop $branches[1] $bb}
+		<a href="#{$bb[branchname]}">[{$bb[branchname]}]</a>
+		{/loop}
+		<div class="clear"></div>
+		</div>
+		{loop $branches[1] $branch}
+		<a name="$branch[branchname]"></a>
+		<h3 class="thebranchname"><span><a href="blist.php?branchid=$branch[branchid]">更多>></a></span>$branch[branchname]</h3>
+		<ul style="padding:0 15px 10px 15px;">
+			{loop $articles[$branch[branchid]] $arc}
+			{eval $arc[dateline]=date('Y-m-d H:i',$arc[dateline])}
+			<li><span class="dateline">$arc[dateline]</span><a href="barticle.php?aid={$arc[aid]}" target="_blank">{$arc[title]}</a></li>
+			{/loop}
+		</ul>
+		{/loop}
+   	</div>
+	<div class="clear"></div>
+</div>
+
+<div class="adv0"><img src="images/adv5.png" border="0" /></div>
+{template footer2}

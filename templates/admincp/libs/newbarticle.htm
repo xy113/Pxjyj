@@ -1,0 +1,150 @@
+<div class="main-div">
+    <div class="pos-div">
+	     <h2>{$lang.cp_home} &raquo; {$lang.article.manage} &raquo; {if $operation=='addnew'}{$lang.article.addnew}{else}{$lang.article.edit}{/if}</h2>
+	</div>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="SaveArticle()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+		<!--{if $operation=='edit'}-->
+		<span class="btn btn-dft" onclick="DropOne({$article.id},'cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.drop}</span></span>
+		<!--{/if}-->
+		<span class="btn btn-dft" onclick="LoadPage('cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload();" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	    <span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+	</div>
+	<form action="{$adminscript}?action=brancharticles&operation=save" method="post" name="article">
+	<input type="hidden" name="aid" value="{$article.aid}" />
+	<table cellspacing="0" cellpadding="0" class="form-table">
+		<tr>
+			<td width="65">{$lang.article.title}£º</td>
+		    <td><input name="articlenew[title]" type="text" class="textinput" id="article_title" style="width:400px;" tabindex="5" value="{$article.title}" maxlength="60" /></td>
+		</tr>
+	    <tr>
+		  <td>{$lang.article.tag}£º</td>
+		  <td><input name="articlenew[tags]" type="text" class="textinput" id="article_tags" style="width:400px;" tabindex="5" value="{$article.tags}" maxlength="50" /></td>
+		</tr>
+		{if $isfounder || $admincp.cpgroupid==1}
+		<tr>
+		  <td>ËùÊô²¿ÃÅ£º</td>
+		  <td>
+			<select name="articlenew[bid]" id="article_bid" onchange="LoadCategory(this.value)">
+				<!--{foreach from=$branches item=bb}-->
+				<option value="{$bb.bid}" {if $bb.current} selected="selected"{/if}>{$bb.bname}</option>
+				<!--{/foreach}-->
+			</select>¡¡
+		  </td>
+		</tr>
+		<tr>
+		  <td>{$lang.article.category}£º</td>
+		  <td>
+			<select name="articlenew[cid]" id="article_cid">
+				<!--{foreach from=$categories item=cc}-->
+				<option value="{$cc.cid}" {if $cc.current} selected="selected"{/if}{if $cc.disabled==1} disabled="disabled"{/if}>{$cc.name}</option>
+				<!--{/foreach}-->
+			</select>¡¡
+			{$lang.article.source}£º
+		    <input name="articlenew[source]" type="text" class="textinput" id="article_source" style="width:75px;" value="{$article.source}" />
+			  <select name="selectf" onchange="article_source.value=this.value">
+			   <option value="">{$lang.please_select}..</option>
+               <!--{foreach from=$sources item=ss}-->
+			   <option value="{$ss.sitename}"> {$ss.sitename}</option>
+               <!--{/foreach}-->
+			</select>
+		  </td>
+		</tr>
+		{else}
+		<tr>
+		  <td>{$lang.article.category}£º</td>
+		  <td>
+			<select name="articlenew[cid]" id="article_cid">
+				<!--{foreach from=$categories item=cc}-->
+				<option value="{$cc.cid}" {if $cc.current} selected="selected"{/if}{if $cc.disabled==1} disabled="disabled"{/if}>{$cc.name}</option>
+				<!--{/foreach}-->
+			</select>¡¡
+			{$lang.article.source}£º
+		    <input name="articlenew[source]" type="text" class="textinput" id="article_source" style="width:75px;" value="{$article.source}" />
+			  <select name="selectf" onchange="article_source.value=this.value">
+			   <option value="">{$lang.please_select}..</option>
+               <!--{foreach from=$sources item=ss}-->
+			   <option value="{$ss.sitename}"> {$ss.sitename}</option>
+               <!--{/foreach}-->
+			</select>
+		  </td>
+		</tr>
+		{/if}
+		<tr>
+		  <td>{$lang.article.image}£º</td>
+		  <td>
+			<input name="articlenew[image]" class="textinput" type="text" id="article_image" style="width:400px;" value="{$article.image}" tabindex="5" /> 	
+			<span class="btn btn-dft" onclick="OpenDialog('article_image')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.upload}</span></span> 
+		  </td>
+       </tr>
+		  <tr>
+			<td>{$lang.article.summary}£º</td>
+			<td><textarea name="articlenew[summary]" id="article_summary" style="width:98%; height:100px;" tabindex="5">{$article.summary}</textarea></td>
+		  </tr>
+		 <!-- <tr>
+			<td colspan="2">
+				{$lang.article.autopage}£º<input name="articlenew[autopage]" type="checkbox" id="article_autopage" style="vertical-align:middle;" value="1" checked="checked"{if $article.autopage==1}{/if} />¡¡
+				{$lang.article.pagesize}£º<input name="articlenew[pagesize]" type="text" class="textinput" id="article_pagesize" style="width:60px;" value="{if $operation=='addnew'}5000{else}{$article.pagesize}{/if}" />
+			</td>
+		  </tr> -->
+		  <tr>
+		  	<td colspan="2">{$fckeditor}</td>
+		  </tr>
+		  <tr>
+			<td colspan="2">
+			   <input name="articlenew[allowcomment]" type="checkbox" value="1"{if $article.allowcomment} checked="checked"{/if} /> 
+			   {$lang.allowcomment}¡¡
+			   <input name="articlenew[allowvote]" type="checkbox" value="1"{if $article.allowvote} checked="checked"{/if} /> 
+			   {$lang.allowvote}¡¡
+			   <input name="articlenew[recommend]" type="checkbox" value="1" checked="checked" /> 
+			   {$lang.setrecommend}¡¡
+			   <input name="articlenew[audited]" type="checkbox" value="1" checked="checked" /> 
+			   {$lang.passaudited}¡¡
+			</td>
+		  </tr>
+		</tr>
+    </table>
+    </form>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="SaveArticle()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+		<!--{if $operation=='edit'}-->
+		<span class="btn btn-dft" onclick="DropOne({$article.id},'cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.drop}</span></span>
+		<!--{/if}-->
+		<span class="btn btn-dft" onclick="LoadPage('cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload();" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	    <span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+	</div>
+</div>
+<script type="text/javascript">
+var hassubmited = false;
+var Message = new Array();
+Message[0] = '{$lang.articletxt.0}';
+Message[1] = '{$lang.articletxt.1}';
+{literal}function SaveArticle(){ 
+	if(hassubmited) return false;
+	var theForm = document.article;
+	if(!$("#article_title").val()){
+		showError(Message[0]);
+		return false;
+	}  
+	if(!$("#article_source").val()){
+		showError(Message[1]);
+		return false;
+	}
+	hassubmited = true;
+	theForm.submit();
+}
+window.document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveArticle();
+	   return false;
+	}
+}
+function LoadCategory(bid){
+	$.get(url+"&operation=loadcategory&bid="+bid,function(response){
+		$("#article_cid").html(response);
+	})
+}
+</script>{/literal}

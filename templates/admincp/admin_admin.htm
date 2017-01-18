@@ -1,0 +1,288 @@
+<!--{if $operation=='addnew'}-->
+<div class="main-div">
+<div class="pos-div">
+	<h2>{$lang.cp_home} &raquo; {$lang.admin.manage} &raquo; {$lang.admin.addnew}</h2>
+</div>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="SaveAdmin()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+<form action="{$adminscript}?action=admin&operation=save" method="post" name="admin" style="margin:10px 0px;">
+<input type="hidden" name="adminid" value="0" /> 
+<table border="0" cellspacing="0" cellpadding="0" class="form-table">
+  <tr>
+	<td width="100">{$lang.admin.account}：</td>
+	<td><input name="adminnew[admin]" id="admin" type="text" class="textinput" style="width:220px;" onblur="checkValue(this.value,'operation=checkadmin','{$lang.admin_exists}')"/></td>
+  </tr>
+  <tr>
+	<td>{$lang.admin.password}：</td>
+	<td><input name="adminnew[password]" id="password" type="password" class="textinput" style="width:220px;" /></td>
+  </tr>
+  <tr>
+	<td>{$lang.admin.password2}：</td>
+	<td><input name="password2" id="password2" type="password" class="textinput" style="width:220px;" /></td>
+  </tr>
+    <tr>
+	<td>{$lang.admin.im}：</td>
+	<td><input name="adminnew[adminim]" id="adminim" type="text" class="textinput" style="width:220px;" /></td>
+  </tr>
+  <tr>
+    <td>{$lang.admin.cpgroup}：</td>
+    <td>
+	<select name="adminnew[cpgroupid]" id="cpgroupid" style="width:233px;">
+		<!--{foreach from=$admingroups item=group}-->
+      	<option value="{$group.cpgroupid}"{if $group.current} selected="selected"{/if}>{$group.cpgroupname}</option>
+	  	<!--{/foreach}-->
+    </select>	
+    </td>
+  </tr>
+  <tbody id="categories" style="display:none;">
+  <tr>
+    <td>所属板块：</td>
+    <td>
+	<select name="adminnew[catid]" id="branchid">
+		<option value="0">不指定</option>
+		<!--{foreach from=$categories.0 item=cat}-->
+      	<option value="{$cat.cid}"{if $cat.current} selected="selected"{/if} style="font-weight:bold;">{$cat.name}</option>
+		<!--{assign var=sub value=$cat.cid}-->
+		<!--{foreach from=$categories.$sub item=cc}-->
+		<option value="{$cc.cid}"{if $cc.current} selected="selected"{/if}>|－{$cc.name}</option>
+		<!--{/foreach}-->
+	  	<!--{/foreach}-->
+    </select>	
+    </td>
+  </tr>
+  </tbody>
+  <tbody id="branches" style="display:none;">
+  <tr>
+    <td>所属部门：</td>
+    <td>
+	<select name="adminnew[branchid]" id="branchid">
+		<option value="0">不指定</option>
+		<!--{foreach from=$branches item=bb}-->
+      	<option value="{$bb.bid}"{if $bb.current} selected="selected"{/if}>{$bb.bname}</option>
+	  	<!--{/foreach}-->
+    </select>	
+    </td>
+  </tr>
+  </tbody>
+</table>
+</form>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="SaveAdmin()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+</div>
+<script type="text/javascript">
+var admintxt = new Array();
+admintxt[0] = '{$lang.admintxt.0}';
+admintxt[1] = '{$lang.admintxt.1}';
+admintxt[2] = '{$lang.admintxt.2}';
+var hassubmited = false;
+{literal}function SaveAdmin(){
+	var theForm = document.admin;
+	if(hassubmited)return false;
+   	if(!$("#admin").val()){
+        showError(admintxt[0]);
+	    return false;
+   	}
+   	var password = $("#password").val();
+	if(password.length<5||password.length>16){
+	     showError(admintxt[2]);
+		 return false;
+	}
+   	hassubmited = true;
+   	theForm.submit();
+   	return true;
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveAdmin();
+	}
+}
+$("#cpgroupid").change(function(){
+	if(this.value==2){
+		$("#categories").show();
+		$("#branches").hide();
+	}else if(this.value==3){
+		$("#categories").hide();
+		$("#branches").show();
+	}else{
+		$("#categories").hide();
+		$("#branches").hide();
+	}
+})
+</script>
+{/literal}
+<!--{elseif $operation=='edit'}-->
+<div class="main-div">
+<div class="pos-div">
+	<h2>{$lang.cp_home} &raquo; {$lang.admin.manage} &raquo; {$lang.admin.edit}</h2>
+</div>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="SaveAdmin()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+<form action="{$adminscript}?action=admin&operation=modify" method="post" name="admin" style="margin:10px 0px;">
+<input type="hidden" name="adminid" value="{$admin.adminid}" />  
+<table border="0" cellspacing="0" cellpadding="0" class="form-table">
+  <tr>
+	<td width="100">{$lang.admin.account}：</td>
+	<td><b>{$admin.admin}</b></td>
+  </tr>
+  <tr>
+	<td>{$lang.admin.password}：</td>
+	<td><input name="adminnew[password]" id="password" type="password" class="textinput" style="width:220px;" /></td>
+  </tr>
+  <tr>
+	<td>{$lang.admin.password2}：</td>
+	<td><input name="password2" id="password2" type="password" class="textinput" style="width:220px;" /></td>
+  </tr>
+    <tr>
+	<td>{$lang.admin.im}：</td>
+	<td><input name="adminnew[adminim]" id="adminim" type="text" class="textinput" value="{$admin.adminim}" style="width:220px;" /></td>
+  </tr>
+  <!--{if !$isfounder}-->
+  <tr>
+    <td>{$lang.admin.cpgroup}：</td>
+    <td>
+	<select name="adminnew[cpgroupid]" id="cpgroupid">
+		<!--{foreach from=$admingroups item=group}-->
+      	<option value="{$group.cpgroupid}"{if $group.current} selected="selected"{/if}>{$group.cpgroupname}</option>
+	  	<!--{/foreach}-->
+    </select>	
+    </td>
+  </tr>
+  <!--{/if}-->
+ <tbody id="categories"{if !$admin.catid} style="display:none;"{/if}>
+  <tr>
+    <td>所属板块：</td>
+    <td>
+	<select name="adminnew[catid]" id="branchid">
+		<option value="0">不指定</option>
+		<!--{foreach from=$categories.0 item=cat}-->
+      	<option value="{$cat.cid}"{if $cat.current} selected="selected"{/if} style="font-weight:bold;">{$cat.name}</option>
+		<!--{assign var=sub value=$cat.cid}-->
+		<!--{foreach from=$categories.$sub item=cc}-->
+		<option value="{$cc.cid}"{if $cc.current} selected="selected"{/if}>|－{$cc.name}</option>
+		<!--{/foreach}-->
+	  	<!--{/foreach}-->
+    </select>	
+    </td>
+  </tr>
+  </tbody>
+  <tbody id="branches"{if !$admin.branchid} style="display:none;"{/if}>
+  <tr>
+    <td>所属部门：</td>
+    <td>
+	<select name="adminnew[branchid]" id="branchid">
+		<option value="0">不指定</option>
+		<!--{foreach from=$branches item=bb}-->
+      	<option value="{$bb.bid}"{if $bb.current} selected="selected"{/if}>{$bb.bname}</option>
+	  	<!--{/foreach}-->
+    </select>	
+    </td>
+  </tr>
+  </tbody>
+</table>
+</form>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="SaveAdmin()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+</div>
+{literal}<script type="text/javascript">
+var hassubmited = false;
+function SaveAdmin(){
+	var theForm = document.admin;
+	if(hassubmited)return false;
+    hassubmited = true;
+    theForm.submit();
+    return true;
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveAdmin();
+	}
+}
+$("#cpgroupid").change(function(){
+	if(this.value==2){
+		$("#categories").show();
+		$("#branches").hide();
+	}else if(this.value==3){
+		$("#categories").hide();
+		$("#branches").show();
+	}else{
+		$("#categories").hide();
+		$("#branches").hide();
+	}
+})
+</script>{/literal}
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.admin.manage} &raquo; {$lang.admin.list}　{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+	 <div class="searchbox">
+		 <select name="cpgroupid" id="cpgroupid" onchange="ListTable('cpgroupid='+this.value)">
+		 	<option value="0">{$lang.cpgroup.all}</option>
+			<!--{foreach from=$admingroups item=group}-->
+			<option value="{$group.cpgroupid}"{if $group.current} selected="selected"{/if}>{$group.cpgroupname}</option>
+			<!--{/foreach}-->
+		</select>
+		<input type="text" name="q" id="q" value="{$smarty.get.q}" class="textinput" style="width:145px;" />
+		<span class="btn btn-dft" onclick="ListTable('cpgroupid='+$('#cpgroupid').val()+'&q='+$('#q').val())" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.search}</span></span>
+	 </div>
+</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('adminid[]','cpgroupid={$cpgroupid}&page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew&cpgroupid={$cpgroupid}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.admin.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('cpgroupid={$cpgroupid}&page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+<table border="0" cellpadding="0" cellspacing="0" class="list">
+  <tr>
+    <th width="20"><input type="checkbox" onclick="checkAll(this,'adminid[]')" /></th>
+    <th>{$lang.admin.account}</th>
+	<th width="100">{$lang.admin.cpgroup}</th>
+	<th width="100">所属板块</th>
+	<th width="100">所属部门</th>
+    <th width="140">{$lang.admin.lastlogin}</th>
+    <th width="60">{$lang.admin.logintimes}</th>
+    <th width="90" class="last">{$lang.admin.loginip}</th>
+  </tr>
+  <!--{foreach from=$admins item=cc}-->
+  <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+    <td>{if !$cc.founder}<input type="checkbox" name="adminid[]" value="{$cc.adminid}" onclick="checkThis(this)" />{/if}</td>
+    <td><a href="{$adminscript}?action=admin&operation=edit&adminid={$cc.adminid}">{$cc.admin}</a></td>
+	<td>{$cc.cpgroupname}</td>
+	<td>{$cc.cname}</td>
+	<td>{$cc.bname}</td>
+    <td>{$cc.lastlogin|date_format:'%Y-%m-%d %H:%M:%S'}</td>
+    <td>{$cc.logintimes}</td>
+    <td>{$cc.lastip}</td>
+  </tr>
+  <!--{/foreach}-->
+  <tr><td colspan="6">{$lang.select}:
+		<a href="javascript:;" onclick="selectAll('adminid[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onclick="cancelAll('adminid[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onclick="reverseAll('adminid[]')">{$lang.reverseselect}</a>
+	</td></tr>
+</table>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('adminid[]','cpgroupid={$cpgroupid}&page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew&cpgroupid={$cpgroupid}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.admin.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('cpgroupid={$cpgroupid}&page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<!--{/if}-->

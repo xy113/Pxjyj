@@ -1,0 +1,36 @@
+<script type="text/javascript">
+				$(function() {
+				$('#custom_file_upload').uploadify({
+  'uploader'       : '/uploadify/uploadify.swf',
+  'script'         : '/uploadify/uploadify.php',
+  'cancelImg'      : '/uploadify/cancel.png',
+  'folder'         : '/uploads',
+  'multi'          : true,
+  'auto'           : true,
+  'fileExt'        : '*.jpg;*.gif;*.png',
+  'fileDesc'       : 'Image Files (.JPG, .GIF, .PNG)',
+  'queueID'        : 'custom-queue',
+  'queueSizeLimit' : 3,
+  'simUploadLimit' : 3,
+  'sizeLimit'   : 102400,
+  'removeCompleted': false,
+  'onSelectOnce'   : function(event,data) {
+      $('#status-message').text(data.filesSelected + ' files have been added to the queue.');
+    },
+  'onAllComplete'  : function(event,data) {
+      $('#status-message').text(data.filesUploaded + ' files uploaded, ' + data.errors + ' errors.');
+    }
+});				});
+				</script>
+
+<script type="text/javascript">
+				$(function() {
+				$('#file_upload').uploadify({
+  'uploader'  : '/uploadify/uploadify.swf',
+  'script'    : '/uploadify/uploadify.php',
+  'cancelImg' : '/uploadify/cancel.png',
+  'folder'    : '/uploads',
+  'removeCompleted' : true,
+  'sizeLimit'   : 102400
+});				});
+				</script>

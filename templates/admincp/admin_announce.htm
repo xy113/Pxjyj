@@ -1,0 +1,99 @@
+<!--{if $operation=='addnew'||$operation=='edit'}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.announce.manage} &raquo; {if $operation eq 'edit'}{$lang.announce.edit}{else}{$lang.announce.addnew}{/if}</h2>
+</div>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="SaveMessage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+  <form name="message" method="post" action="{$adminscript}?action=announce&operation=save">
+    <input type="hidden" name="id" value="{$announce.id}" />
+    <table border="0" cellspacing="0" cellpadding="0" class="form-table">
+	<tr><td colspan="2" height="5"></td></tr>
+      <tr>
+        <td width="60">{$lang.announce.title}£∫</td>
+        <td><input name="announcenew[title]" type="text" class="textinput" id="announce_title" style="width:480px;" value="{$announce.title}" /></td>
+      </tr>
+	  <tr>
+	  	<td>{$lang.announce.mailto}£∫</td>
+		<td><input type="radio" name="sendmail" value="1" /> {$lang.announce.alladmins}°°<input type="radio" name="sendmail" value="2" /> {$lang.announce.allusers}</td>
+	  </tr>
+	  <tr>
+	  	<td>∑¢≤º»À£∫</td>
+		<td><input name="announcenew[poster]" type="text" class="textinput" style="width:480px;" value="{if $announce.poster}{$announce.poster}{else}{$admincp.username}{/if}" /></td>
+	  </tr>
+      <tr>
+        <td>{$lang.announce.content}£∫</td>
+        <td>{$fckeditor}</td>
+      </tr>
+	  <tr><td colspan="2" height="5"></td></tr>
+    </table>
+  </form>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="SaveMessage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>{literal}
+<script type="text/javascript">
+var hassubmited = false;
+function SaveMessage(){
+	if(hassubmited) return false;
+	var theForm = document.message;
+	if(!$("#announce_title").val()){
+		return false;
+	}else{
+		hassubmited = true;
+	    theForm.submit();
+		return true;
+	}
+}
+</script>{/literal}
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.announce.manage} &raquo; {$lang.announce.list}°°{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('id[]','page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.announce.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+  <table border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th width="25"><input type="checkbox" onclick="checkAll(this,'id[]')" /></td>
+      <th>{$lang.announce.title}</td>
+      <th width="100">{$lang.author}</td>
+	  <th width="30" class="tocenter">{$lang.audited}</th>
+      <th width="140">{$lang.dateline}</td>
+	  <th width="60" class="last">{$lang.options}</th>
+    </tr>
+	<!--{foreach from=$announcements item=ann key=key}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox"{if $ann.allow} name="id[]" value="{$ann.id}" onclick="checkThis(this)"{else} disabled="disabled"{/if} /></td>
+      <td><a href="announcement.php?id={$ann.id}" target="_blank">{$ann.title}</a></td>
+      <td>{$ann.author}</td>
+	  <td class="tocenter"><img src="images/{if $ann.audited==1}yes.gif{else}no.gif{/if}" onclick="toggle(this,'operation=toggle_audited&id={$ann.id}')" border="0" /></td>
+      <td>{$ann.dateline|date_format:'%Y-%m-%d %H:%M'}</td>
+	  <td>{if $ann.allow}<a href="{$adminscript}?action=announce&operation=edit&id={$ann.id}">{$lang.edit}</a>{/if}</td>
+    </tr>
+	<!--{/foreach}-->
+	<tr>
+	    <td colspan="6">{$lang.select}£∫
+		<a href="javascript:;" onclick="selectAll('id[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onclick="cancelAll('id[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onclick="reverseAll('id[]')">{$lang.reverseselect}</a>
+		</td>
+	</tr>
+  </table>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('id[]','page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.announce.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<!--{/if}-->

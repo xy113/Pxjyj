@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$lang.app_name}</title>
+<link href="images/index.css" rel="stylesheet" type="text/css">
+<script src="static/js/jquery.js" type="text/javascript"></script>
+</head>
+
+<body>
+<span id="load-div"><img src="images/loading.gif" border="0" width="16" height="16" /> {$lang.loading}</span>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="mainFrame">
+  <tr>
+    <td colspan="2" valign="top">
+	   <div id="top-div">
+		  <span style="padding-right:20px; text-align:left; display:inline; float:right;">
+		      <a href="javascript:document.location.reload();">{$lang.refresh}</a> |
+			  <a href="http://www.toking.cc" target="_blank">{$lang.aboutus}</a> |
+			  <a href="./" target="_blank">{$lang.view_homepage}</a> |
+			  <a href="{$adminscript}?action=account" target="mainframes">{$lang.view_account}</a> |
+			  <a href="{$adminscript}?action=logout" target="_top">{$lang.quit}</a>
+		  </span>
+	      <span style="font-family:Arial;">{$lang.wellcome}，{if $isfounder}{$lang.founder}{else}{$admincp.grouptitle}{/if}，{$admincp.username}，{$lang.yourip}:{$ipaddr}</span> 
+	   </div>
+	   <div id="logo"></div>
+	   <div id="topmenu">
+		   <ul>
+		      <li><a href="javascript:;" id="header_index" onclick="toggleMenu('index','index')" class="cur">{$lang.admincp_home}</a></li>{$headers}
+		   </ul>
+	   </div>
+	</td>
+  </tr>
+  <tr>
+    <td class="menutd" width="191" valign="top">
+	    <div class="top-tab"></div>
+	    <div class="menu-tab">
+		     <a  href="{$adminscript}?action=logout" target="_top" class="check">{$lang.quit}</a>
+			 <a href="./" class="compose" target="_blank">{$lang.home}</a>
+		</div>
+		<div id="leftmenu">
+			<ul id="menu_index" style="display:block;">
+				<li><a href="{$adminscript}?action=account" hidefocus="true" onclick="SwitchMenu(this)" target="mainframes">{$lang.view_account}</a></li>
+				<li><a href="{$adminscript}?action=announce" hidefocus="true" onclick="SwitchMenu(this)" target="mainframes">{$lang.view_announce}</a></li>
+				<li><a href="{$adminscript}?action=clearcache" hidefocus="true" onclick="SwitchMenu(this)" target="mainframes">{$lang.clearcache}</a></li>
+				<li><a href="http://www.toking.cc" hidefocus="true" onclick="SwitchMenu(this)" target="_blank">{$lang.aboutus}</a></li>
+			</ul>
+			{$menus}
+			<ul id="menu_other">
+				<li><a target="mainframes" onclick="SwitchMenu(this)" hidefocus="true" href="{$adminscript}?action=about">单页文章管理</a></li>
+				<li><a target="mainframes" onclick="SwitchMenu(this)" hidefocus="true" href="{$adminscript}?action=slide">幻灯片图片管理</a></li>
+				<li><a target="mainframes" onclick="SwitchMenu(this)" hidefocus="true" href="{$adminscript}?action=friendlink">友情链接管理</a></li>
+				<li><a target="mainframes" onclick="SwitchMenu(this)" hidefocus="true" href="{$adminscript}?action=poll">在线投票管理</a></li>
+				<li><a target="mainframes" onclick="SwitchMenu(this)" hidefocus="true" href="{$adminscript}?action=faq">常见问题管理</a></li>
+			</ul>
+		</div>
+	</td>
+    <td valign="top" width="100%">
+	    <div class="top-tr"></div>
+		<div style="height:100%; width:100%;">
+		<iframe name="mainframes" id="mainframes" style="height:100%; width:100%; overflow:visible;" src="{$adminscript}?action=index" frameborder="0"></iframe>
+	    </div>
+	</td>
+  </tr>
+</table>
+<script type="text/javascript">
+var ADMINSCRIPT = '{$adminscript}';
+var headers = new Array('index','settings','member','articles','image','inter','branch','template','tool','other');
+{literal}$(function(){
+	$("#mainFrame").height($(document).height());
+	$("#mainframes").height($(document).height()-80);
+})
+function SwitchMenu(obj){
+	if(!obj)return;
+	var li = obj.parentNode;
+    var items = li.parentNode.getElementsByTagName('a');
+	for(i=0;i<items.length;i++){
+	    if(obj==items[i]){
+		    items[i].parentNode.className = 'cur';
+		}else{
+		    items[i].parentNode.className = '';
+		}
+	}
+}
+function toggleMenu(menukey,url){
+    if(!menukey || !$$('header_' + menukey)) {
+		return;
+	}
+	for(var k in top.headers) {
+		if($$('menu_' + headers[k])) {
+			$$('menu_' + headers[k]).style.display = headers[k] == menukey ? '' : 'none';
+		}
+	}
+    var hrefs = $$('topmenu').getElementsByTagName('a');
+	for(i=0;i<hrefs.length;i++){
+	    hrefs[i].className='';
+	}
+	$$('header_'+menukey).className = 'cur';
+	if(url){
+		var uls = $$('leftmenu').getElementsByTagName('ul');
+		for(j=0; j<uls.length; j++){
+			uls[j].style.displey = 'none';
+		}
+		if($$('menu_'+menukey))$$('menu_'+menukey).style.display = 'block';
+		parent.mainframes.location = ADMINSCRIPT+'?action='+url;
+	}
+	return false;
+}
+function $$(a){
+	return document.getElementById(a);
+}
+</script>{/literal}
+</body>
+</html>

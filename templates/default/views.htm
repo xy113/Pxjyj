@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$image.title}-{$cfg.sysname}</title>
+<meta name="keywords" content="{$image.tags},{$image.keywords},{$cfg.keywords}" />
+<meta name="description" content="{$image.content}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="page">
+    <div class="youpos">当前位置: <a href="/">首页</a>&raquo;<a href="images.php?cid={$image.cid}">{$image.name}</a>&raquo; {$image.title}</div>
+    <div class="blank"></div>
+	<div class="article-left">
+	    <div class="title-div"><span class="more">支持&larr;&rarr;翻页</span></div>
+		<h1 class="title">{$image.title}　{$pageno}</h1>
+		<div class="article-info">时间:{$image.dateline|date_format:'%Y-%m-%d %H:%M:%S'}　浏览数:{$image.views}　分类:<a href="images.php?cid={$image.cid}">{$image.name}</a></div>
+		<div class="pic">
+			 <div id="pic_id"><a href="{$nextpage}"><img src="{$cfg.attachdir}{$file.attachment}" id="bigimg" class="img" border="0" title="点击浏览下一张" alt="主题:{$image.title},时间:{$file.file_time|date_format:'%Y-%m-%d %H:%M:%S'},大小:{$file.file_size}"></a></div>
+			 <div class="arr-left" id="leftarea" title="上一张" onclick="window.location='{$prevpage}'"></div>
+			 <div class="arr-right" id="rightarea" title="下一张" onclick="window.location='{$nextpage}'"></div>
+	    </div>
+		<div class="pagediv" style="text-align:center;"><a href="{$prev}">上一组</a>{$pagelink}<a href="{$next}">下一组</a></div>
+		<!-- JiaThis Button BEGIN -->
+		<div id="ckepop" class="videoshare">
+			<span style="float:right;"><a href="{$file.file_name}" target="_blank">查看原图</a></span>
+			<a href="javascript:;" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank">分享到：</a>
+			<a title="分享到新浪微博" class="jiathis_button_tsina">新浪微博</a>
+			<a title="分享到QQ空间" class="jiathis_button_qzone">QQ空间</a>
+			<a title="分享到人人网" class="jiathis_button_renren">人人网</a>
+			<div class="clear"></div>
+		</div>
+		<script type="text/javascript" src="http://v1.jiathis.com/code/jia.js" charset="utf-8"></script>
+		<!-- JiaThis Button END -->
+		<div class="video-info"><span style="float:right;">标签:{foreach from=$image.tags item=tag}<a href="search.php?q={$tag}">{$tag}</a>{/foreach}</span>分类:<a href="video.php?cid={$image.cid}">{$image.name}</a></div>
+		<div class="videobody">{$image.content}</div>
+	</div>
+	<div class="article-right">
+		<div class="content-div">
+		    <div class="title-div">热门视频</div>
+			{foreach from=$videos.hot item=vod}
+			<div class="hotvideolist" onmouseover="this.style.background='#e2e2e2'" onmouseout="this.style.background='#fff'">
+				<div class="videoimage"><a href="{$vod.vodurl}" title="{$vod.title}"><img src="{$vod.image}" /></a></div>
+				<ul class="videoinfo">
+					<li style="font-size:14px;"><a href="{$vod.vodurl}">{$vod.title}</a></li>
+					<li>时　间: {$vod.dateline|date_format:'%Y-%m-%d'}</li>
+					<li>播放数: {$image.views}</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			{/foreach}
+		</div>
+		<div class="blank"></div>
+	    <div class="content-div">
+			<div class="title-div">热点文章</div>
+			<ul class="arclist">
+				{foreach from=$articles.hot item=arc}
+				<li><a href="{$arc.arcurl}">{$arc.title}</a></li>
+				{/foreach}
+			</ul>
+		</div>
+		<div class="blank"></div>
+		<div class="content-div">
+			<div class="title-div">热门图片</div>
+			{foreach from=$images.hot item=img}
+			<div class="hotimagebox">
+			    <div class="image"><a href="{$img.imgurl}" title="{$img.title}"><img src="{$img.image}" /></a></div>
+				<div class="title"><a href="{$img.imgurl}">{$img.title}</a></div>
+			</div>
+			{/foreach}
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="article-left" style="margin-top:10px;">
+		<div class="title-div">相关图片</div>
+		<div class="relatedvideo">
+		   {foreach from=$images.related item=img}
+		   <div class="videobox">
+				<div class="image"><a href="{$img.imgurl}" title="{$img.title}"><img src="{$img.image}" /></a></div>
+				<div class="title"><a href="{$img.imgurl}">{$img.title}</a></div>
+		   </div>
+		   {/foreach}
+		   <div class="clear"></div>
+	   </div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">var prevurl='{$prevpage}';var nexturl='{$nextpage}';</script>
+{literal}
+<script type="text/javascript">
+var Height = $('bigimg').height;
+$('leftarea').style.height=Height+'px';
+$('rightarea').style.height=Height+'px';
+function $(a){
+    return document.getElementById(a);
+}
+document.onkeydown = function(e){
+	if(!e)e=window.event;
+	if(e.keyCode==37){
+	   window.location=prevurl;
+	   return false;
+	}
+	if(e.keyCode==39){
+	   window.location=nexturl;
+	   return false;
+	}
+}
+</script>
+{/literal}
+{include file='footer.htm'}

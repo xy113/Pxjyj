@@ -1,0 +1,158 @@
+<!--{if $operation=='addnew' || $operation=='edit'}-->
+<div class="main-div">
+	<div class="pos-div">
+		<h2>$lang[cp_home] &raquo; 管理组 &raquo; 编辑权限</h2>
+	</div>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onclick="$('#form1').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onclick="LoadPage('operation=edit&admingid=$admingid')"><span>刷新</span></b>
+	</div>
+	<form id="form1" name="form1" method="post" action="">
+		<input type="hidden" name="formsubmit" value="yes" />
+		<input type="hidden" name="formhash" value="{FORMHASH}" />
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable" id="actiontable">
+        <tr>
+          <td width="200"><label><input type="checkbox" class="checkbox" name="disabledactions[]" value="settings"$checked[settings] /> 系统设置</label></td>
+          <td>
+		  	<ul class="list">
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="settings_basic"$checked[settings_basic] /> 站点信息设置</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="settings_optimization"$checked[settings_optimization] /> 系统优化设置</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="settings_attachment"$checked[settings_attachment] /> 附件上传设置</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="settings_image"$checked[settings_image] /> 图片附件设置</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="settings_register"$checked[settings_register] /> 用户注册设置</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="settings_randcode"$checked[settings_randcode] /> 验证码设置</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="settings_contact"$checked[settings_contact] /> 联系信息设置</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="nav"$checked[nav] /> 导航栏设置</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="cplog"$checked[cplog] /> 后台日志管理</li>
+			</ul>
+		  </td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" class="checkbox" name="disabledactions[]" value="member"$checked[member] /> 用户管理</label></td>
+          <td>
+		  	<ul class="list">
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="admingroups"$checked[admingroups] /> 更改管理组</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="usergroups"$checked[usergroups] /> 更改用户组</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="member_add"$checked[member_add] /> 添加用户</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="member_edit"$checked[member_edit] /> 编辑用户</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="member_delete"$checked[member_delete] /> 删除用户</li>
+			</ul>
+		  </td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" class="checkbox" name="disabledactions[]" value="articles"$checked[articles] /> 文章管理</label></td>
+          <td>
+		  	<ul class="list">
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="articlecat"$checked[articlecat] /> 添加文章分类</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="articlecat_edit"$checked[articlecat_edit] /> 更改文章分类</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="articlecat_delete"$checked[articlecat_delete] /> 删除文章分类</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="articles_add"$checked[articles_add] /> 添加文章</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="articles_edit"$checked[articles_edit] /> 修改文章</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="articles_delete"$checked[articles_delete] /> 删除文章</li>
+			</ul>
+			</td>
+        </tr>
+         <tr>
+          <td><label><input type="checkbox" class="checkbox" name="disabledactions[]" value="image"$checked[image] /> 图组管理</label></td>
+          <td>
+		  	<ul class="list">
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="imagecat"$checked[imagecat] /> 添加图组分类</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="imagecat_edit"$checked[imagecat_edit] /> 更改图组分类</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="imagecat_delete"$checked[imagecat_delete] /> 删除图组分类</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="image_add"$checked[image_add] /> 添加图组</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="image_edit"$checked[image_edit] /> 修改图组</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="image_delete"$checked[image_delete] /> 删除图组</li>
+			</ul>
+			</td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" class="checkbox" name="disabledactions[]" value="inter"$checked[inter] /> 政务管理</label></td>
+          <td>
+		  	<ul class="list">
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="leads"$checked[leads] /> 领导信息管理</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="leadmails"$checked[leadmails] /> 领导信箱管理</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="forum"$checked[forum] /> 讨论区板块设置</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="thread"$checked[thread] /> 讨论区帖子管理</li>
+			</ul>
+			</td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" class="checkbox" name="disabledactions[]" value="branch"$checked[branch] /> 部门管理</label></td>
+          <td>
+		  	<ul class="list">
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="branch_category"$checked[branch_category] /> 栏目管理</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="branch_articles"$checked[branch_articles] /> 文章管理</li>
+			</ul>
+			</td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" class="checkbox" name="disabledactions[]" value="other"$checked[other] /> 其他</label></td>
+          <td>
+		  	<ul class="list">
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="about"$checked[about] /> 网站相关信息</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="slide"$checked[slide] /> 幻灯片管理</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="friendlink"$checked[friendlink] /> 友情链接管理</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="poll"$checked[poll] /> 在线投票管理</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="faq"$checked[faq] /> 常见问题管理</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="lifebox"$checked[lifebox] /> 实用查询管理</li>
+				<li><input type="checkbox" class="checkbox" name="disabledactions[]" value="announce"$checked[announce] /> 系统公告管理</li>
+			</ul>
+			</td>
+        </tr>
+      </table>
+     </form>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onclick="$('#form1').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onclick="LoadPage('operation=edit&admingid=$admingid')"><span>刷新</span></b>
+	</div>
+</div>
+<!--{else}-->
+<div class="main-div">
+	<div class="pos-div">
+		<h2>$lang[cp_home] &raquo; 管理组</h2>
+	</div>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onclick="$('#admingroups').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onclick="LoadPage()"><span>刷新</span></b>
+	</div>
+	<form name="admingroups" id="admingroups" method="post" action="">
+	   <input type="hidden" name="formsubmit" value="yes" />
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr>
+		  <th width="50"><input type="checkbox" onClick="checkAll(this,'delete[]')"> 删?</th>
+		  <th width="160">组头衔</th>
+		  <th width="60">类型</th>
+		  <th>管理级别</th>
+		  <th width="80" class="last">选项</th>
+		</tr>
+		<!--{loop $admingroups $group}-->
+		<tr onmouseover="this.className='active'" onmouseout="this.className=''">
+		  <td>{if $group[type]=='system'}<input type="checkbox" disabled="disabled">{else}<input type="checkbox" name="delete[]" value="$group[admingid]" onClick="checkThis(this)">{/if}</td>
+		  <td>$group[grouptitle]</td>
+		  <td>$group[typename]</td>
+		  <td>$group[level]</td>
+		  <td><a href="$BASESCRIPT?action=$action&operation=edit&admingid=$group[admingid]">编辑权限</a></td>
+		</tr>
+		<!--{/loop}-->
+		<tr>
+		<tr>
+			<td>新增</td>
+			<td><input type="text" class="text" name="newgrouptitle" /></td>
+			<td></td>
+			<td><select name="newradminid"><option value="1">系统管理员</option><option value="2">内容管理员</option><option value="3">部门管理员</option></select></td>
+			<td></td>
+		</tr>
+		<td colspan="5">$lang[select]:
+			<a href="javascript:;" onclick="selectAll('delete[]')">$lang[selectall]</a> - 
+			<a href="javascript:;" onclick="cancelAll('delete[]')">$lang[noselect]</a> - 
+			<a href="javascript:;" onclick="reverseAll('delete[]')">$lang[reverseselect]</a>
+		</td>
+		</tr>
+	  </table>
+	  </form>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onclick="$('#admingroups').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onclick="LoadPage()"><span>刷新</span></b>
+	</div>
+</div>
+<!--{/if}-->

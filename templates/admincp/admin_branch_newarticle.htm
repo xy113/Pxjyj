@@ -1,0 +1,137 @@
+<script type="text/javascript" src="source/ueditor/editor_config.js"></script>
+<script type="text/javascript" src="source/ueditor/editor_all_min.js"></script>
+<link rel="stylesheet" type="text/css" href="source/ueditor/themes/default/ueditor.css"/>
+{if !$branchid&&$branch}
+<div class="main-div">
+	<div class="pos-div">
+	     <h2>{$lang[cp_home]} &raquo; 文章管理 &raquo; 发布文章 &raquo; 请选择部门</h2>
+	</div>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onclick="history.go(-1)"><span>返回上一页</span></b>
+	</div>
+	<ul class="branchlist">
+		{loop $branches $branch}
+		<li><a href="$BASESCRIPT?action=$action&operation=$operation&branchid=$branch[branchid]">$branch[branchname]</a></li>
+		{/loop}
+	</ul>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onclick="history.go(-1)"><span>返回上一页</span></b>
+	</div>
+</div>
+{else}
+<div class="main-div">
+    <div class="pos-div">
+	     <h2>{$lang[cp_home]} &raquo; 文章管理 &raquo; 添加文章</h2>
+	</div>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#article').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=articles&branchid=$branchid&cid=$cid')"><span>返回列表</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=$operation&branchid=$branchid&cid=$cid')"><span>刷新</span></b>
+	</div>
+	<form action="" method="post" name="article" id="article">
+	<input type="hidden" name="formsubmit" value="yes">
+	<input type="hidden" name="formhash" value="{FORMHASH}">
+	<table cellspacing="0" cellpadding="0" class="form-table">
+		<tr>
+			<td width="65">文章标题</td>
+		    <td><input name="articlenew[title]" type="text" class="textinput" id="article_title" style="width:400px;" tabindex="5" value="$article[title]" maxlength="60" /></td>
+		</tr>
+	    <tr>
+		  <td>TAG标签</td>
+		  <td><input name="articlenew[tags]" type="text" class="textinput" id="article_tags" style="width:400px;" tabindex="5" value="$article[tags]" maxlength="50" /></td>
+		</tr>
+		<tr>
+			<td>所属部门</td>
+			<td>
+				<select name="articlenew[branchid]">
+				{loop $branches $branch}
+				<option value="$branch[branchid]"{if $branch[branchid]==$branchid} selected="selected"{/if}>$branch[branchname]</option>
+				{/loop}
+				</select>
+			</td>
+		</tr>
+		<tr>
+		  <td>文章来源</td>
+		  <td>
+			{if $admincp[adminid]==1}
+		    <input name="articlenew[source]" type="text" class="textinput" id="article_source" style="width:100px;" value="{if $article[source]}$article[source]{else}$config[sitename]{/if}" />
+			<select name="sss" onchange="article_source.value=this.value">
+			   <option value="">{$lang[please_select]}..</option> 
+               <!--{loop $sources $sc}-->
+			   <option value="$sc[sitename]"{if $article[source]==$sc[sitename]} selected="selected"{/if}>$sc[sitename]</option>
+               <!--{/loop}-->
+			</select>
+			{else}
+			<select name="articlenew[source]">
+			   <!--<option value="">{$lang[please_select]}..</option> -->
+               <!--{loop $sources $sc}-->
+			   <option value="$sc[sitename]"{if $article[source]==$sc[sitename]} selected="selected"{/if}>$sc[sitename]</option>
+               <!--{/loop}-->
+			</select>
+			{/if}
+		  </td>
+		</tr>
+		<tr>
+		  <td>文章图片</td>
+		  <td>
+			<input name="articlenew[image]" class="textinput" type="text" id="article_image" style="width:400px;" value="$article[image]" tabindex="5" /> 
+			<b class="button" tabindex="0" onclick="OpenDialog('article_image')"><span>本地上传</span></b>
+		  </td>
+       </tr>
+		  <tr>
+			<td>内容摘要</td>
+			<td><textarea name="articlenew[summary]" id="article_summary" style="width:98%; height:100px;" tabindex="5">$article[summary]</textarea></td>
+		  </tr>
+		  <tr>
+		  	<td colspan="2">
+			<textarea id="myEditor">$article[content]</textarea>
+			<input type="hidden" name="articlenew[content]" id="arcContent" />
+			<script type="text/javascript">
+			var baidueditor = new baidu.editor.ui.Editor();
+			baidueditor.render("myEditor");
+			</script>
+			</td>
+		  </tr>
+		  <tr>
+			<td colspan="2">
+			   <input name="articlenew[audited]" type="checkbox" value="1" checked="checked" /> 
+			   已审核　
+			   <input name="articlenew[recommend]" type="checkbox" value="1"{if $article[recommend]} checked="checked"{/if} /> 
+			   推荐　
+			   <input name="articlenew[allowcomment]" type="checkbox" value="1"{if $article[allowcomment]} checked="checked"{/if} /> 
+			   允许评论　
+			   <input name="articlenew[allowvote]" type="checkbox" value="1"{if $article[allowvote]} checked="checked"{/if} /> 
+			   允许投票
+			</td>
+		</tr>
+    </table>
+    </form>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#article').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=articles&branchid=$branchid&cid=$cid')"><span>返回列表</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=$operation&branchid=$branchid&cid=$cid')"><span>刷新</span></b>
+	</div>
+</div>
+<script type="text/javascript">
+$("#article").submit(function(){
+	if(!$("#article_title").val()){
+		alert("文章标题不能留空");
+		return false;
+	}
+	$("#arcContent").val(baidueditor.getContent());
+	/*
+	var content = FCKeditorAPI.GetInstance("articlenew[content]").GetXHTML();
+	if(!content){
+		alert("文章内容不能留空");
+		return false;
+	}*/
+	return true;
+});
+window.document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   $("#article").submit();
+	}
+}
+</script>
+{/if}

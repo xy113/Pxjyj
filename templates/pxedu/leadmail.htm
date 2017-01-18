@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>领导信箱_{$config.sysname}</title>
+<meta name="keywords" content="{$config.keywords}" />
+<meta name="description" content="{$config.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+<script src="static/js/jquery.js" type="text/javascript"></script>
+<script src="static/js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position">您现在的位置 > <a href="./">网站首页</a> > 领导信箱</span>
+</div>
+<div class="area">
+	<div class="login-left" id="register-left" style="height:auto; margin-top:10px;">
+	  <form id="form1" name="form1" method="post" action="leadmail.php?action=save" onsubmit="return checkForm()">
+	  	<h1>领导信箱</h1>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="30">信件标题：</td>
+            <td><input name="newmail[subject]" type="text" id="newmail_subject" size="30" /> *</td>
+          </tr>
+          <tr>
+            <td height="30">联系电话：</td>
+            <td><input name="newmail[tel]" type="text" id="newmail_tel" size="30" /></td>
+          </tr>
+          <tr>
+            <td height="30">电子邮件：</td>
+            <td><input name="newmail[mailfrom]" type="text" id="newmail_mailfrom" size="30" /></td>
+          </tr>
+          <tr>
+            <td>信件内容：</td>
+            <td><textarea name="newmail[message]" cols="50" rows="6" id="newmail_message"></textarea> *</td>
+          </tr>
+		   <tr>
+            <td height="30">验证码：</td>
+            <td><input name="randcode" id="randcode" type="text" size="10" /> <img src="source/include/randcode.php" border="0" title="点击我刷新验证码" onclick="this.src='source/include/randcode.php?'+Math.random()" align="absmiddle" /></td>
+          </tr>
+        </table>
+		<div class="btnlogin"><input type="submit" name="btnlogin2" value="提交" /></div>
+      </form>
+	</div>
+	<div class="login-right" id="register-right" style="margin-top:10px;">
+		<h1>使用帮助</h1>
+		{foreach from=$faqes item=faq}
+		<p><a href="faq.php#faq{$faq.id}">{$faq.title}</a></p>
+		{/foreach}
+	</div>
+	<div class="clear"></div>
+</div>
+{literal}<script type="text/javascript">
+function checkForm(){
+	if(!$("#newmail_subject").val()){
+		alert('请输入您留言的标题。');
+		return false;
+	}
+	if($("#newmail_message").val().length<10){
+		alert('留言内容不能少于10个字。');
+		return false;
+	}
+	if($("#newmail_message").val().length>1000){
+		alert('留言内容不能大于1000个字。');
+		return false;
+	}
+	if(!$("#randcode").val()){
+		alert("验证码不能为空，请重新输入。");
+		return false;
+	}
+	theform.btnlogin2.disabled = true;
+	return true;
+}
+</script>{/literal}
+<div class="adv0"><img src="images/adv5.png" border="0" /></div>
+{include file='footer.htm'}

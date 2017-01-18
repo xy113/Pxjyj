@@ -1,0 +1,150 @@
+<!--{if $operation=='edit'}-->
+<div class="main-div">
+	<div class="pos-div">
+		<h2>$lang[cp_home] &raquo; 用户组 &raquo; 编辑权限</h2>
+	</div>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#form1').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=edit&groupid=$groupid')"><span>刷新</span></b>
+	</div>
+	<form name="form1" id="form1" method="post" action="">
+	<input type="hidden" name="formsubmit" value="yes" />
+	<input type="hidden" name="formhash" value="{FORMHASH}" />
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
+        <tr>
+          <td><b>组头衔</b></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><input type="text" class="text text160" name="usergroupnew[grouptitle]" value="$usergroup[grouptitle]"></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><b>允许发表主题</b></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="usergroupnew[allowpost]" value="1"{if $usergroup[allowpost]} checked="checked"{/if}> 是 　<input type="radio" name="usergroupnew[allowpost]" value="0"{if !$usergroup[allowpost]} checked="checked"{/if}> 否</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><b>允许回复主题</b></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="usergroupnew[allowreply]" value="1"{if $usergroup[allowreply]} checked="checked"{/if}> 是 　<input type="radio" name="usergroupnew[allowreply]" value="0"{if !$usergroup[allowreply]} checked="checked"{/if}> 否</td>
+          <td>&nbsp;</td>
+        </tr>
+		<tr>
+          <td><b>允许上传附件</b></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="usergroupnew[allowpostattach]" value="1"{if $usergroup[allowpostattach]} checked="checked"{/if}> 是 　<input type="radio" name="usergroupnew[allowpostattach]" value="0"{if !$usergroup[allowpostattach]} checked="checked"{/if}> 否</td>
+          <td>&nbsp;</td>
+        </tr>
+		<tr>
+          <td><b>允许下载附件</b></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="usergroupnew[allowgetattach]" value="1"{if $usergroup[allowgetattach]} checked="checked"{/if}> 是 　<input type="radio" name="usergroupnew[allowgetattach]" value="0"{if !$usergroup[allowgetattach]} checked="checked"{/if}> 否</td>
+          <td>&nbsp;</td>
+        </tr>
+		<tr>
+          <td><b>允许发表评论</b></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="usergroupnew[allowcomment]" value="1"{if $usergroup[allowcomment]} checked="checked"{/if}> 是 　<input type="radio" name="usergroupnew[allowcomment]" value="0"{if !$usergroup[allowcomment]} checked="checked"{/if}> 否</td>
+          <td>&nbsp;</td>
+        </tr>
+		<tr>
+          <td><b>允许使用搜索</b></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="usergroupnew[allowsearch]" value="1"{if $usergroup[allowsearch]} checked="checked"{/if}> 是 　<input type="radio" name="usergroupnew[allowsearch]" value="0"{if !$usergroup[allowsearch]} checked="checked"{/if}> 否</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+	</form>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#form1').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=edit&groupid=$groupid')"><span>刷新</span></b>
+	</div>
+</div>
+<!--{else}-->
+<div class="main-div">
+	<div class="pos-div">
+		<h2>$lang[cp_home] &raquo; 用户组</h2>
+	</div>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#usergroups').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage()"><span>刷新</span></b>
+	</div>
+    <form name="usergroups" id="usergroups" method="post" action="">
+	<input type="hidden" name="formsubmit" value="yes" />
+	<input type="hidden" name="formhash" value="{FORMHASH}" />
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+        <tr>
+          <th width="50"><input type="checkbox" class="checkbox"> 删?</th>
+          <th width="30">ID</th>
+          <th width="180">组头衔</th>
+          <th width="">积分介于</th>
+          <th>选项</th>
+        </tr>
+        <tr>
+          <td colspan="5"><strong>系统用户组</strong></td>
+        </tr>
+		{loop $usergroups[system] $group}
+        <tr>
+          <td><input type="checkbox" class="checkbox" disabled="disabled"></td>
+          <td>$group[groupid]</td>
+          <td><input type="text" class="text text160" name="groupnew[{$group[groupid]}][grouptitle]" value="$group[grouptitle]"></td>
+          <td>&nbsp;</td>
+          <td><a href="$BASESCRIPT?action=$action&operation=edit&groupid=$group[groupid]">编辑权限</a></td>
+        </tr>
+		{/loop}
+        <tr>
+          <td colspan="5"><strong>自定义用户组</strong></td>
+        </tr>
+        {loop $usergroups[custom] $group}
+        <tr>
+          <td><input type="checkbox" class="checkbox" disabled="disabled"></td>
+          <td>$group[groupid]</td>
+          <td><input type="text" class="text text160" name="groupnew[{$group[groupid]}][grouptitle]" value="$group[grouptitle]"></td>
+          <td>&nbsp;</td>
+          <td><a href="$BASESCRIPT?action=$action&operation=edit&groupid=$group[groupid]">编辑权限</a></td>
+        </tr>
+		{/loop}
+         <tr>
+          <td colspan="5"><strong>会员用户组</strong></td>
+        </tr>
+        {loop $usergroups[member] $group}
+        <tr>
+          <td><input type="checkbox" class="checkbox" name="delete[]" value="$group[groupid]"></td>
+          <td>$group[groupid]</td>
+          <td><input type="text" class="text text160" name="groupnew[{$group[groupid]}][grouptitle]" value="$group[grouptitle]"></td>
+          <td><input type="text" class="text text60" name="groupnew[{$group[groupid]}][creditslower]" value="$group[creditslower]"> ~ 
+		  <input type="text" class="text text60" name="groupnew[{$group[groupid]}][creditshigher]" value="$group[creditshigher]"></td>
+          <td><a href="$BASESCRIPT?action=$action&operation=edit&groupid=$group[groupid]">编辑权限</a></td>
+        </tr>
+		{/loop}
+		<tbody id="newgroup"></tbody>
+		<tr>
+			<td colspan="5"><a href="###" id="addgroup">[+]新增用户组</a></td>
+		</tr>
+      </table>
+    </form>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#usergroups').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage()"><span>刷新</span></b>
+	</div>
+</div>
+<script type="text/javascript">
+$("#addgroup").click(function(){
+	$("#newgroup").append('<tr><td><input type="hidden" name="newtype[]" value="member"></td><td></td><td><input type="text" class="text text160" name="newgrouptitle[]"></td><td><input type="text" class="text text60" name="newcreditslower[]"> ~ <input type="text" class="text text60" name="newcreditshigher[]"></td><td></td></tr>');
+});
+</script>
+<!--{/if}-->

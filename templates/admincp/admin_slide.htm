@@ -1,0 +1,125 @@
+<!--{if $operation=='addnew'||$operation=='edit'}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.slide.manage} &raquo; {if $operation eq 'edit'}{$lang.slide.edit}{else}{$lang.slide.addnew}{/if}</h2>
+</div>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveSlide()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+</div>
+<form action="{$adminscript}?action=slide&operation=save" method="post" name="slide">
+  <input type="hidden" name="id" value="{$slide.id}" />
+  <table border="0" cellspacing="0" cellpadding="0" class="form-table">
+    <tr>
+      <td width="40">{$lang.slide.title}£º</td>
+      <td><input name="slidenew[title]" id="slide_title" type="text" value="{$slide.title}" class="textinput" style="width:400px;" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.slide.linkurl}£º</td>
+      <td><input name="slidenew[linkurl]" id="slide_linkurl" type="text" value="{$slide.linkurl}" class="textinput" style="width:400px;" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.slide.image}£º</td>
+      <td>
+         <input name="slidenew[image]" id="slide_image" type="text" value="{$slide.image}" class="textinput" style="width:400px;" />
+		 <span class="btn btn-dft" onclick="OpenDialog('slide_image&w={$config.slidewidth}&h={$config.slideheight}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.upload}</span></span>
+      </td>
+    </tr>
+    <tr>
+      <td>{$lang.slide.description}£º</td>
+      <td><textarea name="slidenew[description]" style="width:560px; height:90px;">{$slide.description}</textarea></td>
+    </tr>
+  </table>
+</form>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveSlide()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+</div>
+</div>
+<script type="text/javascript">
+var hassubmited = false;
+var Message = new Array();
+Message[0] = '{$lang.slidetxt.0}';
+Message[1] = '{$lang.slidetxt.1}';
+Message[2] = '{$lang.slidetxt.2}';
+{literal}function SaveSlide(){
+	if(hassubmited) return false;
+	var theForm = document.slide;
+    if(!$("#slide_title").val()){
+	   showError(Message[0]);
+	   return false;
+    }
+	if(!$("#slide_linkurl").val()){
+	   showError(Message[1])
+	   return false;
+    }
+	if(!$("#slide_image").val()){
+		showError(Message[2])
+	   return false;
+	}      
+    hassubmited = true;
+    theForm.submit();
+    return true;
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveSlide();
+	   return false;
+	}
+}
+</script>{/literal}
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.slide.manage} &raquo; {$lang.slide.list}¡¡{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+	 <div class="searchbox">
+		<input type="text" name="q" id="q" value="{$smarty.get.q}" class="textinput" style="width:145px;" />
+		<span class="btn btn-dft" onclick="ListTable('q='+$('#q').val())" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.search}</span></span>
+	 </div>
+</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('id[]','{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.slide.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+<form name="slides" method="post">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+  <tr>
+    <th width="15"><input type="checkbox" onclick="checkAll(this,'id[]');"/></td>
+	<th width="15" class="tocenter"><img src="images/icon_view.gif" width="16" height="16" /></th>
+    <th width="280">{$lang.slide.title}</th>
+	<th>{$lang.description}</th>
+    <th width="140" class="last">{$lang.dateline}</th>
+  </tr>
+  <!--{foreach from=$slides item=sd}-->
+  <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+    <td><input type="checkbox" name="id[]" value="{$sd.id}" onclick="checkThis(this)" /></td>
+    <td class="tocenter"><a href="{$sd.linkurl}" target="_blank"><img src="images/icon_view.gif" border="0" width="16" height="16" /></a></td>
+	<td><a href="{$adminscript}?action=slide&operation=edit&id={$sd.id}">{$sd.title}</a></td>
+	<td><span title="{$lang.click_edit}" onclick="Edit(this,'operation=edit_desc&id={$sd.id}')">{if $sd.description}{$sd.description}{else}#{/if}</span></td>
+    <td><span class="mdate">{$sd.dateline|date_format:'%Y-%m-%d %H:%M:%S'}</span></td>
+  </tr>
+  <!--{/foreach}-->
+  <tr>
+      <td colspan="5">{$lang.select}£º
+		<a href="javascript:;" onclick="selectAll('id[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onclick="cancelAll('id[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onclick="reverseAll('id[]')">{$lang.reverseselect}</a>
+	  </td>
+  </tr>
+</table>
+</form>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('id[]','{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.slide.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<!--{/if}-->

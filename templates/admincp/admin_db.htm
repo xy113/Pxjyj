@@ -1,0 +1,120 @@
+<!--{if $operation=='resume'}-->
+<div class="main-div">
+	<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.db.manage} &raquo; {$lang.db.resume}</h2>
+	</div>
+	<div class="pos-div">
+		<form name="importform" method="post" action="{$adminscript}?action=db&operation=import" enctype="multipart/form-data" onsubmit="if(!this.sqlfile.value)return false;">
+		{$lang.db.localfile}£º
+		<input type="text" id="filename" class="textinput" style="width:200px;" />
+		<input type="file" size="40" name="sqlfile" id="sqlfile" style="display:none;" onchange="filename.value=this.value" />
+		<span class="btn btn-dft" onclick="$('#sqlfile').click()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.view}</span></span>
+		<span class="btn btn-dft" onclick="document.importform.submit()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.export}</span></span>
+		</form>
+	</div>
+   <div class="toolbar">
+		<span class="btn btn-dft" onclick="document.files.submit()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.resume}</span></span>
+		<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.backup}</span></span>
+		<span class="btn btn-dft" onclick="document.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+   </div>
+   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+    <form name="files" action="{$adminscript}?action=db&operation=resumefiles" method="post">
+     <tr>
+       <th scope="col" width="20"><input type="checkbox" onclick="checkAll(this,'file[]')" /></th>
+       <th scope="col">{$lang.filename}</th>
+       <th scope="col" width="100">{$lang.filesize}</th>
+       <th scope="col" width="140" class="last">{$lang.filetime}</th>
+     </tr>
+	 <!--{if $folders}-->
+	 <!--{foreach from=$folders item=dir}-->
+     <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+       <td>&nbsp;</td>
+	   <td><a href="{$dir.folderlink}"><img src="{$dir.img}" border="0" /> {$dir.filename}</a></td>
+       <td>&nbsp;</td>
+       <td>&nbsp;</td>
+     </tr>
+	 <!--{/foreach}-->
+	 <!--{/if}-->
+	 <!--{if $folders}-->
+	 <!--{foreach from=$filetree item=tree}-->
+     <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+       <td><input type="checkbox" name="file[]" value="{$tree.filepath}" onclick="checkThis(this)" /></td>
+	   <td><img src="{$tree.img}" border="0" /> {$tree.filename}</td>
+       <td>{$tree.filesize}</td>
+       <td>{$tree.filetime}</td>
+     </tr>
+	 <!--{/foreach}-->
+	 <!--{/if}-->
+	 </form>
+	  <tr>
+		  <td colspan="4">{$lang.select}£º
+			<a href="javascript:;" onclick="selectAll('file[]')">{$lang.selectall}</a> - 
+			<a href="javascript:;" onclick="cancelAll('file[]')">{$lang.noselect}</a> - 
+			<a href="javascript:;" onclick="reverseAll('file[]')">{$lang.reverseselect}</a>
+		 </td>
+	  </tr>
+   </table>
+   <div class="toolbar">
+		<span class="btn btn-dft" onclick="document.files.submit()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.resume}</span></span>
+		<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.backup}</span></span>
+		<span class="btn btn-dft" onclick="document.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+   </div>
+</div>
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.db.manage} &raquo; {$lang.db.backup}</h2>
+</div>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="document.tables.submit()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.start_backup}</span></span>
+	<span class="btn btn-dft" onclick="checkDB('optimiz')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className=' btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.optimiz}</span></span>
+	<span class="btn btn-dft" onclick="checkDB('repair')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.repair}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=resume')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.resume}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+<form method="post" name="tables" action="{$adminscript}?action=db&operation=export">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+  <tr>
+    <th scope="col" width="20"><input type="checkbox" onclick="checkAll(this,'table[]')" /></th>
+    <th scope="col">{$lang.db.table_name}</th>
+    <th scope="col" width="60">{$lang.db.table_type}</th>
+	<th scope="col" width="100">{$lang.db.table_rowformat}</th>
+    <th scope="col" width="60">{$lang.db.table_records}</th>
+    <th scope="col" width="80">{$lang.db.table_data}</th>
+    <th scope="col" width="60">{$lang.db.table_index}</th>
+    <th scope="col" width="60">{$lang.db.table_free}</th>
+    <th scope="col" width="60" class="last">{$lang.handler}</th>
+  </tr>
+  <!--{foreach from=$tables item=table}-->
+  <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+    <td><input type="checkbox" name="table[]" value="{$table.Name}" onclick="checkThis(this)" /></td>
+    <td>{$table.Name}</td>
+    <td>{$table.Engine}</td>
+	<td>{$table.Row_format}</td>
+    <td>{$table.Rows}</td>
+    <td>{$table.Data_length}</td>
+    <td>{$table.Index_length}</td>
+    <td>{$table.Data_free}</td>
+    <td><a href="javascript:;" onclick="checkOneDB('{$table.Name}','repair')">{$lang.repair}</a> <a href="javascript:;" onclick="checkOneDB('{$table.Name}','optimiz')">{$lang.optimiz}</a></td>
+  </tr>
+  <!--{/foreach}-->
+  <tr>
+      <td colspan="9">
+	    <span style="float:right; margin-right:10px;">{$tbcount}£¬{$lang.db.space}{$dbsize}MB¡£</span>
+		{$lang.select}£º
+		<a href="javascript:;" onclick="selectAll('table[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onclick="cancelAll('table[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onclick="reverseAll('table[]')">{$lang.reverseselect}</a>
+	 </td>
+  </tr>
+</table>
+</form>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="document.tables.submit()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.start_backup}</span></span>
+	<span class="btn btn-dft" onclick="checkDB('optimiz')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className=' btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.optimiz}</span></span>
+	<span class="btn btn-dft" onclick="checkDB('repair')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.repair}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=resume')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.resume}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<!--{/if}-->

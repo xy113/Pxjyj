@@ -1,0 +1,48 @@
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.cplog.manage} &raquo; {$lang.cplog.list}¡¡{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+	 <div class="searchbox">
+		<input type="text" name="q" id="q" value="{$filter.key}" class="textinput" style="width:145px;" />
+		<span class="btn btn-dft" onclick="ListTable('q='+$('#q').val())" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.search}</span></span>
+	 </div>
+</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('id[]','{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="ClearAll()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.cplog.clear}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th width="30"><input type="checkbox" onclick="checkAll(this,'id[]')" /></td>
+      <th width="90">{$lang.cplog.admin}</th>
+      <th>{$lang.cplog.body}</th>
+      <th width="80">{$lang.cplog.adminip}</th>
+	  <th width="140" class="last">{$lang.cplog.time}</th>
+    </tr>
+	<!--{foreach from=$logs item=log}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input name="id[]" type="checkbox" value="{$log.id}" onclick="checkThis(this)" /></td>
+      <td><a href="{$adminscript}?action=cplog&uid={$log.uid}">{$log.username}</a></td>
+      <td>{$log.body}</td>
+	  <td><a href="http://www.ip138.com/ips.asp?ip={$log.ipaddr}" target="_blank">{$log.ipaddr}</a></td>
+      <td>{$log.dateline|date_format:'%Y-%m-%d %H:%M'}</td>
+    </tr>
+	<!--{/foreach}-->
+  </table>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('id[]','{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="ClearAll()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.cplog.clear}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+{literal}<script type="text/javascript">
+function ClearAll(){
+    if(confirm(drop_confirm)){
+	    $.get(url+'&operation=clearall',function(result){
+	        if(result) $('#bodyFrame').html(result);
+	   });
+    }
+}
+</script>{/literal}

@@ -1,0 +1,124 @@
+<div class="main-div">
+	<div class="pos-div">
+	     <h2>{$lang.cp_home} &raquo; {$lang.video.manage} &raquo; {if $operation=='addnew'}{$lang.video.addnew}{else}{$lang.video.edit}{/if}</h2>
+	</div>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="SaveVideo()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+		<!--{if $operation=='edit'}-->
+		<span class="btn btn-dft" onclick="DropOne({$video.id},'cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.drop}</span></span>
+		<!--{/if}-->
+		<span class="btn btn-dft" onclick="LoadPage('cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload();" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+		<span class="ctrlenter">°°{$lang.ctrlenter}</span>
+	</div>
+	<form action="{$adminscript}?action=video&operation=save" method="post" name="video">
+	  <input type="hidden" name="id" value="{$video.id}" />
+	  <table border="0" cellspacing="0" cellpadding="0" class="form-table">
+		<tr>
+		  <td width="65">{$lang.video.title}£∫</td>
+		  <td><input name="videonew[title]" type="text" class="textinput" id="video_title" style="width:400px;" value="{$video.title}" /></td>
+		</tr>
+		<tr>
+		  <td>{$lang.video.tags}£∫</td>
+		  <td><input name="videonew[tags]" type="text"  class="textinput" id="video_tags" style="width:400px;" value="{$video.tags}" /></td>
+		</tr>
+		<tr>
+		  <td>{$lang.video.category}£∫</td>
+		  <td>
+		  <select name="videonew[cid]" id="video_cid">
+		  <!--{foreach from=$categories.0 item=group}-->
+		  <option value="{$group.cid}" class="big"{if $group.current} selected="selected"{/if}{if $group.disabled==1} disabled="disabled"{/if}>{$group.name}</option>
+		  <!--{assign var='sub' value=$group.cid}-->
+		  <!--{foreach from=$categories.$sub item=menu}-->
+		  <option value="{$menu.cid}"{if $menu.current} selected="selected"{/if}{if $menu.disabled==1} disabled="disabled"{/if}>°°|-{$menu.name}</option>
+		  <!--{/foreach}-->
+		  <!--{/foreach}-->
+		  </select>°°
+		  {$lang.video.source}£∫
+			<input name="videonew[source]" type="text" class="textinput" id="video_source" style="width:75px;" value="{$video.source}" />
+			  <select name="selectf" onchange="video_source.value=this.value">
+			   <option value="">{$lang.please_select}..</option>
+			   <!--{foreach from=$sources item=source}-->
+			   <option value="{$source.sitename}"> {$source.sitename}</option>
+			   <!--{/foreach}-->
+			</select>
+		  </td>
+		</tr>
+		<tr>
+		  <td>{$lang.video.type}£∫</td>
+		  <td height="28" class="form-right">
+			<input type="radio" name="videonew[type]" value="0"{if $video.type==0} checked="checked"{/if} /> Flash Player°°
+			<input type="radio" name="videonew[type]" value="1"{if $video.type==1} checked="checked"{/if} /> Media Player°°
+			<input type="radio" name="videonew[type]" value="2"{if $video.type==2} checked="checked"{/if} /> Real Player°°
+			<input type="radio" name="videonew[type]" value="3"{if $video.type==3} checked="checked"{/if} /> ’æÕ‚∑÷œÌ°°
+		  </td>
+		</tr>
+		<tr>
+		  <td>{$lang.video.image}£∫</td>
+		  <td>
+			<input name="videonew[image]" type="text"  class="textinput" id="video_image" style="width:400px;" value="{$video.image}"  />
+			<span class="btn btn-dft" onclick="OpenDialog('video_image')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.upload}</span></span>
+		  </td>
+		</tr>
+		<tr>
+		  <td>{$lang.video.url}£∫</td>
+		  <td><input name="videonew[videourl]" type="text" class="textinput" id="video_url" style="width:400px;" value="{$video.videourl}" /></td>
+		</tr>
+		<tr>
+		  <td>{$lang.video.content}£∫</td>
+		  <td><textarea name="videonew[content]" id="video_content" style="width:98%; height:200px;">{$video.content}</textarea></td>
+		</tr>
+		  <tr>
+			<td></td>
+			<td>
+			   <input type="checkbox" name="videonew[allowcomment]" value="1"{if $video.allowcomment} checked="checked"{/if} /> {$lang.allowcomment}°°
+			   <input type="checkbox" name="videonew[allowvote]" value="1"{if $video.allowvote} checked="checked"{/if} /> {$lang.allowvote}°°
+			   <input type="checkbox" name="videonew[recommend]" value="1"{if $video.recommend} checked="checked"{/if} /> {$lang.setrecommend}°°
+			   <input type="checkbox" name="videonew[audited]" value="1"{if $video.audited} checked="checked"{/if} /> {$lang.passaudited}°°
+			</td>
+		  </tr>
+	  </table>
+	</form>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="SaveVideo()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+		<!--{if $operation=='edit'}-->
+		<span class="btn btn-dft" onclick="DropOne({$video.id},'cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.drop}</span></span>
+		<!--{/if}-->
+		<span class="btn btn-dft" onclick="LoadPage('cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload();" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+		<span class="ctrlenter">°°{$lang.ctrlenter}</span>
+	</div>
+</div>
+<script type="text/javascript">
+var hassubmited = false;
+var Message = new Array();
+Message[0] = '{$lang.videotxt.0}';
+Message[1] = '{$lang.videotxt.1}';
+Message[2] = '{$lang.videotxt.2}';
+{literal}function SaveVideo(){
+    if(hassubmited)return false;
+	var theForm = document.video;
+	if(!$("#video_title").val()){
+		showError(Message[0])
+		return false;
+	}
+	if(!$("#video_url").val()){
+		showError(Message[1]);
+		return false;
+	}
+	if(!$("#video_content").val()){
+		showError(Message[2]);
+		return false;
+	}
+	hassubmited = true;
+	theForm.submit();
+	return true;
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveVideo();
+	   return false;
+	}
+}{/literal}
+</script>

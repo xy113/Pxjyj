@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$about.title}-{$cfg.sysname}</title>
+<meta name="keywords" content="{$cfg.keywords}" />
+<meta name="description" content="{$cfg.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="page">
+    <div class="youpos">当前位置: <a href="/">首页</a>&raquo; {$about.title}</div>
+    <div class="blank"></div>
+	<div class="content-div">
+		<div class="title-div"></div>
+		<div class="videomaindiv">
+			<ul class="about-left">
+				<!--{foreach from=$articles.about item=arc}-->
+				<li><a href="{$arc.arcurl}">{$arc.title}</a></li>
+				<!--{/foreach}-->
+			</ul>
+			<div class="about-body">{$about.content}</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+{include file='footer.htm'}

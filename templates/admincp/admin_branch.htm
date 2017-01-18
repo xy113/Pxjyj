@@ -1,0 +1,80 @@
+<div class="main-div">
+	<div class="pos-div">
+		<h2>$lang[cp_home] &raquo; 部门管理</h2>
+	</div>
+	<div class="toolbar">
+		{if $admincp[adminid]==1}<b class="button" tabindex="0" onclick="$('#form1').submit()"><span>提交</span></b>{/if}
+		<b class="button" tabindex="0" onclick="LoadPage()"><span>刷新</span></b>
+	</div>
+	<form id="form1" name="form1" method="post" action="">
+		<input type="hidden" name="formsubmit" value="yes">
+		<input type="hidden" name="formhash" value="{$FORMHASH}">
+	  	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+        <tr>
+          <th width="50"><input type="checkbox" class="checkbox" onclick="checkAll(this,'delete[]')"> 删?</th>
+          <th width="80">显示顺序</th>
+          <th width="300">部门名称</th>
+          <th>管理员</th>
+          <th width="160">选项</th>
+        </tr>
+		{if $admincp[adminid]==1}
+		{loop $branches[0] $cat}
+        <tr onmouseover="this.className='hover'" onmouseout="this.className=''">
+          <td><input type="checkbox" class="checkbox" name="delete[]" value="$cat[branchid]"></td>
+          <td><input type="text" class="text text60" name="branchnew[{$cat[branchid]}][displayorder]" value="$cat[displayorder]"></td>
+          <td><input type="text" class="text text160" name="branchnew[{$cat[branchid]}][branchname]" value="$cat[branchname]" style="font-weight:bold;"></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+		{loop $branches[$cat[branchid]] $branch}
+        <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+          <td><input type="checkbox" class="checkbox" name="delete[]" value="$branch[branchid]"></td>
+          <td><input type="text" class="text text60" name="branchnew[{$branch[branchid]}][displayorder]" value="$branch[displayorder]"></td>
+          <td>|——<input type="text" class="text text160" name="branchnew[{$branch[branchid]}][branchname]" value="$branch[branchname]"></td>
+          <td><a href="###" onclick="openWindow($branch[branchid],'admins')">{if $branch[admins]}{$branch[admins]}{else}添加管理员{/if}</a></td>
+          <td><!--<a href="###" onclick="openWindow($branch[branchid],'category')">栏目管理</a>　 --><a href="$BASESCRIPT?action=$action&operation=edit&branchid=$branch[branchid]">$lang[edit]</a></td>
+        </tr>
+		{/loop}
+		<tbody id="cat$cat[branchid]"></tbody>
+		<tr>
+			<td></td>
+			<td></td>
+			<td colspan="3"><a href="###" onclick="addBranch($cat[branchid])">[+]添加部门</a></td>
+		</tr>
+		{/loop}
+		<tbody id="newcat"></tbody>
+		<tr>
+			<td></td>
+			<td colspan="4"><a href="###" id="addcat"><strong>[+]添加新分类</strong></a></td>
+		</tr>
+		{else}
+		{loop $branches $branch}
+		<tr onmouseover="this.className='active'" onmouseout="this.className=''">
+          <td><input type="checkbox" class="checkbox" disabled="disabled"></td>
+          <td>$branch[displayorder]</td>
+          <td>$branch[branchname]</td>
+          <td>$branch[admins]</td>
+          <td><!--<a href="###" onclick="openWindow($branch[branchid],'category')">栏目管理</a> --></td>
+        </tr>
+		{/loop}
+		{/if}
+      </table>
+    </form>
+	<div class="toolbar">
+		{if $admincp[adminid]==1}<b class="button" tabindex="0" onclick="$('#form1').submit()"><span>提交</span></b>{/if}
+		<b class="button" tabindex="0" onclick="LoadPage()"><span>刷新</span></b>
+	</div>
+</div>
+<script type="text/javascript">
+$("#addcat").click(function(){
+	$("#newcat").append('<tr><td><input type="hidden" name="newclassid[]" value="0"></td><td><input type="text" class="text text60" name="neworder[]" value="0"></td><td><input type="text" class="text text160" name="newname[]" value="" style="font-weight:bold;"></td><td>&nbsp;</td><td>&nbsp;</td></tr>');
+});
+function addBranch(cid){
+	$("#cat"+cid).append('<tr><td><input type="hidden" name="newclassid[]" value="'+cid+'"></td><td><input type="text" class="text text60" name="neworder[]" value="0"></td><td>|——<input type="text" class="text text160" name="newname[]" value=""></td><td>&nbsp;</td><td>&nbsp;</td></tr>');
+}
+function openWindow(branchid,operation){
+	var sw=Math.floor((window.screen.width/2-300));
+    var sh=Math.floor((window.screen.height/2-280));
+	window.open(ADMINSCRIPT+'?action=$action&operation='+operation+'&branchid='+branchid,'dialog','Width=600,Height=400,toolbar=no,menubar=no,directories=no,top='+sh+',left='+sw+',resizable=yes,scrollbars=yes,center=yes,help=no,alwaysRaised=yes,location=no, status=no',false);
+}
+</script>

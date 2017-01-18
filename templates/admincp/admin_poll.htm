@@ -1,0 +1,177 @@
+<!--{if $operation=='addnew' || $operation=='edit'}-->
+<script type="text/javascript" src="static/js/Calendar4.js"></script>
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.poll.manage} &raquo; {if $operation eq 'edit'}{$lang.poll.edit}{else}{$lang.poll.addnew}{/if}</h2>
+</div>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SavePoll()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+<form name="poll" action="{$adminscript}?action=poll&operation=save" method="post">
+<input type="hidden" name="pollid" value="{$poll.pollid}">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="form-table">
+    <tr>
+      <td width="60">{$lang.poll.subject}：</td>
+      <td><input type="text" class="textinput" style="width:400px;" name="pollnew[subject]" id="poll_subject" value="{$poll.subject}"></td>
+    </tr>
+    <tr>
+      <td>{$lang.poll.type}：</td>
+      <td>
+		  <input type="radio" name="pollnew[type]" value="radio" {if $poll.type!='checkbox'} checked="checked"{/if}> {$lang.poll.radio}　
+		  <input type="radio" name="pollnew[type]" value="checkbox" {if $poll.type=='checkbox'} checked="checked"{/if}> {$lang.poll.checkbox}
+	  </td>
+    </tr>
+    <tr>
+      <td>{$lang.poll.option}：</td>
+      <td>
+	  <!--{if $operation=='addnew'}-->
+	  <textarea style="width:400px; height:80px" name="polloptions"></textarea> {$lang.poll_tips_0}
+	  <!--{elseif $operation=='edit'}-->
+	  <table width="100%" cellpadding="0" cellspacing="0" border="0" id="polloptions">
+		<tr id="Item0">
+			<td width="40">{$lang.sort}</td>
+			<td width="210">{$lang.poll.optionname}</td>
+			<td width="50">{$lang.poll.votes}</td>
+			<td><a href="javascript:;" onClick="AddOption()">{$lang.poll.addoption}</a></td>
+		</tr>
+		<!--{foreach from=$polloptions item=o key=k}-->
+		 <tr id="Item{$k+1}">
+			<td><input class="textinput" style="width:30px;" name="ordernum[]" value="{$o.ordernum}"></td>
+			<td><input class="textinput" style="width:200px;" name="optionname[]" value="{$o.optionname}"></td>
+			<td><input class="textinput" style="width:40px;" name="votes[]" value="{$o.votes}"></td>
+			<td><a href="javascript:;" onClick="DropOption({$k+1})">{$lang.poll.dropoption}</a><input type="hidden" name="optionid[]" value="{$o.optionid}"></td>
+		</tr>
+		<!--{/foreach}-->
+	  </table>
+	  <!--{/if}-->
+	  </td>
+    </tr>
+	<tr>
+		<td>{$lang.poll.start}：</td>
+		<td>
+			<input type="text" class="textinput" style="width:100px;" name="pollnew[date_start]" value="{$poll.date_start}" onclick="MyCalendar.SetDate(this)">　{$lang.poll.end}：
+			<input type="text" class="textinput" style="width:100px;" name="pollnew[date_end]" value="{$poll.date_end}" onclick="MyCalendar.SetDate(this)">
+		</td>
+	</tr>
+    <tr>
+      <td>{$lang.poll.message}：</td>
+      <td><textarea name="pollnew[message]" style="width:98%; height:200px;">{$poll.message}</textarea></td>
+    </tr>
+  </table>
+</form>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SavePoll()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+<script type="text/javascript">
+var option_delete = '{$lang.poll.dropoption}';
+{literal}function AddOption(){ 
+	var signFrame = $$("polloptions");
+	//添加行
+	var rowID = signFrame.rows.length;
+	var newTR = signFrame.insertRow(signFrame.rows.length);
+	newTR.id = "Item" + rowID;
+  	//添加列:序号
+  	var newNameTD=newTR.insertCell(0);
+	newNameTD.innerHTML = '<input class="textinput" style="width:30px;" name="ordernum[]" value="0">';
+	//将行号推进下一行
+	var newNameTD=newTR.insertCell(1);
+	newNameTD.innerHTML = '<input class="textinput" style="width:200px;" name="optionname[]">';
+	var newNameTD=newTR.insertCell(2);
+	newNameTD.innerHTML = '<input class="textinput" style="width:40px;" name="votes[]" value="0">';
+	var newNameTD=newTR.insertCell(3);
+	newNameTD.innerHTML = '<a href="javascript:;" onClick="DropOption('+rowID+')">'+option_delete+'</a><input type="hidden" name="optionid[]" value="0">';
+	rowID++;
+}
+//删除指定行
+function DropOption(RowID){
+	var signFrame = $$('polloptions');
+	//获取将要删除的行的Index
+	var Row = $$('Item'+RowID);
+	var rowIndex = Row.rowIndex;
+	//删除指定Index的行
+	if(rowIndex){
+	   signFrame.deleteRow(rowIndex);
+	}
+}
+
+var hassubmited = false;
+function SavePoll(){
+	if(hassubmited) return false;
+	var theForm = document.poll;
+    if(!$("#poll_subject").val()){
+	   return false;
+    }	
+    hassubmited = true;
+    theForm.submit();
+    return true;
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SavePoll();
+	   return false;
+	}
+}
+</script>
+{/literal}
+</div>
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.poll.manage} &raquo; {$lang.poll.list}　{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+	 <div class="searchbox">
+		<input type="text" name="q" id="q" value="{$filter.key}" class="textinput" style="width:145px;" />
+		<span class="btn btn-dft" onclick="ListTable('q='+$('#q').val())" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.search}</span></span>
+	 </div>
+</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onClick="Drop('pollid[]','{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onClick="LoadPage('operation=addnew')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span>{$lang.poll.addnew}</span></span>
+	<span class="btn btn-dft" onClick="LoadPage('{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+  <tr>
+    <th scope="col" width="20"><input type="checkbox" name="pollid[]" value="0" onClick="checkAll(this,'pollid[]')"></th>
+    <th scope="col" width="20"><img src="images/icon_view.gif" border="0" width="16" height="16"></th>
+    <th scope="col">{$lang.poll.subject}</th>
+    <th scope="col" width="40" class="tocenter">{$lang.poll.type}</th>
+	<th scope="col" width="50" class="tocenter">{$lang.poll.total}</th>
+	<th scope="col" width="100">{$lang.poll.author}</th>
+	<th scope="col" width="40" class="tocenter">{$lang.poll.closed}</th>
+    <th scope="col" width="140" class="last">{$lang.poll.dateline}</th>
+  </tr>
+  <!--{foreach from=$polls item=poll}-->
+  <tr>
+    <td><input type="checkbox" name="pollid[]" value="{$poll.pollid}" onClick="checkThis(this)"></td>
+    <td><a href="polldisplay.php?pollid={$poll.pollid}" target="_blank"><img src="images/icon_view.gif" border="0" width="16" height="16"></a></td>
+    <td><a href="{$adminscript}?action=poll&operation=edit&pollid={$poll.pollid}">{$poll.subject}</a></td>
+	<td class="tocenter">{if $poll.type=='radio'}{$lang.poll.radio}{else}{$lang.poll.checkbox}{/if}</td>
+	<td class="tocenter">{$poll.total}</td>
+	<td>{$poll.author}</td>
+    <td class="tocenter"><img src="images/{if $poll.status==1}yes.gif{else}no.gif{/if}" border="0" onClick="toggle(this,'operation=toggle_status&pollid={$poll.pollid}')"></td>
+    <td><span class="mdate">{$poll.dateline|date_format:'%Y-%m-%d %H:%M'}</span></td>
+  </tr>
+  <!--{/foreach}-->
+  <tr>
+      <td colspan="8">{$lang.select}：
+		<a href="javascript:;" onClick="selectAll('pollid[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onClick="cancelAll('pollid[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onClick="reverseAll('pollid[]')">{$lang.reverseselect}</a>
+	  </td>
+  </tr>
+</table>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onClick="Drop('pollid[]','{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onClick="LoadPage('operation=addnew')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span>{$lang.poll.addnew}</span></span>
+	<span class="btn btn-dft" onClick="LoadPage('{$querystring}')" onMouseOver="this.className='btn btn-hover'" onMouseUp="this.className='btn btn-hover'" onMouseDown="this.className='btn btn-active'" onMouseOut="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<!--{/if}-->

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$topic.subject}_{$topic.name}_{$cfg.sysname}</title>
+<meta name="keywords" content="{$cfg.keywords}" />
+<meta name="description" content="{$cfg.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position"> <a href="./">网站首页</a> > 
+		<a href="bbs.php">互动交流</a> >
+		<a href="forum.php?fid={$topic.fid}">{$topic.name}</a> >
+		{$topic.subject}
+	</span>
+</div>
+<div class="area">
+	<div class="pagediv">
+		<span class="right"><a href="post.php?action=newreply&tid={$topic.tid}&page={$page}">回复</a> <a href="post.php?action=newpost&fid={$topic.fid}">发表话题</a></span>
+		<span><a href="{$prev}">上一主题</a> | <a href="{$next}">下一主题</a></span>
+		<span class="pagebox">{$pagelink}</span>
+	</div>
+	<!--{foreach from=$messages.list item=me name=mm}-->
+	<div class="questionframe">
+		<!--{if $smarty.foreach.mm.first}-->
+		<div class="titlebar">
+			<span class="more"><a href="javascript:;">打印</a></span>
+			{$topic.subject}
+		</div>
+		<!--{/if}-->
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+			<td class="questionauthor">
+				<div class="author"><strong>{$me.author}</strong></div>
+				<div class="avatar"><img src="images/noavatar.gif" border="0" width="120" height="120" /></div>
+			</td>
+			<td class="questioncontent">
+				<div class="questioninfo">
+					<span class="fontsize">大 中 小 <strong>{$me.floorno}<sup>#</sup></strong></span>
+					发表于 {$me.dateline|date_format:'%Y-%m-%d %H:%M'}
+				</div>
+				<!--{if $smarty.session.admin_user && $smarty.session.admin_pass}-->
+				<div class="toolbar">
+					<!--{if $me.first==1}-->
+					<a href="post.php?action=edittopic&cid={$me.cid}&id={$me.qid}">编辑</a> 
+					<a href="post.php?action=droptopic&cid={$me.cid}&id={$me.qid}" onclick="return confirm('此操作不能撤销,您确定要删除吗?')">删除主题</a>
+					<!--{else}-->
+					<a href="post.php?action=editpost&aid={$me.aid}">编辑</a> 
+					<a href="post.php?action=droptopic&cid={$me.cid}&id={$me.qid}" onclick="return confirm('此操作不能撤销,您确定要删除吗?')">删除主题</a>
+					<a href="post.php?action=droppost&id={$me.qid}&aid={$me.aid}" onclick="return confirm('此操作不能撤销,您确定要删除吗?')">删除回复</a>
+					<!--{/if}-->
+				</div>
+				<!--{/if}-->
+				<div class="questionbody">{$me.message}</div>
+				<div class="questionbottom">引用 回复 <a href="#">TOP</a> </div>
+			</td>
+		  </tr>
+		</table>
+	</div>
+	<!--{/foreach}-->
+	<div class="pagediv">
+		<span class="right"><a href="post.php?action=newreply&tid={$topic.tid}&page={$page}">回复</a> <a href="post.php?action=newpost&fid={$topic.fid}">发表话题</a></span>
+		<span><a href="{$prev}">上一主题</a> | <a href="{$next}">下一主题</a></span>
+		<span class="pagebox">{$pagelink}</span>
+	</div>
+</div>
+<div class="adv0"><img src="images/adv5.png" border="0" /></div>
+{include file='footer.htm'}

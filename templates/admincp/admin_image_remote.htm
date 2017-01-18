@@ -1,0 +1,47 @@
+<script src="static/js/image.js" type="text/javascript"></script>
+<div class="main-div">
+	<div class="pos-div">
+		 <h2>{$lang.cp_home} &raquo; {$lang.image.manage} &raquo; {$image.title} &raquo; {$lang.image.upload}</h2>
+	</div>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';SaveFile()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';LoadPage('operation=localfile&cid={$cid}&gid={$gid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.localfile}</span></span>
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';LoadPage('cid={$cid}&gid={$gid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.viewfiles}</span></span>
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';Location('{$adminscript}?action=image&cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.backgroups}</span></span>
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';Location('{$adminscript}?action=image&operation=addnew&cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.image.addnew}</span></span>
+		<span class="btn btn-dft" id="add1" onclick="this.className='btn btn-active';AddSignURL()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.addnew}</span></span>
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';window.location.reload();" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+		<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+	</div>
+	<form name="form1" method="post" action="{$adminscript}?action=imagefile&operation=save&cid={$cid}&gid={$gid}">
+	<input type="hidden" id="txtTRLastIndex" value="1" />
+	<table border="0" cellspacing="0" cellpadding="0" id="URLFrame" class="form-table">
+	  <tr id="UrlItem0">
+		<td>
+			<div style="padding:5px 0;">{$lang.imagefile.downfile}£º<input type="checkbox" name="downfile" value="1" checked="checked" /></div>
+			<div class="title-div"><span class="label1">{$lang.imagefile.urls}£º</span><span class="label3"><input name="imageurls[]" type="text" class="textinput" style="width:480px;" /></span></div>
+			<div class="title-div"><span class="label2">{$lang.imagefile.description}£º</span><span class="label3"><textarea name="description[]" style="width:480px; height:65px;"></textarea></span></div>
+		</td>
+	  </tr>
+	</table>
+	</form>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';SaveFile()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';LoadPage('operation=localfile&cid={$cid}&gid={$gid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.localfile}</span></span>
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';LoadPage('cid={$cid}&gid={$gid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.viewfiles}</span></span>
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';Location('{$adminscript}?action=image&cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.imagefile.backgroups}</span></span>
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';Location('{$adminscript}?action=image&operation=addnew&cid={$cid}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.image.addnew}</span></span>
+		<span class="btn btn-dft" id="add1" onclick="this.className='btn btn-active';AddSignURL()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.addnew}</span></span>
+		<span class="btn btn-dft" onclick="this.className='btn btn-active';window.location.reload();" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+		<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+	</div>
+</div>
+{literal}<script type="text/javascript">
+document.onkeydown = function(e){
+	if(!e)e=window.event;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveFile()
+	   return false;
+	}
+}
+</script>{/literal}

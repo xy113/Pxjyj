@@ -1,0 +1,49 @@
+<div class="main-div">
+<div class="messagebox">
+<!--{if $msg_type==0}-->
+<h3 class="ok">{$msg_detail}</h3>
+<!--{elseif $msg_type==1}-->
+<h3 class="error">{$msg_detail}</h3>
+<!--{else}-->
+<h3 class="confirm">{$msg_detail}</h3>
+<!--{/if}-->
+{if $auto_redirect}
+<div class="messagediv" id="redirectionMsg">{$lang.auto_redirect}</div>
+{else}
+<div class="messagediv" id="redirectionMsg">{$lang.manual_redirect}</div>
+{/if}
+<div class="messagediv"><img src="images/arrow.gif" border="0" align="absmiddle" width="9" height="9" />
+	{foreach from=$links item=aa} 
+	<a href="{$aa.href}" target="{$aa.target}">{$aa.text}</a> 
+	{/foreach}
+</div>
+</div>
+</div>
+<!--{if $auto_redirect}-->
+<script type="text/javascript">
+<!--
+var seconds = 3;
+var defaultUrl = "{$defaulturl}";
+{literal}
+window.onload = function(){
+  if (defaultUrl == 'javascript:history.go(-1)' && window.history.length == 0){
+    document.getElementById('redirectionMsg').innerHTML = '';
+    return;
+  }
+  window.setInterval(redirection, 1000);
+}
+function redirection(){	
+    if (seconds <= 0){
+    	window.clearInterval();
+    	return;
+    }
+  	seconds --;
+  	document.getElementById('spanSeconds').innerHTML = seconds;
+  	if (seconds == 0){
+    	window.clearInterval();
+    	location.href = defaultUrl;
+  	}
+}{/literal}
+//-->
+</script>
+<!--{/if}-->

@@ -1,0 +1,58 @@
+<div class="main-div">
+	<div class="pos-div">
+		<h2>{$lang.cp_home} &raquo; {$lang.admin.manage} &raquo; {$lang.admin.account_modify}</h2>
+	</div>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="SaveAdmin()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save_edit}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+		<span class="ctrlenter">　{$lang.ctrlenter}</span>
+	</div>
+	<form action="{$adminscript}?action=account&operation=save" method="post" name="admin" style="margin:10px 0px;">
+	<table border="0" cellspacing="0" cellpadding="0" class="form-table">
+	  <tr>
+		<td width="100">用户名：</td>
+		<td><input name="membernew[username]" type="text" class="textinput" value="{$member.username}" readonly="" style="width:220px;" />　不可修改</td>
+	  </tr>
+	  <tr>
+		<td>登录密码：</td>
+		<td><input name="membernew[password]" type="password" class="textinput" style="width:220px;" />　{$lang.admintxt.3}</td>
+	  </tr>
+		<tr>
+		<td>{$lang.admin.im}：</td>
+		<td><input name="membernew[userim]" type="text" class="textinput" value="{$member.userim}" style="width:220px;" /></td>
+	  </tr>
+		<tr>
+		<td>{$lang.admin.question}：</td>
+		<td><input name="membernew[question]" type="text" value="{$member.question}" class="textinput" style="width:220px;"/></td>
+	  </tr>
+	  <tr>
+		<td>{$lang.admin.answer}：</td>
+		<td><input name="membernew[answer]" type="text" class="textinput" style="width:220px;" />　{$lang.admintxt.3}</td>
+	  </tr>
+	  <tr>
+		<td>{$lang.admin.email}：</td>
+		<td><input name="membernew[email]" type="text" value="{$member.email}" class="textinput" style="width:220px;" /></td>
+	</table>
+	</form>
+	<div class="toolbar">
+		<span class="btn btn-dft" onclick="SaveAdmin()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save_edit}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+		<span class="ctrlenter">　{$lang.ctrlenter}</span>
+	</div>
+</div>
+{literal}<script type="text/javascript">
+var hassubmited = false;
+function SaveAdmin(){
+	var theForm = document.admin;
+	if(hassubmited)return false;
+    hassubmited = true;
+    theForm.submit();
+    return true;
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveAdmin();
+	}
+}
+</script>{/literal}

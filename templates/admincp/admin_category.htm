@@ -1,0 +1,61 @@
+<!--{if $operation=='addnew'||$operation=='edit'}-->
+{include file='libs/newcategory.htm'}
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.category.manage} &raquo; {$lang.category.$ctype} &raquo; {$lang.category.list}</h2>
+</div>
+  <div class="toolbar">
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew&ctype={$ctype}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.category.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('ctype={$ctype}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+  </div>
+  <table border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th width="240">{$lang.category.name}</th>
+	  <th width="20" class="tocenter"><img src="images/icon_view.gif" border="0" width="16" height="16" /></th>
+      <th width="40" class="tocenter" style="cursor:pointer;" onclick="LoadPage('ctype={$ctype}')" title="{$lang.click_resort}">{$lang.sort}</th>
+	  <th width="40" class="tocenter">{$lang.category.disabled}</th>
+      <th class="last">{$lang.keywords}</th>
+    </tr>
+	<!--{foreach from=$categories.0 item=cc}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td onmouseover="showMenuBox({$cc.cid})" onmouseout="hideMenuBox({$cc.cid})">
+	      <img src="images/menu_minus.gif" border="0" align="absmiddle" width="9" height="9" /> 
+	      <b><span title="{$lang.click_edit}" onclick="Edit(this,'operation=editname&cid={$cc.cid}')">{$cc.name}</span></b> [ID:{$cc.cid}] 
+	      <span class="c_box" id="box_{$cc.cid}">
+			  <b class="icon-edit" tabindex="0" title="{$lang.edit}" onclick="LoadPage('operation=edit&ctype={$ctype}&cid={$cc.cid}')"></b>
+			  <b class="icon-drop" tabindex="0" title="{$lang.drop}" onclick="DropOne({$cc.cid})"></b>
+			  <b class="icon-add" tabindex="0" title="{$lang.add}" onclick="LoadPage('operation=addnew&ctype={$ctype}&fid={$cc.cid}')"></b>
+		  </span>
+	  </td>
+	  <td class="tocenter"><a href="{$cc.caturl}" target="_blank"><img src="images/icon_view.gif" title="{$lang.view}" border="0" width="16" height="16" /></a></td>
+      <td class="tocenter"><span title="{$lang.click_edit}" onclick="Edit(this,'operation=editorder&cid={$cc.cid}')">{$cc.displayorder}</span></td>
+      <td class="tocenter"><img src="images/{if $cc.disabled==0}yes.gif{else}no.gif{/if}" border="0" title="{$lang.click_switch}" onclick="toggle2(this,'operation=toggle_disabled&cid={$cc.cid}')" /></td>
+	  <td>{$cc.keywords}</td>
+    </tr>
+	<!--{assign var='sub' value=$cc.cid}-->
+    <!--{foreach from=$categories.$sub item=ccc}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td style="padding-left:20px;" onmouseover="showMenuBox({$ccc.cid})" onmouseout="hideMenuBox({$ccc.cid})">
+	       <img src="images/menu_arrow.gif" border="0" align="absmiddle" width="9" height="9" /> 
+		   <span title="{$lang.click_edit}" onclick="Edit(this,'operation=editname&cid={$ccc.cid}')">{$ccc.name}</span>  [ID:{$ccc.cid}]
+	       <span class="c_box" id="box_{$ccc.cid}"> 
+			  <b class="icon-edit" tabindex="0" title="{$lang.edit}" onclick="LoadPage('operation=edit&ctype={$ctype}&cid={$ccc.cid}')"></b>
+			  <b class="icon-drop" tabindex="0" title="{$lang.drop}" onclick="DropOne({$ccc.cid})"></b>
+			  <b class="icon-add" tabindex="0" title="{$lang.add}" onclick="LoadPage('operation=addnew&ctype={$ctype}&fid={$cc.cid}')"></b>
+		   </span>
+	  </td>
+	  <td class="tocenter"><a href="{$ccc.caturl}" target="_blank"><img src="images/icon_view.gif" title="{$lang.view}" border="0" width="16" height="16" /></a></td>
+      <td class="tocenter"><span title="{$lang.click_edit}" onclick="Edit(this,'operation=editorder&cid={$ccc.cid}')">{$ccc.displayorder}</span></td>
+      <td class="tocenter"><img src="images/{if $ccc.disabled==0}yes.gif{else}no.gif{/if}" border="0" title="{$lang.click_switch}" onclick="toggle2(this,'operation=toggle_disabled&cid={$ccc.cid}')" /></td>
+	  <td>{$bb.keywords}</td>
+    </tr>
+    <!--{/foreach}-->
+	<!--{/foreach}-->
+  </table>
+  <div class="toolbar">
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew&ctype={$ctype}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.category.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('ctype={$ctype}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+  </div>
+</div>
+<!--{/if}-->

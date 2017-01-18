@@ -1,0 +1,35 @@
+<div class="main-div">
+	<div class="pos-div">
+		<h2>$lang[cp_home] &raquo; 栏目管理</h2>
+	</div>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#form1').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=$operation&branchid=$branchid')"><span>刷新</span></b>
+	</div>
+	<form name="form1" id="form1" method="post" action="">
+	<input type="hidden" name="formsubmit" value="yes">
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+        <tr>
+          <th width="50"><input type="checkbox" class="checkbox" onClick="checkAll(this,'delete[]')"> 删?</th>
+          <th width="80">显示顺序</th>
+          <th>栏目名称</th>
+        </tr>
+		{loop $categories $cat}
+        <tr>
+          <td><input type="checkbox" name="delete[]" value="$cat[cid]"></td>
+          <td><input type="text" class="text text60" name="categorynew[{$cat[cid]}][displayorder]" value="$cat[displayorder]"></td>
+          <td><input type="text" class="text text160" name="categorynew[{$cat[cid]}][name]" value="$cat[name]"></td>
+        </tr>
+		{/loop}
+        <tr>
+          <td>新增:</td>
+          <td><input type="text" class="text text60" name="neworder" value="0"></td>
+          <td><input type="text" class="text text160" name="newname"></td>
+        </tr>
+      </table>
+        </form>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#form1').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=$operation&branchid=$branchid')"><span>刷新</span></b>
+	</div>
+</div>

@@ -1,0 +1,47 @@
+<div class="main-div">
+	<div class="pos-div">
+		<h2>{$lang.cp_home} &raquo; 适用查询管理</h2>
+	</div>
+  <div class="toolbar">
+		<span class="btn btn-dft" onclick="Drop('delete[]')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+  </div>
+  <table border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th width="25"><input type="checkbox" onclick="checkAll(this,'delete[]')" /></th>
+      <th width="180" style="cursor:pointer;" title="{$lang.click_resort}" onclick="Sort()">{$lang.source.sitename}</th>
+	  <th width="40" class="tocenter">{$lang.sort}</th>
+      <th class="last">{$lang.source.siteurl}</th>
+    </tr>
+    <!--{foreach from=$links item=link}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox" name="delete[]" value="{$link.id}" /></td>
+      <td><span title="{$lang.click_edit}" onclick="Edit(this,'operation=edittitle&id={$link.id}')">{$link.title}</span></td>
+	  <td class="tocenter"><span title="{$lang.click_edit}" onclick="Edit(this,'operation=editorder&id={$link.id}')">{$link.displayorder}</span></td>
+      <td><span title="{$lang.click_edit}" onclick="Edit(this,'operation=editurl&id={$link.id}')">{$link.url}</span></td>
+    </tr>
+    <!--{/foreach}-->
+    <tr>
+      <td colspan="4">
+	        标题: <input name="title" type="text" class="textinput" style="width:100px;" />　 
+			链接地址: <input type="text" name="url" value="http://"  class="textinput" style="width:280px;" />　        
+			{$lang.sort}: <input name="displayorder" type="text" value="0"  class="textinput" style="width:30px;" />
+			<b class="button" tabindex="0" id="btn_s"><span>{$lang.add}</span></b>
+      </td>
+    </tr>
+  </table>
+  <div class="toolbar">
+		<span class="btn btn-dft" onclick="Drop('delete[]')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+  </div>
+</div>
+{literal}<script type="text/javascript">
+$("#btn_s").click(function(){
+	if($("input[name=title]").val() && $("input[name=url]").val()){
+		var data = {'title':$("input[name=title]").val(),'url':$("input[name=url]").val(),'displayorder':$("input[name=displayorder]").val()};
+		$.get(url+"&operation=save",data,function(response){
+			$("#bodyFrame").html(response);
+		})
+	}
+});
+</script>{/literal}

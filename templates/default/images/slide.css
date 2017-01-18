@@ -1,0 +1,64 @@
+/* CSS Document */
+#featured {
+	overflow: hidden; width: 620px; position: relative; height: 300px
+}
+#featured .word {
+	z-index:10;
+	left: 0px;
+	width: 610px;
+	color: #fff;
+	bottom: 0px;
+	position: absolute;
+	height: 32px;
+	padding:5px;
+}
+#featured .word h3 {
+	font-size: 13px;
+	background:none;
+}
+#featured .ui-els-hide {
+	display: none
+}
+#thumbs {
+	width: 620px; list-style-type: none; height: 28px;
+}
+
+#thumbs li {
+	display: inline-block; width: 52px; margin-right: 4px; height: 24px; clear:none;
+}
+#thumbs ul {
+	margin-top: 3px;
+	text-align:center;
+}
+#thumbs li.last_img {
+	margin-right: 4px
+}
+#thumbs li.first {
+	margin: 5px 10px 0 15px; width: 20px; cursor: pointer; height: 13px
+}
+#thumbs li.last {
+	margin: 5px 12px 0pt 8px; width: 20px; cursor: pointer; height: 13px
+}
+#thumbs li a {
+	border-right: #9c9c9c 2px solid; border-top: #9c9c9c 2px solid; display: block; font-size: 0px; border-left: #9c9c9c 2px solid; width: 48px; border-bottom: #9c9c9c 2px solid
+}
+#thumbs li a:hover {
+	border-right: #99cc33 2px solid; border-top: #99cc33 2px solid; border-left: #99cc33 2px solid; border-bottom: #99cc33 2px solid
+}
+#thumbs li a.current {
+	border: #5fc243 2px solid;
+}
+#thumbs li.first img {
+	border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px
+}
+#thumbs li.last img {
+	border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px
+}
+#topstory {
+	margin-top: 5px; margin-left: 5px; background: #fff; float: left; width: 490px; height: 237px
+}
+#highlight {
+	padding-right: 5px; padding-left: 5px; float: left; padding-bottom: 5px; width: 470px; padding-top: 5px
+}
+
+#featured .image img{width:620px; height:300px;}

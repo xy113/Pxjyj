@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>图片选择器</title>
+<script src="include/language/lang.zh_cn.js" type="text/javascript"></script>
+<link href="images/style.css" rel="stylesheet" type="text/css" /></head>
+{literal}
+<style type="text/css">
+body{font-family:"宋体";}
+.napisdiv {position:absolute;z-index:3;display:none; margin:10px auto; top:5px; left:150px;}
+.napisdiv img{border:1px #333333 solid;max-width:320px;max-height:300px;}
+.list td a {display:block;}
+</style>
+{/literal}
+</head>
+
+<body>
+<div class="main-div" style="height:340px; overflow:auto;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+		<tr bgcolor="#FFFFFF">
+			<th height="24">目录和文件名</td>
+			</th><th width="70">文件大小</td>
+			</th><th width="130">修改时间</td>
+			</th><th width="40" class="last">预览</td>
+		</th></tr>
+		<!--{foreach from=$folders item=fd}-->
+		<tr onmouseover="this.className='active'" onmouseout="this.className=''">
+			<td height="24" class="td-right"><a href="{$fd.folderlink}"><img src="images/{$fd.img}" border="0" align="absbottom" /> {$fd.filename}</a></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<!--{/foreach}-->
+		<!--{foreach from=$filetree item=tree}-->
+		<tr onmouseover="this.className='active'" onmouseout="this.className=''">
+			<td  height="24" class="td-right"><a href="javascript:;" title="{$lang.click_choose}" onclick="ReturnImg('{$tree.filepath}')"><img src="images/{$tree.img}" border="0" align="absbottom" /> {$tree.filename}</a></td>
+			<td  align="center">{$tree.filesize}</td>
+			<td  align="center">{$tree.filetime}</td>
+			<td  align="center"><a href="javascript:;" onclick="ChangeImage('{$tree.filepath}');"><img src="images/img/picviewnone.gif" width="16" height="16" border="0" align="absmiddle" title="预览" /></a></td>
+		</tr>
+		<!--{/foreach}-->
+	</table>
+</div>
+<form action="{$adminscript}?action=selectimg&operation=upload&f={$f}" method="post" enctype="multipart/form-data" name="form1" id="form1" onsubmit="return CheckUpload(this)">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-size:12px;">
+		<tr>
+			<td height="35" style="vertical-align:middle; text-align:center;">
+				<input type="file" name="imgfile" class="textinput" style="height:24px;" />
+				水印:<input type="checkbox" name="watermark" value="1" checked="checked" style="vertical-align:middle;" /> 
+				缩略图:<input type="checkbox" name="createsmall" value="1" checked="checked" style="vertical-align:middle;" />
+				宽:<input name="width" type="text" value="{$width}" class="textinput" style="width:40px;" />
+				高:<input name="height" type="text" value="{$height}"  class="textinput" style="width:40px;" />
+				<span class="btn btn-dft" onclick="document.form1.submit()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>上传</span></span>
+			</td>
+		</tr>
+	</table>
+</form>
+<div id="floater" class="napisdiv">
+<a href="javascript:;" onclick="$$('floater').style.display='none';"><img src="images/img/picviewnone.gif" id="picview" border="0" title="单击关闭预览" /></a></div>
+<script type="text/javascript">
+var f = window.opener.document.{$f} || window.opener.document.getElementById('{$f}');
+{literal}function $$(o){
+	return document.getElementById(o);
+}
+function ReturnImg(reimg){
+	f.value=reimg;
+	if(document.all) window.opener=true;
+    window.close();
+}
+function ChangeImage(surl){ 
+	$$('floater').style.display='block';
+	$$('picview').src = surl; 
+}
+function CheckUpload(fileobj){
+    if(!fileobj.file.value){
+	   alert(upload_file_empty);
+		 return false;
+	}
+	return true;
+}{/literal}
+</script>
+</body>
+</html>

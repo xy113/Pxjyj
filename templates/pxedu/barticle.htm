@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$article.title}_{$branch.branchname}_{$config.sysname}</title>
+<meta name="keywords" content="{$article.tags},{$article.keywords},{$config.keywords}" />
+<meta name="description" content="{$article.summary},{$article.description},{$config.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+<script src="static/js/jquery.js" type="text/javascript"></script>
+<script src="static/js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position">您现在的位置 > <a href="index.php">网站首页</a> > <a href="bindex.php?branchid={$branch.branchid}">{$branch.branchname}</a> > 正文</span>
+</div>
+<div class="area" id="arcframe">
+	<div class="title-green"></div>
+	<h1 class="title">{$article.title}</h1>
+	<div class="arcinfo">时间：{$article.dateline|date_format:'%Y-%m-%d %H:%S'}　点击：{$article.views}　编辑：{$article.author}</div>
+	<div class="arcbody">{$article.content}</div>
+</div>
+<div class="adv0"><img src="images/adv5.png" border="0" /></div>
+{include file='footer.htm'}

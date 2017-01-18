@@ -1,0 +1,93 @@
+<!--{if $operation=='addnew' || $operation=='edit'}-->
+<div class="main-div">
+<div class="pos-div">
+<h2>{$lang.cp_home} &raquo; 讨论区管理 &raquo; 板块设置 &raquo; {if $operation=='addnew'}添加板块{else}编辑板块{/if}</h2>
+</div>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveForum()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+    <span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+<form name="forum" method="post" action="{$adminscript}?action=forum&operation=save">
+<input type="hidden" name="fid" value="{$forum.fid}">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="form-table">
+    <tr>
+      <td width="60">板块名称：</td>
+      <td><input name="forumnew[fname]" type="text" class="textinput" id="forum_fname" style="width:200px;" value="{$forum.fname}"></td>
+    </tr>
+    <tr>
+      <td>关键字：</td>
+      <td><input name="forumnew[keywords]" type="text" class="textinput" id="forum_keywords" style="width:400px;" value="{$forum.keywords}"></td>
+    </tr>
+    <tr>
+      <td>分类描述：</td>
+      <td><textarea name="forumnew[description]" id="forum_description" style="width:400px; height:100px;">{$forum.description}</textarea></td>
+    </tr>
+  </table>
+  </form>
+ <div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveForum()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+    <span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+</div>
+{literal}
+<script type="text/javascript">
+var hassubmited = false;
+function SaveForum(){
+	if(hassubmited)return false;
+	if(!$("#forum_fname").val()){
+		showError("板块名称不能为空。");
+		return false;
+	}
+	document.forum.submit();
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveForum();
+	}
+}
+</script>
+{/literal}
+<!--{else}-->
+<div class="main-div">
+	 <div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; 讨论区管理 &raquo; 板块设置</h2>
+	 </div>
+	 <div class="toolbar">
+		<span class="btn btn-dft" onclick="Drop('fid[]')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><strong>{$lang.drop}</strong></span></span>
+		<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>添加板块</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	</div>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th scope="col" width="20"><input type="checkbox" onClick="checkAll(this,'fid[]')"></th>
+      <th scope="col" width="20">ID</th>
+      <th scope="col" width="160">板块名称</th>
+      <th scope="col" class="tocenter" width="80">发帖需要审核</th>
+      <th scope="col" class="tocenter" width="80">回帖需要审核</th>
+	  <th scope="col" class="tocenter" width="30">排序</th>
+	  <th scope="col">关键字</th>
+    </tr>
+	<!--{foreach from=$forums item=ff}-->
+    <tr>
+      <td><input type="checkbox" name="fid[]" value="{$ff.fid}" onClick="checkThis(this)"></td>
+      <td>{$ff.fid}</td>
+      <td><a href="{$adminscript}?action=forum&operation=edit&fid={$ff.fid}">{$ff.fname}</a></td>
+      <td class="tocenter"><img src="images/{if $ff.poststatus==1}yes.gif{else}no.gif{/if}" border="0" onClick="toggle(this,'operation=toggle_post&fid={$ff.fid}')"></td>
+      <td class="tocenter"><img src="images/{if $ff.replystatus==1}yes.gif{else}no.gif{/if}" border="0" onClick="toggle(this,'operation=toggle_reply&fid={$ff.fid}')"></td>
+	  <td class="tocenter"><span onClick="Edit(this,'operation=edit_name&fid={$ff.fid}')">{$ff.displayorder}</span></td>
+	  <td>{$ff.keywords}</td>
+    </tr>
+	<!--{/foreach}-->
+  </table>
+  	 <div class="toolbar">
+		<span class="btn btn-dft" onclick="Drop('fid[]')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><strong>{$lang.drop}</strong></span></span>
+		<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>添加板块</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	</div>
+</div>
+<!--{/if}-->

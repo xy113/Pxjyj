@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>新闻中心_{$config.sysname}</title>
+<meta name="keywords" content="{$config.keywords}" />
+<meta name="description" content="{$config.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+<script src="static/js/jquery.js" type="text/javascript"></script>
+<script src="static/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">var currenttab = '#tab_news';</script>
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position">您现在的位置 > <a href="index.php">网站首页</a> > <a href="news.php">新闻中心</a></span>
+</div>
+<div class="area">
+	{include file='left.htm'}
+	<div class="bodyright">
+		<div class="articlediv" id="arclist1">
+			<div class="title-green">
+				<span class="more"><a href="arclist.php?cid=2">更多</a></span>
+				<span class="menu">教育动态</span>
+			</div>
+			<ul>
+				<!--{foreach from=$articles.2 item=arc name=list}-->
+				<li{if $smarty.foreach.list.last} class="end"{/if}><span class="dateline">{$arc.dateline|date_format:'%Y-%m-%d %H:%M'}</span>·<a href="{$arc.arcurl}" target="_blank">{$arc.title}</a></li>
+				<!--{/foreach}-->
+			</ul>
+		</div>
+		
+		<div class="articlediv" id="arclist2">
+			<div class="title-green">
+				<span class="more"><a href="arclist.php?cid=3">更多</a></span>
+				<span class="menu">学校快讯</span>
+			</div>
+			<ul>
+				<!--{foreach from=$articles.3 item=arc name=list}-->
+				<li{if $smarty.foreach.list.last} class="end"{/if}><span class="dateline">{$arc.dateline|date_format:'%Y-%m-%d %H:%M'}</span>·<a href="{$arc.arcurl}" target="_blank">{$arc.title}</a></li>
+				<!--{/foreach}-->
+			</ul>
+		</div>
+   	</div>
+	<div class="clear"></div>
+</div>
+
+<div class="adv0"><img src="images/adv5.png" border="0" /></div>
+{include file='footer.htm'}

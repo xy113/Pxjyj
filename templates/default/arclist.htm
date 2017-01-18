@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$curcategory.name}-{$cfg.sysname}</title>
+<meta name="keywords" content="{$curcategory.keywords},{$cfg.keywords}" />
+<meta name="description" content="{$curcategory.description},{$cfg.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="page">
+    <div class="youpos">当前位置: <a href="/">首页</a>&raquo; {$curcategory.name}</div>
+    <div class="blank"></div>
+	<div class="article-left">
+		<ul class="videocategory">
+			<!--{foreach from=$category.article.0 item=cat}-->
+			<li{if $cat.cid==$topcategoryid} class="selected"{/if}><a href="{$cat.caturl}">{$cat.name}</a></li>
+			<!--{/foreach}-->
+		</ul>
+		<!--{if $topcategoryid>0 && $category.article.$topcategoryid}-->
+		<div class="subcategory">
+			{foreach from=$category.article.$topcategoryid item=menu}
+			<a href="{$menu.caturl}"{if $menu.cid==$smarty.get.cid} class="selected"{/if}>{$menu.name}</a>
+			{/foreach}
+		</div>
+		<!--{/if}-->
+		<ul class="related-list">
+		<!--{foreach from=$articles.list item=arc}-->
+		<li><span class="dateline">{$arc.dateline|date_format:'%Y-%m-%d %H:%M:%S'}</span><a href="{$arc.arcurl}" target="_blank">{$arc.title}</a></li>
+		<!--{/foreach}-->
+		</ul>
+		<div class="pagediv" style="text-align:center; clear:both;">{$pagelink}</div>
+	</div>
+	<div class="article-right">
+	    <div class="content-div">
+			<div class="title-div">热点文章</div>
+			<ul class="arclist">
+				{foreach from=$articles.hot item=arc}
+				<li><a href="{$arc.arcurl}">{$arc.title}</a></li>
+				{/foreach}
+			</ul>
+		</div>
+		<div class="blank"></div>
+		<div class="content-div">
+			<div class="title-div">热门图片</div>
+			{foreach from=$images.hot item=img}
+			<div class="hotimagebox">
+			    <div class="image"><a href="{$img.imgurl}" title="{$img.title}"><img src="{$img.image}" /></a></div>
+				<div class="title"><a href="{$img.imgurl}">{$img.title}</a></div>
+			</div>
+			{/foreach}
+			<div class="clear"></div>
+		</div>
+		<div class="blank"></div>
+		<div class="content-div">
+		    <div class="title-div">热门视频</div>
+			<ul class="videolist">
+				{foreach from=$videos.hot item=vod}
+				<li><a href="{$vod.vodurl}">{$vod.title}</a></li>
+				{/foreach}
+			</ul>
+		</div>
+	</div>
+	<div class="article-left" style="margin-top:10px;">
+		<div class="title-div">推广合作</div>
+		    <div style="height:132px; padding:5px; overflow:hidden;">
+			<script type="text/javascript"><!--
+			google_ad_client = "pub-7306822352785197";
+			/* 728x90, 创建于 10-5-1 */
+			google_ad_slot = "4268330469";
+			google_ad_width = 728;
+			google_ad_height = 90;
+			//-->
+			</script>
+			<script type="text/javascript"
+			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script>
+			<script type="text/javascript"><!--
+			google_ad_client = "pub-7306822352785197";
+			/* 728x90, 创建于 10-5-1 */
+			google_ad_slot = "4268330469";
+			google_ad_width = 728;
+			google_ad_height = 90;
+			//-->
+			</script>
+			<script type="text/javascript"
+			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script>
+			</div>
+		</div>
+	<div class="clear"></div>
+</div>
+{include file='footer.htm'}

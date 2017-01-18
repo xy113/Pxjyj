@@ -1,0 +1,112 @@
+<!--{if $operation=='edit'}-->
+{literal}<style type="text/css">
+#ad { position:absolute; right:60px; top:30px; width:500px; height:66px; border:0px; margin:0px; padding:0px;}
+textarea#htmlbox {margin-top:0px;padding:10px;border:1px double #666;background-color:#fafafa;height:500px;width:95%}
+.ed_button {padding:2px;}
+#ed_italic_canvas {font-style:italic;}
+#ed_bold_canvas {font-weight:bold;}
+#ed_h1_canvas {font-weight:bold;}
+#ed_h2_canvas {font-weight:bold;}
+#ed_h3_canvas {font-weight:bold;}
+#ed_h4_canvas {font-weight:bold;}
+#ed_link_canvas {color:blue;text-decoration:underline;}
+#ed_toolbar_canvas {background:#ddd;padding:5px;padding-top:2px;border:2px solid #777;float:left;margin-top:5px;}
+input {margin-right: 7px;border:1px solid #aaa;margin-top:5px;font-size:13px;}
+.preview {float:right;font-size:12px;border:1px double #785;}
+.preview h4 {font-size:14px;margin-top:0px;}
+#dynamicframe { width:98%; height:520px;border:1px double #785;}
+A:link {COLOR: #4B4B4B;text-decoration: none;}
+A:visited {COLOR: #4B4B4B;text-decoration: none;}
+A:hover {COLOR: #0E6E9E;TEXT-DECORATION: underline;}
+A:active {COLOR: #000}
+</style>{/literal}
+<script src="static/js/quicktags.js"></script>
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.tpl.manage} &raquo; {$lang.tpl.edit}</h2>
+</div>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="document.form1.submit()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.save}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+<form id="form1" name="form1" method="post" action="{$adminscript}?action=template&operation=save&file={$file}">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="form-table">
+	<tr>
+		<td align="center"><script type="text/javascript">edToolbar('htmlbox');</script></td>
+	</tr>
+	<tr>
+		<td align="center"><textarea id="htmlbox" name="tmpcontent" style="width:97%; margin:0 auto; height:450px;">{$tmpcontent}</textarea></td>
+	</tr>
+</table>
+</form>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="document.form1.submit()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.save}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('curpath={$smarty.get.curpath}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<!--{elseif $operation=='select'}-->
+<div class="main-div">
+<div class="pos-div2"><h2>{$lang.cp_home} &raquo; {$lang.tpl.manage} &raquo; {$lang.tpl.select}</h2></div>
+<div class="blank"></div>
+<h2 style="padding-left:10px;">{$lang.tpl.current}</h2>
+<div class="tmp-box">
+   <img src="{$curtmp}" width="160" height="120" border="0" />
+   <div class="tmp-name"><b>{$config.template}</b></div>
+</div>
+<div class="blank" style="border-bottom:1px #CCCCCC solid;"></div>
+<div class="blank"></div>
+<h2 style="padding-left:10px;">{$lang.tpl.list}</h2>
+<!--{foreach from=$templets item=tmp}-->
+<div class="tmp-box">
+<a href="{$adminscript}?action=template&operation=done&tmp={$tmp.name}"><img src="{$tmp.img}" title="{$lang.click_choose}" width="160" height="120" border="0"/></a>
+<div class="tmp-name">{$tmp.name}</div>
+</div>
+<!--{/foreach}-->
+<div class="blank"></div>
+</div>
+<div class="bottom-line"></div>
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.tpl.manage} &raquo; {$lang.tpl.list}</h2>
+</div>
+  <div class="toolbar">
+	<span class="btn btn-dft" onclick="history.go(-1)" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.go_back}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+  </div>
+  <table border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th>{$lang.filename}</td>
+      <th width="140">{$lang.filesize}</th>
+	  <th width="140" class="last">{$lang.filetime}</th>
+    </tr>
+	<!--{if $folderup}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td> <img src="{$folderup.img}" border="0" align="absmiddle" /> <a href="{$folderup.folderlink}">{$folderup.filename}</a></td>
+      <td></td>
+      <td></td>
+    </tr>
+	<!--{/if}-->
+    <!--{foreach from=$folders item=dir}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td> <img src="{$dir.img}" border="0" align="absmiddle" /> <a href="{$dir.folderlink}">{$dir.filename}</a></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <!--{/foreach}-->
+    <!--{foreach from=$filetree item=file}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td> <img src="{$file.img}" border="0" align="absmiddle" /> <a href="{$adminscript}?action=template&operation=edit&curpath={$curpath}&file={$file.filepath}">{$file.filename}</a></td>
+      <td>{$file.filesize}</td>
+      <td>{$file.filetime}</td>
+    </tr>
+    <!--{/foreach}-->
+  </table>
+  <div class="toolbar">
+	<span class="btn btn-dft" onclick="history.go(-1)" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.go_back}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+  </div>
+</div>
+<!--{/if}-->

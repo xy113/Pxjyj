@@ -1,0 +1,45 @@
+/* CSS Document */
+html,body{font:12px Arial; padding:0; margin:0; color:#555;}
+a{color:#2200C1;}
+form{padding:0; margin:0;}
+.clear{clear:both; height:1px; line-height:1px;}
+#topdiv {height:20px; line-height:20px; padding:5px 10px 2px; clear:both; vertical-align:middle; border-bottom:1px #C9D7F1 solid; overflow:hidden;}
+#topdiv span.form{float:left; margin:0; padding:0;}
+#topdiv span.form input{height:16px; border:1px #C9D7F1 solid; padding:0; margin:0; vertical-align:middle;}
+#topdiv span.form .btnlogin{height:18px; background:#eee; padding:2px 5px 0;}
+#topdiv span.nav {float:left; margin:0; padding:0;}
+#topdiv span.nav a{font:14px Arial; text-decoration:none; margin-right:5px;}
+#topdiv span.nav a:hover{text-decoration:underline;}
+#topdiv span.right{float:right;}
+
+#searchForm {clear:both; padding:10px;}
+#searchForm .logo-small{width:160px; float:left; display:inline-block;}
+#searchForm .form{float:left; display:inline-block; padding-top:16px; vertical-align:baseline;}
+#searchForm .form input{height:24px; font:400 14px ''; margin:0; padding:3px 5px 0; border:1px #ccc solid; vertical-align:middle;}
+#searchForm .form input.btnsearch{background:url(searchbg.png) repeat-x; height:28px; font:400 14px ''; border-color:#ccc #999 #999 #ccc; padding:0 10px;}
+#searchForm .form select{height:28px; line-height:28px; font-size:14px; padding:4px 2px; vertical-align:middle; border:1px #ccc solid;}
+
+#searchRecord {width:660px; text-align:right; clear:both;}
+
+.pagebody{clear:both; padding:5px 0 15px 15px;}
+#RecordFrame {width:660px; float:left;}
+#RecordFrame h3{font:400 16px ''; margin:5px 0 0; padding:3px 0;}
+#RecordFrame p{font:12px ''; line-height:150%; clear:both; padding:0; margin:0; color:#333; width:580px; text-align:justify; letter-spacing:110%;}
+#RecordFrame div.arcinfo{height:20px; clear:both;}
+#RecordFrame div.arcinfo .url{color:#0E774A; font:12px Arial;}
+#RecordFrame div.arcinfo .views{color:#3366CC; font:12px Arial;}
+
+#RecordFrame .imagebox {width:131px; height:120px; float:left; text-align:center; margin-top:10px;}
+#RecordFrame .imagebox .image{text-align:center;}
+#RecordFrame .imagebox .image img{width:115px; height:86px}
+#RecordFrame .imagebox .title{width:132px; height:24px; line-height:24px; margin:0 auto; text-align:center; overflow:hidden;}
+
+/**page start**/
+.pagelink{clear:both; padding-left:10px; margin:10px 0;}
+.pagelink a,.pagelink span.cur{font-size:12px;height:20px; color:#666666; line-height:20px;display:inline-block;border:1px #CCCCCC solid;text-decoration:none;padding:0 6px;margin:0 2px;}
+.pagelink a:hover{border:1px #003300 solid;color:#666;text-decoration:none;}
+.pagelink span.cur {background-color:#999999; color:#FFFFFF; border:1px #003300 solid;}
+/**page end**/
+
+#adsFrame {width:300px; float:left; padding:5px 0;}
+#footer {height:22px; line-height:22px; padding:8px 10px 0; clear:both; border-top:1px #C9D7F1 solid; overflow:hidden; text-align:center; font:12px Arial; margin-bottom:20px;}

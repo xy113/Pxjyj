@@ -1,0 +1,559 @@
+<div class="main-div">
+<div class="pos-div">
+	<h2>{$lang.cp_home} &raquo; {$lang.setting_system} &raquo; 
+	{if $operation eq 'basic'}{$lang.setting_basic}{/if}
+	{if $operation eq 'optimization'}{$lang.setting_optimization}{/if}
+	{if $operation eq 'attachment'}{$lang.setting_attachment}{/if}
+	{if $operation eq 'image'}{$lang.setting_image}{/if}
+	{if $operation eq 'register'}{$lang.setting_register}{/if}
+	{if $operation eq 'randcode'}{$lang.setting_randcode}{/if}
+	{if $operation eq 'contact'}{$lang.setting_contact}{/if}
+	</h2>
+</div>
+<div class="toolbar">
+	<b class="button" tabindex="0" onclick="$('#settings').submit()"><span>提交</span></b>
+	<b class="button" tabindex="0" onclick="LoadPage('operation={$operation}')"><span>刷新</span></b>
+</div>
+<form name="settings" id="settings" method="post" action="{$adminscript}?action=settings&operation={$operation}&do=modify">
+	<!--{if $operation eq 'basic'}-->
+	<table border="0" cellpadding="0" cellspacing="0" class="formtable">
+	<tr>
+	  <td width="360" class="bold">{$lang.setting_sysname}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><input name="settingnew[sysname]" type="text" class="textinput txt" value="{$config.sysname}" /></td>
+	  <td>{$lang.setting_tips_0}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_sitename}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><input name="settingnew[sitename]" type="text" class="textinput txt" value="{$config.sitename}"/></td>
+	  <td>{$lang.setting_tips_1}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_siteurl}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><input name="settingnew[siteurl]" type="text" class="textinput txt" value="{$config.siteurl}"/></td>
+	  <td>{$lang.setting_tips_2}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_keywords}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><textarea name="settingnew[keywords]" >{$config.keywords}</textarea></td>
+	  <td>{$lang.setting_tips_3}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_description}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><textarea name="settingnew[description]">{$config.description}</textarea></td>
+	  <td>{$lang.setting_tips_4}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_icp}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><input name="settingnew[icp]" type="text" class="textinput txt" value="{$config.icp}" /></td>
+	  <td>{$lang.setting_tips_5}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_copyright}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><textarea name="settingnew[copyright]">{$config.copyright}</textarea></td>
+	  <td>{$lang.setting_tips_6}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_islog}：</td>
+	  <td></td>
+	</tr>
+	<tr>
+		<td>
+			<input type="radio" name="settingnew[islog]"  value="1"{if $config.islog==1} checked="checked"{/if} /> {$lang.yes}　
+			<input type="radio" name="settingnew[islog]"  value="0"{if $config.islog==0} checked="checked"{/if} /> {$lang.no}	</td>
+	  <td>{$lang.setting_tips_7}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_statcode}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><textarea name="settingnew[statcode]">{$config.statcode}</textarea></td>
+	  <td>{$lang.setting_tips_8}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_slidewidth}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><input type="text" name="settingnew[slidewidth]" value="{$config.slidewidth}" class="textinput txt" /></td>
+	  <td>{$lang.setting_tips_9}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_slideheight}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><input type="text" name="settingnew[slideheight]" value="{$config.slideheight}" class="textinput txt" /></td>
+	  <td>{$lang.setting_tips_10}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_sysclosed}：</td>
+	  <td>	</td>
+	</tr>
+	<tr>
+	  <td>
+		<input name="settingnew[sysclosed]" type="radio" value="1"{if $config.sysclosed==1} checked="checked"{/if} /> {$lang.yes}　
+		<input name="settingnew[sysclosed]" type="radio" value="0"{if $config.sysclosed==0} checked="checked"{/if} /> {$lang.no}  </td>
+	  <td>{$lang.setting_tips_11}</td>
+	</tr>
+	<tr>
+	  <td class="bold">{$lang.setting_closedreason}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	
+	<tr>
+	  <td><textarea name="settingnew[sysclosedreason]">{$config.sysclosedreason}</textarea></td>
+	  <td>{$lang.setting_tips_12}</td>
+	</tr>
+	</table>
+	<!--{/if}-->
+	<!--{if $operation eq 'optimization'}-->
+	<table border="0" cellspacing="0" cellpadding="0" class="formtable">
+		<tr>
+		  <td width="360" class="bold">{$lang.setting_rewrite}:</td>
+		  <td>&nbsp;</td>
+	  	</tr>
+		<tr>
+		  <td>
+		  	<input type="radio" name="settingnew[rewrite]"  value="1"{if $config.rewrite==1} checked="checked"{/if} /> {$lang.yes}　
+			<input type="radio" name="settingnew[rewrite]"  value="0"{if $config.rewrite==0} checked="checked"{/if} /> {$lang.no}		  </td>
+		  <td>{$lang.setting_tips_13}</td>
+	  	</tr>
+		<tr>
+		  <td class="bold">{$lang.setting_seotitle}:</td>
+		  <td></td>
+	  </tr>
+		<tr>
+		  <td><input name="settingnew[seotitle]" type="text" class="textinput txt" value="{$config.seotitle}" /></td>
+		  <td>{$lang.setting_tips_14}</td>
+	  </tr>
+		<tr>
+		  <td class="bold">{$lang.setting_seohead}:</td>
+		  <td></td>
+	  </tr>
+		<tr>
+		  <td><textarea name="settingnew[seohead]">{$config.seohead}</textarea></td>
+		  <td>{$lang.setting_tips_15}</td>
+	  </tr>
+		<tr>
+		  <td width="100" class="bold">{$lang.setting_iscache}：</td>
+		  <td></td>
+		</tr>
+		<tr>
+		  <td>
+		  	<input type="radio" name="settingnew[iscache]"  value="1"{if $config.iscache==1} checked="checked"{/if} /> {$lang.yes}　
+			<input type="radio" name="settingnew[iscache]"  value="0"{if $config.iscache==0} checked="checked"{/if} /> {$lang.no}		  </td>
+		  <td>{$lang.setting_tips_16}</td>
+	  	</tr>
+		<tr>
+		  <td class="bold">{$lang.setting_cacheindex}:</td>
+		  <td></td>
+	  </tr>
+		<tr>
+		  <td><input type="text" name="settingnew[cacheindex]" class="textinput txt" value="{$config.cacheindex}" /></td>
+		  <td>{$lang.setting_tips_17}</td>
+	  </tr>
+		<tr>
+		  <td class="bold">{$lang.setting_cachetime}：</td>
+		  <td></td>
+		</tr>
+		<tr>
+		  <td><input type="text" name="settingnew[cachetime]" value="{$config.cachetime}" class="textinput txt" /></td>
+		  <td>{$lang.setting_tips_18}</td>
+	  </tr>
+		<tr>
+		  <td class="bold">{$lang.setting_cachedir}：</td>
+		  <td></td>
+		</tr>
+		<tr>
+		  <td><input type="text" name="settingnew[cachedir]" value="{$config.cachedir}" class="textinput txt" /></td>
+		  <td>{$lang.setting_tips_19}</td>
+	  </tr>
+		<tr>
+		  <td class="bold">{$lang.setting_gzipcompress}：</td>
+		  <td></td>
+		</tr>
+		<tr>
+		  <td>
+		  	<input type="radio" name="settingnew[gzipcompress]" value="1"{if $config.gzipcompress==1} checked="checked"{/if} /> {$lang.yes}　
+			<input type="radio" name="settingnew[gzipcompress]" value="0"{if $config.gzipcompress==0} checked="checked"{/if} /> {$lang.no}
+		  </td>
+		  <td>{$lang.setting_tips_20}</td>
+	  </tr>
+	</table>
+	<!--{/if}-->
+	<!--{if $operation eq 'attachment'}-->
+	<table border="0" cellspacing="0" cellpadding="0" class="formtable">
+	  <tr>
+		<td width="360" class="bold">{$lang.setting_attachdir}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[attachdir]" type="text" value="{$config.attachdir}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_21}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_attachmax}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[attachmax]" type="text" value="{$config.attachmax}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_22}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_attachtype}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[attachtype]" type="text" value="{$config.attachtype}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_23}</td>
+	  </tr>
+	</table>
+	<!--{/if}-->
+	<!--{if $operation eq 'image'}-->
+	<table border="0" cellspacing="0" cellpadding="0" class="formtable">
+	  <tr>
+		<td width="360" class="bold">{$lang.setting_imgtype}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[imgtype]" type="text" value="{$config.imgtype}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_24}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_thumbstatus}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td>
+			<input type="radio" name="settingnew[thumbstatus]" value="1"{if $config.thumbstatus==1} checked="checked"{/if} />
+			{$lang.yes}
+			<input type="radio" name="settingnew[thumbstatus]" value="0"{if $config.thumbstatus==0} checked="checked"{/if} />
+			{$lang.no}		 	
+		</td>
+		<td>{$lang.setting_tips_25}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_thumbsize}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td>
+			<input name="settingnew[thumbwidth]" type="text" value="{$config.thumbwidth}" class="textinput" style="width:60px;" /> x 
+			<input name="settingnew[thumbheight]" type="text" value="{$config.thumbheight}" class="textinput" style="width:60px;" />			</td>
+		<td>{$lang.setting_tips_26}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_watermark}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td>
+			<input type="radio" name="settingnew[watermarkstatus]" value="0"{if $config.watermarkstatus==0} checked="checked"{/if} />
+			{$lang.setting_nowatermark}<br />
+			<input type="radio" name="settingnew[watermarkstatus]" value="1"{if $config.watermarkstatus==1} checked="checked"{/if} />
+			#1
+			<input type="radio" name="settingnew[watermarkstatus]" value="2"{if $config.watermarkstatus==2} checked="checked"{/if} />
+			#2
+			<input type="radio" name="settingnew[watermarkstatus]" value="3"{if $config.watermarkstatus==3} checked="checked"{/if} />
+			#3<br />
+			<input type="radio" name="settingnew[watermarkstatus]" value="4"{if $config.watermarkstatus==4} checked="checked"{/if} />
+			#4
+			<input type="radio" name="settingnew[watermarkstatus]" value="5"{if $config.watermarkstatus==5} checked="checked"{/if} />
+			#5
+			<input type="radio" name="settingnew[watermarkstatus]" value="6"{if $config.watermarkstatus==6} checked="checked"{/if} />
+			#6<br />
+			<input type="radio" name="settingnew[watermarkstatus]" value="7"{if $config.watermarkstatus==7} checked="checked"{/if} />
+			#7
+			<input type="radio" name="settingnew[watermarkstatus]" value="8"{if $config.watermarkstatus==8} checked="checked"{/if} />
+			#8
+			<input type="radio" name="settingnew[watermarkstatus]" value="9"{if $config.watermarkstatus==9} checked="checked"{/if} />
+			#9			</td>
+		<td>{$lang.setting_tips_27}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_watermarktype}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td>
+		<input type="radio" name="settingnew[watermarktype]" value="0"{if $config.watermarktype==0} checked="checked"{/if} />
+		{$lang.setting_watermarktype_0}
+		<input type="radio" name="settingnew[watermarktype]" value="1"{if $config.watermarktype==1} checked="checked"{/if} />
+		{$lang.setting_watermarktype_1}			
+		</td>
+		<td>{$lang.setting_tips_28}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_watertext}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><textarea name="settingnew[watermarktext]" rows="3" class="textinput txt">{$config.watermarktext}</textarea></td>
+		<td>{$lang.setting_tips_29}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_waterfont}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[watermarkfontfile]" type="text" value="{$config.watermarkfontfile}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_30}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_watersize}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[watermarkfontsize]" type="text" value="{$config.watermarkfontsize}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_31}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_watercolor}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[watermarkfontcolor]" type="text" value="{$config.watermarkfontcolor}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_32}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_waterimg}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[watermarkimg]" type="text" value="{$config.watermarkimg}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_33}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_wateralpha}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[watermarkalpha]" type="text" value="{$config.watermarkalpha}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_34}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_waterxoffset}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[watermarkoffsetx]" type="text" value="{$config.watermarkoffsetx}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_35}</td>
+	  </tr>
+	  <tr>
+		<td class="bold">{$lang.setting_wateryoffset}：</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td><input name="settingnew[watermarkoffsety]" type="text" value="{$config.watermarkoffsety}" class="textinput txt" /></td>
+		<td>{$lang.setting_tips_36}</td>
+	  </tr>
+	</table>
+	<!--{/if}-->
+	<!--{if $operation eq 'register'}-->
+	<table border="0" cellpadding="0" cellspacing="0" class="formtable">
+	<tr>
+	  <td width="360" class="bold">{$lang.setting_register_allowed}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>
+		<input name="settingnew[regallowed]" type="radio" value="1"{if $config.regallowed==1} checked="checked"{/if} />
+		{$lang.yes}　
+		  <input name="settingnew[regallowed]" type="radio" value="0"{if $config.regallowed==0} checked="checked"{/if} />
+		{$lang.no}			</td>
+	  <td>{$lang.setting_tips_37}</td>
+	  </tr>
+	<tr>
+	  <td class="bold">{$lang.setting_register_link}:</td>
+	  <td>&nbsp;</td>
+	  </tr>
+	<tr>
+	  <td><input type="text" name="settingnew[reglink]" value="{$config.reglink}" class="textinput txt" /></td>
+	  <td>{$lang.setting_tips_38}</td>
+	  </tr>
+	<tr>
+	  <td class="bold">{$lang.setting_register_linkname}:</td>
+	  <td>&nbsp;</td>
+	  </tr>
+	<tr>
+	  <td><input type="text" name="settingnew[reglinkname]" value="{$config.reglinkname}" class="textinput txt" /></td>
+	  <td>{$lang.setting_tips_39}</td>
+	  </tr>
+	<tr>
+	  <td class="bold">{$lang.setting_register_advance}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>
+		<input name="settingnew[regadvance]" type="radio" value="1"{if $config.regadvance==1} checked="checked"{/if} />
+		{$lang.yes}　
+		  <input name="settingnew[regadvance]" type="radio" value="0"{if $config.regadvance==0} checked="checked"{/if} />
+		{$lang.no}			</td>
+	  <td>{$lang.setting_tips_40}</td>
+	  </tr>
+	<tr>
+	  <td class="bold">{$lang.setting_register_verify}:</td>
+	  <td>&nbsp;</td>
+	  </tr>
+	<tr>
+	  <td>
+		<select name="settingnew[regverify]" style="width:300px;">
+			<option value="0"{if $config.regverify==0} selected="selected"{/if}>{$lang.setting_register_verify_0}</option>
+			<option value="1"{if $config.regverify==1} selected="selected"{/if}>{$lang.setting_register_verify_1}</option>
+			<option value="2"{if $config.regverify==2} selected="selected"{/if}>{$lang.setting_register_verify_2}</option>
+		</select>
+	  </td>
+	  <td>{$lang.setting_tips_41}</td>
+	  </tr>
+	<tr>
+	  <td class="bold">{$lang.setting_register_wellcomemsg}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>
+		<ul>
+			<li><input name="settingnew[wellcomemsg]" type="radio" value="0"{if $config.wellcomemsg==0} checked="checked"{/if} /> {$lang.setting_register_wellcomemsg_0}</li>
+			<li><input name="settingnew[wellcomemsg]" type="radio" value="1"{if $config.wellcomemsg==1} checked="checked"{/if} /> {$lang.setting_register_wellcomemsg_1}</li>
+			<li><input name="settingnew[wellcomemsg]" type="radio" value="2"{if $config.wellcomemsg==2} checked="checked"{/if} /> {$lang.setting_register_wellcomemsg_2}</li>
+		</ul>		 	
+		</td>
+	  <td>{$lang.setting_tips_42}</td>
+	  </tr>
+	<tr>
+	  <td class="bold">{$lang.setting_register_wellcomemsgtitle}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><input type="text" name="settingnew[wellcomemsgtitle]" class="textinput txt" value="{$config.wellcomemsgtitle}" /></td>
+	  <td>{$lang.setting_tips_43}</td>
+	  </tr>
+	<tr>
+	  <td class="bold">{$lang.setting_register_wellcomemsgtxt}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><textarea name="settingnew[wellcomemsgtxt]" style="height:100px;">{$config.wellcomemsgtxt}</textarea></td>
+	  <td>{$lang.setting_tips_44}</td>
+	  </tr>
+	<tr>
+	  <td class="bold">{$lang.setting_register_sysrules}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>
+		<input name="settingnew[sysrules]" type="radio" value="1"{if $config.sysrules==1} checked="checked"{/if} />
+		{$lang.yes}　
+		<input name="settingnew[sysrules]" type="radio" value="0"{if $config.sysrules==0} checked="checked"{/if} />
+		{$lang.no}			
+		</td>
+	  <td>{$lang.setting_tips_45}</td>
+	  </tr>
+	<tr>
+	  <td class="bold">{$lang.setting_register_sysrulestxt}：</td>
+	  <td>&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><textarea name="settingnew[sysrulestxt]" style="height:100px;">{$config.sysrulestxt}</textarea></td>
+	  <td>{$lang.setting_tips_46}</td>
+	  </tr>
+	</table>
+	<!--{/if}-->
+	<!--{if $operation eq 'randcode'}-->
+	<table border="0" cellpadding="0" cellspacing="0" class="formtable">
+		<tr>
+		  <td width="360" class="bold">{$lang.setting_randcodestatus}：</td>
+		  <td></td>
+		</tr>
+		<tr>
+		  <td>
+			<ul>
+				<li><input name="settingnew[randcodestatus][reg]" type="checkbox" value="1"{if $config.randcodestatus.reg} checked="checked"{/if} /> {$lang.setting_randcodestatus_1}</li>
+				<li><input name="settingnew[randcodestatus][login]" type="checkbox" value="1"{if $config.randcodestatus.login} checked="checked"{/if} /> {$lang.setting_randcodestatus_2}</li>
+				<li><input name="settingnew[randcodestatus][post]" type="checkbox" value="1"{if $config.randcodestatus.post} checked="checked"{/if} /> {$lang.setting_randcodestatus_3}</li>
+				<li><input name="settingnew[randcodestatus][comment]" type="checkbox" value="1"{if $config.randcodestatus.comment} checked="checked"{/if} /> {$lang.setting_randcodestatus_4}</li>
+				<li><input name="settingnew[randcodestatus][modify]" type="checkbox" value="1"{if $config.randcodestatus.modify} checked="checked"{/if} /> {$lang.setting_randcodestatus_5}</li>
+			</ul>			  
+		  </td>
+		  <td>{$lang.setting_tips_47}</td>
+	  </tr>
+	</table>
+	<!--{/if}-->
+	<!--{if $operation=='contact'}-->
+	<table border="0" cellspacing="0" cellpadding="0" class="form-table">
+    <tr>
+      <td width="70">{$lang.contact.name}：</td>
+      <td><input type="text" class="textinput" name="settingnew[ct_name]" style="width:300px;" value="{$config.ct_name}" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.tel}：</td>
+      <td><input type="text" class="textinput" name="settingnew[ct_tel]" style="width:300px;" value="{$config.ct_tel}" />　
+      {$lang.contact_tel_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.fax}：</td>
+      <td><input type="text" class="textinput" name="settingnew[ct_fax]" style="width:300px;" value="{$config.ct_fax}" />　
+      {$lang.contact_fax_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.mobile}：</td>
+      <td><input type="text" class="textinput" name="settingnew[ct_mobile]" style="width:300px;" value="{$config.ct_mobile}" />　
+      {$lang.contact_mobile_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.qq}：</td>
+      <td><input type="text" class="textinput" name="settingnew[ct_qq]" style="width:300px;" value="{$config.ct_qq}" />　
+      {$lang.contact_qq_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.email}：</td>
+      <td><input type="text" class="textinput" name="settingnew[ct_email]" style="width:300px;" value="{$config.ct_email}" />　
+      {$lang.contact_email_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.msn}：</td>
+      <td><input type="text" class="textinput" name="settingnew[ct_msn]" style="width:300px;" value="{$config.ct_msn}" />　
+      {$lang.contact_msn_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.ww}：</td>
+      <td><input type="text" class="textinput" name="settingnew[ct_ww]" style="width:300px;" value="{$config.ct_ww}" />　
+      {$lang.contact_ww_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.postcode}：</td>
+      <td><input type="text" class="textinput" name="settingnew[ct_postcode]" style="width:300px;" value="{$config.ct_postcode}" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.address}：</td>
+      <td><input type="text" class="textinput" name="settingnew[ct_address]" style="width:300px;" value="{$config.ct_address}" /></td>
+    </tr>
+  </table>
+	<!--{/if}-->
+</form>
+<div class="toolbar">
+	<b class="button" tabindex="0" onclick="$('#settings').submit()"><span>提交</span></b>
+	<b class="button" tabindex="0" onclick="LoadPage('operation={$operation}')"><span>刷新</span></b>
+</div>
+</div>

@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<!--{if $action=='newquestion'}-->
+<title>发表提问_{$categoryinfo.name}_{$cfg.sysname}</title>
+<!--{elseif $action=='editquestion'}-->
+<title>编辑提问_{$question.name}_{$cfg.sysname}</title>
+<!--{elseif $action=='newpost'}-->
+<title>发表回复_{$question.name}_{$cfg.sysname}</title>
+<!--{elseif $action=='editpost'}-->
+<title>编辑回复_{$answer.name}_{$cfg.sysname}</title>
+<!--{else}-->
+<title>{$question.subject}_{$question.name}_{$cfg.sysname}</title>
+<!--{/if}-->
+<meta name="keywords" content="{$cfg.keywords}" />
+<meta name="description" content="{$cfg.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position"> <a href="index.php">网站首页</a> > 
+		<a href="guestbook.php">留言板</a> >
+		<!--{if $action=='newquestion'}-->
+		<a href="guestbook.php?cid={$categoryinfo.cid}">{$categoryinfo.name}</a> > 发表提问
+		<!--{elseif $action=='editquestion'}-->
+		<a href="guestbook.php?cid={$question.cid}">{$question.name}</a> > 编辑提问
+		<!--{elseif $action=='newpost'}-->
+		<a href="guestbook.php?cid={$question.cid}">{$question.name}</a> > <a href="message.php?id={$question.id}">{$question.subject}</a> > 发表回复
+		<!--{elseif $action=='editpost'}-->
+		<a href="guestbook.php?cid={$answer.cid}">{$answer.name}</a> > <a href="message.php?id={$answer.qid}">{$answer.subject}</a> > 编辑回复
+		<!--{else}-->
+		<a href="guestbook.php?cid={$question.cid}">{$question.name}</a> > {$question.subject}
+		<!--{/if}-->
+	</span>
+</div>
+
+<!--{if $action=='newquestion' || $action=='editquestion'}-->
+<div class="area" id="postframe">
+	<div class="titlebar"><span class="more"><a href="guestbook.php?cid={$smarty.get.cid}">返回</a></span>发表留言</div>
+	<div class="formframe">
+		<form id="form1" name="form1" method="post" action="message.php?action=savequestion&cid={$smarty.get.cid}" onsubmit="return Check(this)">
+		  <input type="hidden" name="id" value="{$smarty.get.id}" />
+		  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			  <td width="80" height="30" align="right">标题：</td>
+			  <td><input name="subject" type="text" id="subject" size="50" value="{$question.subject}" /></td>
+			</tr>
+			<tr>
+			  <td align="right">内容：</td>
+			  <td>{$editor}</td>
+			</tr>
+			<tr>
+			  <td height="10">&nbsp;</td>
+			  <td>&nbsp;</td>
+			</tr>
+			<tr>
+			  <td>&nbsp;</td>
+			  <td><input type="submit" name="btnsubmit" class="btnsubmit" value="{if $action=='newquestion'}发表提问{else}保存修改{/if}" />　<span class="ctrl">CTRL+ENTER发表</span></td>
+			</tr>
+		  </table>
+		</form>
+	</div>
+</div>
+{literal}
+<script type="text/javascript">
+function Check(formobj){
+	if(!formobj.subject.value){
+		alert('标题不能为空，请您重新填写!');
+		return false;
+	}
+	
+	if(formobj.subject.value.length>50){
+		alert('标题不能超过50个字符，请您重新填写!');
+		return false;
+	}
+	formobj.btnsubmit.disabled = true;
+	return true;
+}
+</script>{/literal}
+<!--{elseif $action=='newpost' || $action=='editpost'}-->
+<div class="area" id="postframe">
+	<div class="titlebar"><span class="more"><a href="message.php?id={$smarty.get.id}">返回</a></span>发表回复</div>
+	<div class="formframe">
+		<form id="form1" name="form1" method="post" action="message.php?action=savepost&cid={$question.cid}&id={$question.id}" onsubmit="return Check(this)">
+		  <input type="hidden" name="aid" value="{$answer.aid}" />
+		  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="80"></td>
+			    <td>{$editor}</td>
+			</tr>
+			<tr>
+				<td width="80"></td>
+			  	<td height="10">&nbsp;</td>
+			</tr>
+			<tr>
+				<td width="80"></td>
+			  	<td><input type="submit" name="btnsubmit" class="btnsubmit" value="发表回复" />　<span class="ctrl">CTRL+ENTER发表</span></td>
+			</tr>
+		  </table>
+		</form>
+	</div>
+</div>
+{literal}
+<script type="text/javascript">
+function Check(formobj){
+	formobj.btnsubmit.disabled = true;
+	return true;
+}
+</script>{/literal}
+<!--{else}-->
+<div class="area">
+	<div class="pagediv">
+		<span class="right"><a href="message.php?action=newpost&id={$question.id}">回复</a> <a href="message.php?action=newquestion&cid={$question.cid}">发表提问</a></span>
+		<span><a href="{$prev}">上一主题</a> | <a href="{$next}">下一主题</a></span>
+		<span class="pagebox">{$pagelink}</span>
+	</div>
+	<!--{foreach from=$messages.list item=me}-->
+	<div class="questionframe">
+		<!--{if $key==0}-->
+		<div class="titlebar">
+			<span class="more">打印</span>
+			{$questioninfo.subject}
+		</div>
+		<!--{/if}-->
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+			<td class="questionauthor">
+				<div class="author"><strong>{$me.author}</strong></div>
+				<div class="avatar"><img src="images/noavatar.gif" border="0" width="120" height="120" /></div>
+			</td>
+			<td class="questioncontent">
+				<div class="questioninfo">
+					<span class="fontsize">大 中 小 <strong>{$me.floorno}<sup>#</sup></strong></span>
+					发表于 {$me.dateline|date_format:'%Y-%m-%d %H:%M'}
+				</div>
+				<!--{if $smarty.session.admin_user && $smarty.session.admin_pass}-->
+				<div class="toolbar">
+					<!--{if $me.first==1}-->
+					<a href="message.php?action=editquestion&cid={$me.cid}&id={$me.qid}">编辑</a> 
+					<a href="message.php?action=dropquestion&cid={$me.cid}&id={$me.qid}" onclick="return confirm('此操作不能撤销,您确定要删除吗?')">删除主题</a>
+					<!--{else}-->
+					<a href="message.php?action=editpost&aid={$me.aid}">编辑</a> 
+					<a href="message.php?action=dropquestion&cid={$me.cid}&id={$me.qid}" onclick="return confirm('此操作不能撤销,您确定要删除吗?')">删除主题</a>
+					<a href="message.php?action=droppost&id={$me.qid}&aid={$me.aid}" onclick="return confirm('此操作不能撤销,您确定要删除吗?')">删除回复</a>
+					<!--{/if}-->
+				</div>
+				<!--{/if}-->
+				<div class="questionbody">{$me.message}</div>
+				<div class="questionbottom">引用 回复 <a href="#">TOP</a> </div>
+			</td>
+		  </tr>
+		</table>
+	</div>
+	<!--{/foreach}-->
+	<div class="pagediv">
+		<span class="right"><a href="message.php?action=newpost&id={$question.id}">回复</a> <a href="message.php?action=newquestion&cid={$question.cid}">发表提问</a></span>
+		<span><a href="{$prev}">上一主题</a> | <a href="{$next}">下一主题</a></span>
+		<span class="pagebox">{$pagelink}</span>
+	</div>
+</div>
+<!--{/if}-->
+<div class="adv0"><img src="images/adv5.png" border="0" /></div>
+{include file='footer.htm'}

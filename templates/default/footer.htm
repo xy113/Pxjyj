@@ -1,0 +1,12 @@
+<div class="blank"></div>
+<div class="bottom">
+    <div class="footer">
+	<!--{foreach from=$navs.bot.0 item=nav name=botnav}-->
+	<a href="{$nav.nav_link}"{$nav.target}>{$nav.nav_name}</a>{if !$smarty.foreach.botnav.last} | {/if}
+	<!--{/foreach}-->
+	</div>
+	<div class="footer">{$cfg.copyright} Powered By <a href="http://www.songdewei.com" target="_blank">XSCMS</a></div>
+	<div class="footer"><a href="http://www.miibeian.gov.cn" target="_blank">{$cfg.icp}</a> - {$cfg.tongjicode}</div>
+</div>
+</body>
+</html>

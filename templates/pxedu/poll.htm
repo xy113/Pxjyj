@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>网上投票_$config[sitename]</title>
+<meta name="keywords" content="{$config[keywords]}" />
+<meta name="description" content="{$config[description]}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+<script src="static/js/jquery.js" type="text/javascript"></script>
+<script src="static/js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+{template header2}
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position">
+	您现在的位置 > 
+	<a href="./">网站首页</a> > 网上投票
+	</span>
+</div>
+{loop $polls $poll}
+<form method="post" id="poll_$poll[pollid]" action="polldisplay.php?action=poll" target="_blank" onsubmit="return checkVote($poll[pollid])">
+<input type="hidden" name="pollid" value="$poll[pollid]" />
+<div class="poll">
+	<h3>$poll[subject]</h3>
+	<p>$poll[message]</p>
+	<ul>
+		{if $poll[type]=='checkbox'}
+		{loop $poll[options] $option}
+		<li><input type="checkbox" name="options[]" value="$option[optionid]" /> $option[optionname]</li>
+		{/loop}
+		{else}
+		{loop $poll[options] $option}
+		<li><input type="radio" name="options" value="$option[optionid]" /> $option[optionname]</li>
+		{/loop}
+		{/if}
+	</ul>
+	<div> 
+		<input type="submit" value="投票" />
+	</div>
+</div>
+</form>
+{/loop}
+<div style="padding:7px 0; text-align:center;">$pagelink</div>
+<script type="text/javascript">
+function checkVote(pollid){
+	if($("#poll_"+pollid).find(":input[name='options[]'][checked]").length==0 && $("#poll_"+pollid).find(":input[name=options][checked]").length==0){
+		alert("您还没有选择投票选项，不能进行投票。");
+		return false;
+	}else{
+		return true;
+	}
+}
+</script>
+<div class="adv0"><img src="images/adv5.png" border="0" /></div>
+{template footer2}

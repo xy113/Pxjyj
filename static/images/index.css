@@ -1,0 +1,206 @@
+/* CSS Document */
+*{padding:0px; margin:0px; overflow:hidden;}
+body{padding:0px; margin:0px; font:Arial, Helvetica, sans-serif; font-size:12px;}
+.menutd {
+     background:url(bg.png) 0px 0px repeat-y;
+	 width:191px;
+	 overflow-x:hidden;
+	 height:500px;
+	 white-space:nowrap;
+	 margin:0px;
+	 padding:0px;
+}
+
+#load-div {
+     position:absolute;
+	 border:1px #009900 solid;
+	 top:26px;
+	 padding:0px 6px;
+	 height:22px;
+	 line-height:22px;
+	 font-size:12px;
+	 left:40%;
+	 background-color:#00CC00;
+	 color:#fff;
+	 vertical-align:middle;
+	 display:none;
+}
+
+#load-div img {
+     border:none;
+	 vertical-align:text-bottom;
+}
+
+#top-div { 
+     height:24px;
+	 line-height:24px;
+	 border-bottom:1px #ddeeff solid;
+	 overflow:hidden;
+	 color:#999;
+	 text-decoration:none;
+	 padding:0px 10px;
+}
+
+#top-div a{
+	 color:#999;
+	 text-decoration:none;
+}
+
+#top-div a:hover{
+	 color:#333;
+	 text-decoration:none;
+}
+
+#topmenu {
+     list-style:none;
+	 height:50px;
+	 position:relative;
+}
+
+#topmenu ul {
+	 height:24px;
+	 line-height:24px;
+	 list-style:none;
+	 position:absolute;
+	 bottom:0px;
+}
+#topmenu ul li {
+	 height:24px;
+	 line-height:24px;
+	 text-align:center;
+	 margin-right:5px;
+	 display:inline-block;
+	 float:left;
+}
+
+#topmenu ul li a{
+     background:url(bgx.png) 0px -144px repeat-x;
+     text-decoration:none;
+	 color:#666666;
+	 padding:0px 5px;
+	 border:1px solid #6C92AD;
+	 border-bottom:none;
+	 height:24px;
+	 line-height:25px;
+	 overflow:hidden;
+	 display:inline-block;
+	 outline:none;
+}
+
+#topmenu ul li a:hover{
+     color:#000;
+}
+
+#topmenu ul li a.cur{
+     background:url(bgx.png) 0px -216px repeat-x;
+     color:#FFFFFF;
+}
+
+#logo {
+     background:url(logo.jpg) center no-repeat;
+	 width:160px;
+	 height:50px;
+	 float:left;
+}
+.top-tab{
+     background:url(bg.png) -252px -390px no-repeat;
+	 height:6px;
+}
+
+.top-tr{
+     background:url(bgx.png) 0 -117px repeat-x;
+	 height:6px;
+}
+
+.menu-tab {
+     background:url(bg.png) -252px 0 no-repeat;
+	 width:191px;
+	 height:45px;
+	 overflow:hidden;
+	 position:relative;
+}
+
+.menu-tab a {
+	color:#000000;
+	display:block;
+	font-size:14px;
+	font-weight:bold;
+	height:32px;
+	letter-spacing:8px;
+	line-height:32px;
+	outline:medium none;
+	overflow:hidden;
+	position:absolute;
+	text-align:left;
+	text-decoration:none;
+	text-indent:40px;
+	width:91px;
+	background:url(bg.png) no-repeat;
+	padding-top:2px;
+}
+
+.menu-tab .check  {
+	background-position:-257px 0;
+	left:5px;
+	top:0;
+}
+
+.menu-tab .check:hover {
+    background-position:-257px -72px;
+}
+
+.menu-tab .check:active {
+    background-position:-257px -145px;
+}
+
+.menu-tab .compose{
+	background-position:-346px 0;
+	left:92px;
+	top:0;
+}
+.menu-tab .compose:hover{
+	background-position:-346px -72px;
+}
+
+.menu-tab .compose:active{
+	background-position:-346px -145px;
+}
+#leftmenu {clear:both; width:191px;}
+#leftmenu ul {clear:both;list-style:none;width:191px;display:none;}
+#leftmenu ul li {
+	cursor:default;
+	height:26px;
+	line-height:26px;
+	text-align:left;
+	white-space:nowrap;
+	overflow:hidden;
+	padding-left:19px;
+}
+
+#leftmenu ul li.cur {
+    background:url(bg.png) -252px -216px no-repeat;
+	cursor:default;
+	height:26px;
+	line-height:26px;
+	text-align:left;
+	white-space:nowrap;
+	overflow:hidden;
+	padding-left:19px;
+	outline:none;
+}
+
+#leftmenu ul li a{
+    text-decoration:none;
+	color:#005590;
+	height:26px;
+	line-height:26px;
+	width:145px;
+	overflow:hidden;
+	display:block;
+	white-space:nowrap;
+	outline:none;
+}
+
+#leftmenu ul li a:hover {
+    color:#000000;
+}

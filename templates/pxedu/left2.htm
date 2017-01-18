@@ -1,0 +1,43 @@
+<div class="bodyleft">
+	<div class="left-tools"><img src="images/left-tools.png" border="0" usemap="#Map" /></div>
+	<map name="Map" id="Map">
+		<area shape="rect" coords="41,43,99,109" href="http://oa.pxjyj.com" target="_blank" />
+		<area shape="rect" coords="123,44,185,111" href="http://kb.pxjyj.com" target="_blank" />
+		<area shape="rect" coords="202,43,266,111" href="#" />
+		<area shape="rect" coords="38,118,99,178" href="#" />
+		<area shape="rect" coords="123,116,186,178" href="leadmail.php" />
+		<area shape="rect" coords="204,115,269,179" href="poll.php" target="_blank" />
+		<area shape="rect" coords="37,182,100,252" href="#" />
+		<area shape="rect" coords="123,183,184,253" href="http://xj.pxjyj.com" target="_blank" />
+	</map>
+	
+	<div class="box1">
+		<div><img src="images/hudong.png" /></div>
+		<div class="btnlist">
+			<a id="button1" href="about-4.html">教育概况</a>
+			<a id="button2" href="about-5.html">领导班子</a>
+			<a id="button3" href="about-6.html">内设机构</a>
+			<a id="button4" href="about-7.html">机构职能</a>
+		</div>
+	</div>
+
+	<div class="box2">
+		<div><img src="images/zhinan.png" /></div>
+		<div class="btnlist">
+			<a id="button5" href="forum.php?fid=5">入学入托</a>
+			<a id="button6" href="forum.php?fid=6">助学贷款</a>
+			<a id="button7" href="forum.php?fid=7">教育收费</a>
+			<a id="button8" href="forum.php?fid=8">教子问答</a>
+		</div>
+	</div>
+	
+	<div class="box3">
+		<div><img src="images/tongdao.png" border="0" /></div>
+		<ul class="bmlist">
+			{loop $branches[1] $key $branch}
+			{eval $key++;}
+			<li{if $key%3==0} class="end"{/if}><a href="bindex.php?branchid={$branch[branchid]}">{$branch[branchname]}</a></li>
+			{/loop}
+		</ul>
+	</div>
+</div>

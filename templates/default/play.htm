@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$video.title}-{$cfg.sysname}</title>
+<meta name="keywords" content="{$video.tags},{$video.keywords},{$cfg.keywords}" />
+<meta name="description" content="{$video.content}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="page">
+    <div class="youpos">当前位置: <a href="/">首页</a>&raquo;<a href="video.php?cid={$video.cid}">{$video.name}</a>&raquo; {$video.title}</div>
+    <div class="blank"></div>
+	<div class="article-left">
+	    <div class="title-div"></div>
+		<h1 class="title">{$video.title}</h1>
+		<div class="article-info">时间:{$video.dateline|date_format:'%Y-%m-%d %H:%M:%S'}　播放数:{$video.views}</div>
+		<div class="videoplayer">
+		   <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="600" height="480">
+               <param name="movie" value="{$video.videourl}" />
+               <param name="quality" value="high" />
+               <embed src="{$video.videourl}" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="600" height="480"></embed>
+           </object>
+		</div>
+		<!-- JiaThis Button BEGIN -->
+		<div id="ckepop" class="videoshare">
+			<a href="javascript:;" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank">分享到：</a>
+			<a title="分享到新浪微博" class="jiathis_button_tsina">新浪微博</a>
+			<a title="分享到QQ空间" class="jiathis_button_qzone">QQ空间</a>
+			<a title="分享到人人网" class="jiathis_button_renren">人人网</a>
+			<div class="clear"></div>
+		</div>
+		<script type="text/javascript" src="http://v1.jiathis.com/code/jia.js" charset="utf-8"></script>
+		<!-- JiaThis Button END -->
+		<div class="video-info"><span style="float:right;">标签:{foreach from=$video.tagarray item=tag}<a href="search.php?q={$tag}">{$tag}</a>{/foreach}</span>分类:<a href="video.php?cid={$video.cid}">{$video.name}</a></div>
+		<div class="videobody">{$video.content}</div>
+	</div>
+	<div class="article-right">
+		<div class="content-div">
+		    <div class="title-div">热门视频</div>
+			{foreach from=$videos.hot item=vod}
+			<div class="hotvideolist" onmouseover="this.style.background='#e2e2e2'" onmouseout="this.style.background='#fff'">
+				<div class="videoimage"><a href="{$vod.vodurl}" title="{$vod.title}"><img src="{$vod.image}" /></a></div>
+				<ul class="videoinfo">
+					<li style="font-size:14px;"><a href="{$vod.vodurl}">{$vod.title}</a></li>
+					<li>时　间: {$vod.dateline|date_format:'%Y-%m-%d'}</li>
+					<li>播放数: {$vod.views}</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			{/foreach}
+		</div>
+		<div class="blank"></div>
+	    <div class="content-div">
+			<div class="title-div">热点文章</div>
+			<ul class="arclist">
+				{foreach from=$articles.hot item=arc}
+				<li><a href="{$arc.arcurl}">{$arc.title}</a></li>
+				{/foreach}
+			</ul>
+		</div>
+		<div class="blank"></div>
+		<div class="content-div">
+			<div class="title-div">热门图片</div>
+			{foreach from=$images.hot item=img}
+			<div class="hotimagebox">
+			    <div class="image"><a href="{$img.imgurl}" title="{$img.title}"><img src="{$img.image}" /></a></div>
+				<div class="title"><a href="{$img.imgurl}">{$img.title}</a></div>
+			</div>
+			{/foreach}
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="article-left" style="margin-top:10px;">
+		<div class="title-div">相关视频</div>
+		<div class="relatedvideo">
+		   {foreach from=$videos.related item=vod}
+		   <div class="videobox">
+				<div class="image"><a href="{$vod.vodurl}" title="{$vod.title}"><img src="{$vod.image}" /></a></div>
+				<div class="title"><a href="{$vod.vodurl}">{$vod.title}</a></div>
+		   </div>
+		   {/foreach}
+		   <div class="clear"></div>
+	   </div>
+	</div>
+	<div class="clear"></div>
+</div>
+{include file='footer.htm'}

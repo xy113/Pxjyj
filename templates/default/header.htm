@@ -1,0 +1,14 @@
+<div class="topnav">
+<h1>XSCMSÑÝÊ¾Õ¾µã</h1>
+<span style="float:right">
+<!--{foreach from=$navs.top.0 item=nav name=topnav}-->
+<a href="{$nav.nav_link}"{$nav.target}>{$nav.nav_name}</a>{if !$smarty.foreach.topnav.last} | {/if}
+<!--{/foreach}-->
+</span>
+</div>
+<ul class="nav">
+   <li><a href="/">Ê×Ò³</a></li>
+   <!--{foreach from=$navs.mid.0 item=nav name=midnav}-->
+   <li><a href="{$nav.nav_link}"{$nav.target}>{$nav.nav_name}</a></li>
+   <!--{/foreach}-->
+</ul>

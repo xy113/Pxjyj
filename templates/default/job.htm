@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$job.jobtitle}-{$cfg.sysname}</title>
+<meta name="keywords" content="{$job.keywords},{$cfg.keywords}" />
+<meta name="description" content="{$job.description},{$cfg.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="page">
+    <div class="youpos">当前位置: <a href="/">首页</a>&raquo; <a href="jobs.php">英才诚聘</a> &raquo; {$job.jobtitle}</div>
+    <div class="blank"></div>
+	<div class="content-div">
+		<div class="videomaindiv">
+			<div class="jobsbox">
+				<h3>{$job.jobtitle}</h3>
+				<div class="jobs-item">招聘人数：{$job.numbers}　薪资：{$job.salary}　发布时间：{$job.dateline|date_format:'%Y-%m-%d'}</div>
+				<div class="jobs-content"><strong>职位描述：</strong><br /><br />{$job.jobdescription}</div>
+				<div class="jobs-content"><strong>能力要求：</strong><br /><br />{$job.content}</div>
+			</div>
+			<div class="apply"><a href="javascript:;">立即申请</a></div>
+			<div class="blank"></div>
+		</div>
+	</div>
+</div>
+{include file='footer.htm'}

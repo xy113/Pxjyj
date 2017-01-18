@@ -1,0 +1,120 @@
+<!--{if $operation=='addnew' || $operation=='edit'}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; 领导信息管理 &raquo; {if $operation=='addnew'}新增领导信息{else}编辑领导信息{/if}</h2>
+</div>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveLead()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+<form action="{$adminscript}?action=leads&operation=save" method="post" name="lead">
+<input type="hidden" name="leadid" value="{$lead.leadid}">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="form-table">
+    <tr>
+      <td width="60">领导头衔：</td>
+      <td><input type="text" class="textinput" style="width:200px;" name="leadnew[title]" id="lead_title" value="{$lead.title}"></td>
+    </tr>
+    <tr>
+      <td>领导姓名：</td>
+      <td><input type="text" class="textinput" style="width:200px;" name="leadnew[name]" id="lead_name" value="{$lead.name}"></td>
+    </tr>
+    <tr>
+      <td>形象照：</td>
+      <td><input type="text" class="textinput" style="width:400px;" name="leadnew[avatar]" id="lead_avatar" value="{$lead.avatar}">
+	  <span class="btn btn-dft" onclick="OpenDialog('lead_avatar')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.upload}</span></span>
+	  </td>
+    </tr>
+    <tr>
+      <td>主要职责：</td>
+      <td><textarea name="leadnew[resp]" style="width:96%; height:100px;">{$lead.resp}</textarea></td>
+    </tr>
+    <tr>
+      <td>个人简介：</td>
+      <td>{$fckeditor}</td>
+    </tr>
+  </table>
+</form>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveLead()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">　{$lang.ctrlenter}</span>
+</div>
+</div>
+{literal}<script type="text/javascript">
+var hassubmited = false;
+function SaveLead(){
+	if(hassubmited) return false;
+	var theForm = document.lead;
+    if(!$("#lead_title").val()){
+	   showError("领导头衔不能留空。");
+	   return false;
+    }	
+	if(!$("#lead_name").val()){
+		showError("领导姓名不能留空。")
+	   return false;
+	}  
+    if(!$("#lead_avatar").val()){
+	   showError("领导照片不能留空。")
+	   return false;
+    }
+    hassubmited = true;
+    theForm.submit();
+    return true;
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveLead();
+	   return false;
+	}
+}
+</script>{/literal}
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; 领导信息管理 &raquo; 领导信息列表</h2>
+</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('leadid[]','page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>添加新领导</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+<form name="slides" method="post">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+  <tr>
+    <th width="15"><input type="checkbox" onclick="checkAll(this,'leadid[]');"/></td>
+	<th width="15" class="tocenter"><img src="images/icon_view.gif" width="16" height="16" /></th>
+    <th width="100">姓名</td>
+	<th width="160">头衔</td>
+    <th class="last">主要职责</td>
+  </tr>
+  <!--{foreach from=$leads item=d}-->
+  <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+    <td><input type="checkbox" name="leadid[]" value="{$d.leadid}" onclick="checkThis(this)" /></td>
+    <td class="tocenter"><a href="../lead.php?leadid={$d.leadid}" target="_blank"><img src="images/icon_view.gif" border="0" width="16" height="16" /></a></td>
+	<td><a href="{$adminscript}?action=leads&operation=edit&leadid={$d.leadid}">{$d.name}</a></td>
+	<td>{$d.title}</td>
+    <td>{$d.resp}</td>
+  </tr>
+  <!--{/foreach}-->
+  <tr>
+      <td colspan="5">{$lang.select}：
+			<a href="javascript:;" onclick="selectAll('leadid[]')">{$lang.selectall}</a> - 
+			<a href="javascript:;" onclick="cancelAll('leadid[]')">{$lang.noselect}</a> - 
+			<a href="javascript:;" onclick="reverseAll('leadid[]')">{$lang.reverseselect}</a>
+	  </td>
+  </tr>
+</table>
+</form>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('leadid[]','page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>添加新领导</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('page={$page}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<!--{/if}-->

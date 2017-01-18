@@ -1,0 +1,64 @@
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.contact.manage} &raquo; {$lang.contact.modify}</h2>
+</div>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="document.form1.submit()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save_edit}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+<form name="form1" method="post" action="{$adminscript}?action=contactus&operation=save" style="margin:10px 0px;">
+  <table border="0" cellspacing="0" cellpadding="0" class="form-table">
+    <tr>
+      <td width="70">{$lang.contact.name}£º</td>
+      <td><input name="contactusnew[name]" type="text" class="textinput" id="contactusnew[name]" style="width:300px;" value="{$contact.name}" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.tel}£º</td>
+      <td><input name="contactusnew[tel]" type="text" class="textinput" id="contactusnew[tel]" style="width:300px;" value="{$contact.tel}" />¡¡
+      {$lang.contact_tel_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.fax}£º</td>
+      <td><input name="contactusnew[fax]" type="text" class="textinput" id="contactusnew[fax]" style="width:300px;" value="{$contact.fax}" />¡¡
+      {$lang.contact_fax_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.mobile}£º</td>
+      <td><input name="contactusnew[mobile]" type="text" class="textinput" id="contactusnew[mobile]" style="width:300px;" value="{$contact.mobile}" />¡¡
+      {$lang.contact_mobile_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.qq}£º</td>
+      <td><input name="contactusnew[qq]" type="text" class="textinput" id="contactusnew[qq]" style="width:300px;" value="{$contact.qq}" />¡¡
+      {$lang.contact_qq_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.email}£º</td>
+      <td><input name="contactusnew[email]" type="text" class="textinput" id="contactusnew[email]" style="width:300px;" value="{$contact.email}" />¡¡
+      {$lang.contact_email_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.msn}£º</td>
+      <td><input name="contactusnew[msn]" type="text" class="textinput" id="contactusnew[msn]" style="width:300px;" value="{$contact.msn}" />¡¡
+      {$lang.contact_msn_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.ww}£º</td>
+      <td><input name="contactusnew[ww]" type="text" class="textinput" id="contactusnew[ww]" style="width:300px;" value="{$contact.ww}" />¡¡
+      {$lang.contact_ww_txt}</td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.postcode}£º</td>
+      <td><input name="contactusnew[postcode]" type="text" class="textinput" id="contactusnew[postcode]" style="width:300px;" value="{$contact.postcode}" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.contact.address}£º</td>
+      <td><input name="contactusnew[address]" type="text" class="textinput" id="contactusnew[address]" style="width:300px;" value="{$contact.address}" /></td>
+    </tr>
+  </table>
+</form>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="document.form1.submit()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save_edit}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>

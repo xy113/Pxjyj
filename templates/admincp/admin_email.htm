@@ -1,0 +1,120 @@
+<!--{if $operation=='addnew'||$operation=='edit'}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.mail.manage} &raquo; {if $opration eq 'edit'}{$lang.mail.edit}{else}{$lang.mail.addnew}{/if}</h2>
+</div>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="SendMail()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.mail.post}</span></span>
+	<span class="btn btn-dft" onclick="SaveMail()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+  <form id="form1" name="form1" method="post" action="{$adminscript}?action=email&opration=save">
+    <input type="hidden" name="mailid" value="{$mail.mailid}" />
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="form-table">
+      <tr>
+        <td>{$lang.mail.mailto}£º</td>
+        <td>
+			<input name="newmail[mailto]" id="mailto" type="text" value="{$mail.mailto}" class="textinput" style="width:480px;" /> 
+			<input type="checkbox" name="mailtoall" value="1" /> {$lang.mail.alluser}
+		</td>
+      </tr>
+      <tr>
+        <td>{$lang.mail.subject}£º</td>
+        <td><input name="newmail[subject]" id="subject" type="text" value="{$mail.subject}" class="textinput" style="width:480px;" /></td>
+      </tr>
+      <tr>
+        <td width="50">{$lang.mail.mailfrom}£º</td>
+        <td><input name="newmail[mailfrom]" id="mailfrom" type="text" value="{if $mail.mailfrom}{$mail.mailfrom}{else}{$cfg.adminemail}{/if}" class="textinput" style="width:480px;" /></td>
+      </tr>
+      <tr>
+        <td>{$lang.mail.content}£º</td>
+        <td>{$fckeditor}</td>
+      </tr>
+    </table>
+  </form>
+<div class="toolbar">
+	<span class="btn btn-dft" onclick="SendMail()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.mail.post}</span></span>
+	<span class="btn btn-dft" onclick="SaveMail()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<script type="text/javascript">
+var Message = new Array();
+Message[0] = '{$lang.mailtxt.0}';
+Message[1] = '{$lang.mailtxt.1}';
+Message[2] = '{$lang.mailtxt.2}';
+{literal}function SendMail(){
+	var theForm = document.form1;
+    if(!$("#mailto").val() && theForm.mailtoall.checked==false){
+	    showError(Message[0]);
+		return false;
+	}
+    if(!$("#subject").val()){
+	    showError(Message[1]);
+		return false;
+	}
+	theForm.action = pageurl+'&operation=save&send=yes';
+	theForm.submit();
+}
+function SaveMail(){
+	var theForm = document.form1;
+    if(!$("#mailto").val() && theForm.mailtoall.checked==false){
+	    showError(Message[0]);
+		return false;
+	}
+    if(!$("#subject").val()){
+	    showError(Message[1]);
+		return false;
+	}
+	theForm.action = pageurl+'&operation=save';
+	theForm.submit();
+}
+</script>{/literal}
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.mail.manage} &raquo; {$lang.mail.list}¡¡{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+	 <div class="searchbox">
+		<input type="text" name="q" id="q" value="{$smarty.get.q}" class="textinput" style="width:145px;" />
+		<span class="btn btn-dft" onclick="ListTable('q='+$('#q').val())" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.search}</span></span>
+	 </div>
+</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('mailid[]','{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.mail.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th width="20"><input type="checkbox" onclick="checkAll(this,'mailid[]')" /></td>
+      <th>{$lang.mail.subject}</th>
+      <th width="80">{$lang.mail.author}</th>
+      <th width="120" class="last">{$lang.mail.time}</th>
+    </tr>
+	<!--{foreach from=$mails item=mail}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox" name="mailid[]" value="{$mail.mailid}" onclick="checkThis(this)" /></td>
+      <td><a href="{$adminscript}?action=email&operation=edit&mailid={$mail.mailid}">{$mail.subject}</a></td>
+      <td>{$mail.author}</td>
+      <td><span class="mdate">{$mail.dateline|date_format:'%Y-%m-%d %H:%M:%S'}</span></td>
+    </tr>
+	<!--{/foreach}-->
+    <tr>
+      <td colspan="4">{$lang.select}£º
+		<a href="javascript:;" onclick="selectAll('mailid[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onclick="cancelAll('mailid[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onclick="reverseAll('mailid[]')">{$lang.reverseselect}</a>
+	  </td>
+  </tr>
+  </table>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('mailid[]','{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.mail.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<!--{/if}-->

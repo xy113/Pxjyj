@@ -1,0 +1,75 @@
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.category.manage} &raquo; {$lang.category.$ctype} &raquo; {if $operation=='addnew'}{$lang.category.addnew}{else}{$lang.category.edit}{/if}</h2>
+</div>
+  <div class="toolbar">
+        <span class="btn btn-dft" onclick="SaveCategory()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+		<span class="btn btn-dft" onclick="LoadPage('ctype={$ctype}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+  		<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+  </div>
+ <form name="category" method="post" action="{$adminscript}?action={$action}&operation=save">
+  <input type="hidden" name="cid" value="{$category.cid}" />
+  <input type="hidden" name="ctype" value="{$ctype}" />
+  <table border="0" cellspacing="0" cellpadding="0" class="form-table">
+    <tr>
+      <td width="80">{$lang.category.name}£º</td>
+      <td><input name="category[name]" type="text" class="textinput" id="category_name" style="width:200px;" value="{$category.name}" maxlength="10" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.category.father}£º</td>
+      <td>
+	  <select name="category[fid]">
+        <option value="0">{$lang.category.top}</option>
+		<!--{foreach from=$categories.0 item=cc}-->
+		<option value="{$cc.cid}"{if $cc.current} selected="selected"{/if}>{$cc.name}</option>
+		<!--{/foreach}-->
+      </select>	  
+	 </td>
+    </tr>
+	<!--{if $operation=='addnew'}-->
+    <tr>
+      <td>{$lang.category.addtonav}£º</td>
+      <td>
+	      <input name="addtonav" type="radio" value="1" /> {$lang.yes}¡¡
+		  <input name="addtonav" type="radio" value="0" checked="checked" /> {$lang.no}
+	  </td>
+    </tr>
+	<!--{/if}-->
+    <tr>
+      <td>{$lang.keywords}£º</td>
+      <td><input name="category[keywords]" type="text" class="textinput" style="width:400px;" value="{$category.keywords}" /></td>
+    </tr>
+    <tr>
+      <td>{$lang.description}£º</td>
+      <td><textarea name="category[description]" class="textinput" style="width:400px; height:50px;" >{$category.description}</textarea></td>
+    </tr>
+  </table>
+  </form>
+  <div class="toolbar">
+        <span class="btn btn-dft" onclick="SaveCategory()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+		<span class="btn btn-dft" onclick="LoadPage('ctype={$ctype}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+  		<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+  </div>
+</div>
+<script type="text/javascript">
+var hassubmited = false;
+{literal}function SaveCategory(){
+	var theForm = document.category;
+	if(hassubmited)return false;
+	if(!$("#category_name").val()){
+		return false;
+	}else {
+		hassubmited = true;
+		theForm.submit();
+		return true;
+	}
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveCategory();
+	}
+}
+</script>{/literal}

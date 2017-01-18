@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$poll[subject]}_网上投票_$config[sitename]</title>
+<meta name="keywords" content="{$config[keywords]}" />
+<meta name="description" content="{$config[description]}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+<script src="static/js/jquery.js" type="text/javascript"></script>
+<script src="static/js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+{template header2}
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position">
+	您现在的位置 > 
+	<a href="./">网站首页</a> > 网上投票
+	</span>
+</div>
+<div class="poll">
+	<h3>$poll[subject]</h3>
+	<p>$poll[message]</p>
+	<h3>投票结果</h3>
+	<ul class="options">
+		{loop $options $option}
+		{eval $percent = round(($option[votes]/$total)*100,2);}
+		<li><span style="display:inline-block; background:#003300; height:20px; vertical-align:middle; width:{$percent}%;"></span> <b>$option[optionname]</b>(票数：{$option[votes]}，百分比：{$percent}%)</li>
+		{/loop}
+	</ul>
+	<div>
+		<input type="button" value="返回投票" onclick="window.location='poll.php'" />
+	</div>
+</div>
+<div class="adv0"><img src="images/adv5.png" border="0" /></div>
+{template footer2}

@@ -1,0 +1,102 @@
+<!--{if $operation=='addnew'||$operation=='edit'}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.faq.manage} &raquo; {if $operation eq 'edit'}{$lang.faq.edit}{else}{$lang.faq.addnew}{/if}</h2>
+</div>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveFaq()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+    <span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+</div>
+  <form action="{$adminscript}?action=faq&operation=save" method="post" name="form1">
+    <input type="hidden" name="id" value="{$article.id}" />
+    <table border="0" cellspacing="0" cellpadding="0" class="form-table">
+      <tr>
+        <td width="50">{$lang.faq.title}£º</td>
+        <td><input name="articlenew[title]" id="article_title" type="text" value="{$article.title}" class="textinput" style="width:400px;" /></td>
+      </tr>
+      <tr>
+        <td>{$lang.keywords}£º</td>
+        <td><input name="articlenew[keywords]" id="article_keywords" type="text" value="{$article.keywords}" class="textinput" style="width:400px;" /></td>
+      </tr>
+      <tr>
+	  	<td>{$lang.faq.content}£º</td>
+        <td>{$fckeditor}</td>
+        </tr>
+    </table>
+  </form>
+<div class="toolbar">
+    <span class="btn btn-dft" onclick="SaveFaq()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.save}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.back_list}</span></span>
+	<span class="btn btn-dft" onclick="window.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+	<span class="ctrlenter">¡¡{$lang.ctrlenter}</span>
+</div>
+</div>
+<script type="text/javascript">
+var hassubmited = false;
+var Message = new Array();
+Message[0] = '{$lang.faqtxt.0}';
+Message[1] = '{$lang.faqtxt.1}';
+{literal}function SaveFaq(){
+	if(hassubmited)return false;
+	var theForm = document.form1;
+	if(!$("#article_title").val()){
+		showError(Message[0]);
+		return false;
+	}
+	hassubmited = true;
+	theForm.submit();
+	return true;
+}
+document.onkeydown = function(e){
+	e=window.event||e;
+	if(e.ctrlKey&&e.keyCode==13){
+	   SaveFaq();
+	}
+}{/literal}
+</script>
+<!--{else}-->
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.faq.manage} &raquo; {$lang.faq.list}¡¡{$lang.total}{$totalrecords}{$lang.total_records}</h2>
+     <div class="searchbox">
+		<input type="text" name="q" id="q" value="{$smarty.get.q}" class="textinput" style="width:145px;" />
+		<span class="btn btn-dft" onclick="ListTable('q='+$('#q').val())" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.search}</span></span>
+	 </div>
+</div>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('id[]','{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'"><span>{$lang.faq.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th width="20"><input type="checkbox" name="id[]" value="0" onclick="checkAll(this,'id[]')" /></th>
+      <th width="280">{$lang.faq.title}</th>
+	  <th>{$lang.keywords}</th>
+	  <th width="140" class="last">{$lang.dateline}</th>
+    </tr>
+	<!--{foreach from=$articles item=arc}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox" name="id[]" value="{$arc.id}" onclick="checkThis(this)" /></td>
+      <td><a href="{$adminscript}?action=faq&operation=edit&id={$arc.id}">{$arc.title}</a></td>
+	  <td>{$arc.keywords}</td>
+	  <td><span class="mdate">{$arc.dateline|date_format:'%Y-%m-%d %H:%M:%S'}</span></td>
+    </tr>
+	<!--{/foreach}-->
+	<tr><td colspan="6">{$lang.select}:
+		<a href="javascript:;" onclick="selectAll('id[]')">{$lang.selectall}</a> - 
+		<a href="javascript:;" onclick="cancelAll('id[]')">{$lang.noselect}</a> - 
+		<a href="javascript:;" onclick="reverseAll('id[]')">{$lang.reverseselect}</a>
+	</td></tr>
+  </table>
+<div class="toolbar">
+    <span class="pagebox">{$pagelink}</span>
+	<span class="btn btn-dft" onclick="Drop('id[]','{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'"><span><b>{$lang.drop}</b></span></span>
+	<span class="btn btn-dft" onclick="LoadPage('operation=addnew')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'"><span>{$lang.faq.addnew}</span></span>
+	<span class="btn btn-dft" onclick="LoadPage('{$querystring}')" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+</div>
+</div>
+<!--{/if}-->

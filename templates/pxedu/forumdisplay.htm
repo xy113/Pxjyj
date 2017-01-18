@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$forum.fname}_互动交流_{$config.sysname}</title>
+<meta name="keywords" content="{$config.keywords}" />
+<meta name="description" content="{$config.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+<script src="static/js/jquery.js" type="text/javascript"></script>
+<script src="static/js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="subnav">
+	<span id="wellcome"><span id="timer"></span>　欢迎来到盘县教育网</span>
+	<span id="position">您现在的位置 > <a href="./">网站首页</a> > <a href="forum.php">互动交流</a> > {$forum.fname}</span>
+</div>
+<div class="area">
+    <div class="forum-list">
+		<div class="title-green">
+			<span class="more"><strong><a href="post.php?action=newpost&fid={$forum.fid}">发表话题</a></strong></span>
+			<span class="menu">{$forum.fname}</span>
+		</div>
+	    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th height="24" style="padding-left:10px;">标题</th>
+            <th width="60">发表人</th>
+            <th width="50">点击</th>
+            <th width="140">发表时间</th>
+          </tr>
+		  {foreach from=$threads.list item=tt}
+          <tr>
+            <td height="24" class="title"><a href="thread-{$tt.tid}-1.html" target="_blank">{$tt.subject}</a></td>
+            <td>{$tt.author}</td>
+            <td>{$tt.views}</td>
+            <td>{$tt.dateline|date_format:'%Y-%m-%d %H:%S'}</td>
+          </tr>
+		  {/foreach}
+		  <tr><td colspan="4" class="pagelink">{$pagelink}</td></tr>
+        </table>
+	</div>
+</div>
+<div class="adv0"><img src="images/adv5.png" border="0" /></div>
+{include file='footer.htm'}

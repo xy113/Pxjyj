@@ -1,0 +1,52 @@
+<div class="main-div">
+	<div class="pos-div">
+		<h2>{$lang.cp_home} &raquo; {$lang.source.manage} &raquo; {$lang.source.$type}</h2>
+	</div>
+  <div class="toolbar">
+		<span class="btn btn-dft" onclick="Drop('sid[]','type={$type}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+  </div>
+  <table border="0" cellspacing="0" cellpadding="0" class="list">
+    <tr>
+      <th width="25"><input type="checkbox" onclick="checkAll(this,'sid[]')" /></th>
+      <th width="180" style="cursor:pointer;" title="{$lang.click_resort}" onclick="Sort()">{$lang.source.sitename}</th>
+	  <th width="40" class="tocenter">{$lang.sort}</th>
+      <th class="last">{$lang.source.siteurl}</th>
+    </tr>
+    <!--{foreach from=$sources item=source key=key}-->
+    <tr onmouseover="this.className='active'" onmouseout="this.className=''">
+      <td><input type="checkbox" name="sid[]" value="{$source.sid}" /></td>
+      <td><span title="{$lang.click_edit}" onclick="Edit(this,'operation=edit_name&sid={$source.sid}')">{$source.sitename}</span></td>
+	  <td class="tocenter"><span title="{$lang.click_edit}" onclick="Edit(this,'operation=edit_order&sid={$source.sid}')">{$source.ordernum}</span></td>
+      <td><span title="{$lang.click_edit}" onclick="Edit(this,'operation=edit_url&sid={$source.sid}')">{$source.siteurl}</span></td>
+    </tr>
+    <!--{/foreach}-->
+    <tr>
+      <td colspan="4">
+	        {$lang.source.sitename}: <input name="sitename" id="sitename" type="text" class="textinput" style="width:100px;" />¡¡ 
+			{$lang.source.siteurl}: <input type="text" name="siteurl" id="siteurl" value="http://"  class="textinput" style="width:280px;" />¡¡        
+			{$lang.sort}: <input name="ordernum" id="ordernum" type="text"  class="textinput" style="width:30px;" />
+			<b class="button" tabindex="0" onclick="Add('{$type}')"><span>Ìí¼Ó</span></b>
+      </td>
+    </tr>
+  </table>
+  <div class="toolbar">
+		<span class="btn btn-dft" onclick="Drop('sid[]','type={$type}')" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span><b>{$lang.drop}</b></span></span>
+		<span class="btn btn-dft" onclick="window.location.reload()" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseover="this.className='btn btn-hover'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+  </div>
+</div>
+{literal}<script type="text/javascript">
+function Add(type){
+   if(!$("#sitename").val()){
+	   showError(sitename_empty);
+       return false;
+   }
+   var data = {sitename:$("#sitename").val(),siteurl:$("#siteurl").val(),ordernum:$("#ordernum").val()};
+   $.post(url+'operation=save&type='+type,data,function(result){
+       if(result){
+	       $('#bodyFrame').html(result);
+	   }
+   })
+   $$('btn_s').disabled=true;
+}
+</script>{/literal}

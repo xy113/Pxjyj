@@ -1,0 +1,41 @@
+<div class="main-div">
+	<div class="pos-div">
+		<h2>$lang[cp_home] &raquo; 部门管理 &raquo; 编辑部门</h2>
+	</div>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#form1').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage()"><span>返回列表</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=edit&branchid=$branchid')"><span>刷新</span></b>
+	</div>
+	<form name="form1" id="form1" method="post" action="">
+	<input type="hidden" name="formsubmit" value="yes">
+	<input type="hidden" name="formhash" value="{FORMHASH}">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="form-table">
+      <tr>
+        <td width="70">部门名称</td>
+        <td><input type="text" class="text" name="branchnew[branchname]" value="$branch[branchname]"></td>
+      </tr>
+      <tr>
+        <td>部门分类</td>
+        <td><select name="branchnew[classid]">
+			{loop $classes $cat}
+			<option value="$cat[branchid]"{if $cat[branchid]==$branch[classid]} selected="selected"{/if}>$cat[branchname]</option>
+			{/loop}
+		</select></td>
+      </tr>
+      <tr>
+        <td>关键字</td>
+        <td><input type="text" class="text" name="branchnew[keywords]" value="$branch[keywords]"></td>
+      </tr>
+      <tr>
+        <td>部门描述</td>
+        <td><textarea name="branchnew[description]" style="width:300px; height:100px;">$branch[description]</textarea></td>
+      </tr>
+    </table>
+	</form>
+	<div class="toolbar">
+		<b class="button" tabindex="0" onClick="$('#form1').submit()"><span>提交</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage()"><span>返回列表</span></b>
+		<b class="button" tabindex="0" onClick="LoadPage('operation=edit&branchid=$branchid')"><span>刷新</span></b>
+	</div>	
+</div>

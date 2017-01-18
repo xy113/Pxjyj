@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{$curcategory.name}-{$cfg.sysname}</title>
+<meta name="keywords" content="{$curcategory.keywords},{$cfg.keywords}" />
+<meta name="description" content="{$curcategory.description},{$cfg.description}" />
+<link href="images/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+{include file='header.htm'}
+<div class="page">
+    <div class="youpos">当前位置: <a href="/">首页</a>&raquo; {$curcategory.name}</div>
+    <div class="blank"></div>
+	<div class="content-div">
+		<ul class="videocategory">
+			<!--{foreach from=$category.video.0 item=cat}-->
+			<li{if $cat.cid==$topcategoryid} class="selected"{/if}><a href="{$cat.caturl}">{$cat.name}</a></li>
+			<!--{/foreach}-->
+		</ul>
+		<!--{if $topcategoryid>0 && $category.video.$topcategoryid}-->
+		<div class="subcategory">
+			{foreach from=$category.video.$topcategoryid item=menu}
+			<a href="{$menu.caturl}"{if $menu.cid==$smarty.get.cid} class="selected"{/if}>{$menu.name}</a>
+			{/foreach}
+		</div>
+		<!--{/if}-->
+		<div class="videomaindiv">
+			<!--{foreach from=$videos.list item=vod}-->
+			<div class="videoitem" onmouseover="this.style.background='#e2e2e2'" onmouseout="this.style.background='#fff'">
+				<div class="image-item"><a href="{$vod.vodurl}" title="{$vod.title}"><img src="{$vod.image}" /></a></div>
+				<div class="title-item"><a href="{$vod.vodurl}">{$vod.title}</a></div>
+				<div class="info-item">时　间:{$vod.dateline|date_format:'%Y-%m-%d %H:%M:%S'}</div>
+				<div class="info-item">播放数:{$vod.views}</div>
+			</div>
+			<!--{/foreach}-->
+			<div class="blank"></div>
+			<div class="pagediv" style="text-align:right; padding:10px;">{$pagelink}</div>
+		</div>
+	</div>
+</div>
+{include file='footer.htm'}

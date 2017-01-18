@@ -1,0 +1,20 @@
+<div class="main-div">
+<div class="pos-div">
+	 <h2>{$lang.cp_home} &raquo; {$lang.db.manage} &raquo; {$lang.import_code}</h2>
+</div>
+   <div class="toolbar">
+		<span class="btn btn-dft" onclick="ExecuSql(document.formexecu)" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.import_execu}</span></span>
+		<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.backup}</span></span>
+		<span class="btn btn-dft" onclick="document.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+   </div>
+<div style="color:#FF0000;" id="code-div"></div>
+<div class="blank"></div>
+<h3 style="color:#FF0000; margin:5px 0px;">{$lang.import_notice}</h3>
+<textarea name="sql_code" id="sql_code" style="width:98%; height:200px;"></textarea>
+<div class="blank"></div>
+   <div class="toolbar">
+		<span class="btn btn-dft" onclick="ExecuSql(document.formexecu)" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.import_execu}</span></span>
+		<span class="btn btn-dft" onclick="LoadPage()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.db.backup}</span></span>
+		<span class="btn btn-dft" onclick="document.location.reload()" onmouseover="this.className='btn btn-hover'" onmouseup="this.className='btn btn-hover'" onmousedown="this.className='btn btn-active'" onmouseout="this.className='btn btn-dft'" tabindex="0"><span>{$lang.refresh}</span></span>
+   </div>
+</div>
